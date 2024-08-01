@@ -1,8 +1,5 @@
 <script setup>
 
-import VersionRender from '@/views/others/VersionRender.vue'
-import ErrorMessage from '@/views/others/ErrorMessage.vue'
-
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition } from '@/services/Windows';
 
@@ -15,7 +12,6 @@ const props = defineProps(['data']);
 const data = props.data;
 
 let id = data.id;
-let title = data.title;
 
 onMounted(() => {
     SetupHandle(id);
@@ -28,7 +24,7 @@ onMounted(() => {
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <div class="window-handle" :id="'window-handle-' + id">
-            {{ title }}
+            Edit profile
         </div>
 
         <!-- Body -->

@@ -6,6 +6,7 @@ import LoginWindow from '@/views/windows/LoginWindow.vue'
 import RegisterWindow from '@/views/windows/RegisterWindow.vue'
 import ExampleWindow from '@/views/windows/ExampleWindow.vue'
 import MainMenuWindow from '@/views/windows/MainMenuWindow.vue'
+import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
 
 // Gestionem ventanas
 import useEmitter from '@/services/Emitter';
@@ -18,6 +19,7 @@ const windows = {
     register: reactive([]),
     test: reactive([]),
     main_menu: reactive([]),
+    edit_profile: reactive([]),
 };
 
 emitter.on("create-window", (data) => {
@@ -26,8 +28,20 @@ emitter.on("create-window", (data) => {
         return;
     }
 
-    windows[data.type].push(data);
-    reload.value += 1;
+    let contains = false;
+    for (var i = 0; i < windows[data.type].length; i++) {
+        if(windows[data.type][i].id == data.id){
+            contains = true;
+            break;
+        }
+    }
+
+    console.log(contains);
+
+    if(!contains) {
+        windows[data.type].push(data);
+        // reload.value += 1;
+    }
 })
 
 
@@ -44,6 +58,7 @@ emitter.on("clear-windows", (data) => {
     <RegisterWindow v-for="window in windows.register" :key="window.id" :data="window"></RegisterWindow>
     <ExampleWindow v-for="window in windows.test" :key="window.id" :data="window"></ExampleWindow>
     <MainMenuWindow v-for="window in windows.main_menu" :key="window.id" :data="window"></MainMenuWindow>
+    <EditProfileWindow v-for="window in windows.edit_profile" :key="window.id" :data="window"></EditProfileWindow>
   </div>
 </template>
 

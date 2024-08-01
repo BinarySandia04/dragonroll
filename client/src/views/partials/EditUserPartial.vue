@@ -4,7 +4,7 @@ import VersionRender from '@/views/others/VersionRender.vue'
 import ErrorMessage from '@/views/others/ErrorMessage.vue'
 
 import { onMounted, ref } from 'vue';
-import { GetUser } from '@/services/User'
+import { GetUser, LogoutUser } from '@/services/User'
 
 import Api from '@/services/Api'
 import url from '@/services/BackendURL'
@@ -18,10 +18,19 @@ username.value = GetUser().username;
 function retrieveAvatar(){
     let userAvatarDisplay = document.getElementById("upload-image");
     Api().get('/user/retrieve-avatar?username=' + GetUser().username).then((response) => {
-        console.log(response.data.image);
-
         userAvatarDisplay.src = url + "public/" + response.data.image;
     }).catch((err) => console.log("Internal error"));
+}
+
+function LogOut(){
+    LogoutUser();
+
+    emitter.emit("clear-windows", {type: "main_menu"});
+    emitter.emit("create-window", {type: "login", id: "login"})
+}
+
+function EditProfile(){
+    emitter.emit("create-window", {type: "edit_profile", id: "edit_profile"})
 }
 
 onMounted(() => {
@@ -38,15 +47,15 @@ onMounted(() => {
         Api().post('/user/upload-avatar', formData, {
             headers: { "Content-Type": "multipart/form-data" }
         }).then((response) => {
-            console.log(response);
             retrieveAvatar();
         }).catch((err) => console.log("Internal error"));
     });
 
     userAvatarDisplay.addEventListener("click", (event) => {
-        console.log("Clicked");
         sendAvatarFileUploader.click();
-    })
+    });
+
+    retrieveAvatar();
 });
 </script>
 
@@ -62,6 +71,11 @@ onMounted(() => {
             <div class="main-user-info">
                 <b>{{ username }}</b><br>Miauler
             </div>
+
+            <div class="main-user-actions">
+                <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Edit profile</button>
+                <button class="btn-primary button-small" v-on:click.prevent="LogOut">Log out</button>
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +84,12 @@ onMounted(() => {
 <style scoped>
 #send-avatar-form {
     display: none;
+}
+
+.button-small {
+    height: 32px;
+    margin-bottom: 0px;
+    padding: 10px;
 }
 
 .main-user-container {
@@ -82,6 +102,8 @@ onMounted(() => {
     padding: 10px;
     display: flex;
     align-items: center;
+
+    justify-content: center;
 }
 
 .main-user-info {
@@ -92,5 +114,9 @@ onMounted(() => {
 .user-icon {
     width: 40px;
     height: 40px;
+}
+
+.main-user-actions {
+    margin-left: auto;
 }
 </style>

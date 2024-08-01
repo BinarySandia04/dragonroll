@@ -1,0 +1,9 @@
+{
+    "ext": "json,scss,js",
+    "events": {
+      "restart": "grunt sass:src"
+    },
+    "ignore": [
+      "public/*"
+    ]
+  }

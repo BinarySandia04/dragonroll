@@ -1,0 +1,10 @@
+{
+    "mongo_ip": "root:root@mongo",
+    "mongo_ip_debug": "localhost",
+
+    "latexocr_ip": "latexocr",
+    "latexocr_ip_debug": "172.17.0.2",
+    "latexocr_port": "8502",
+
+    "secret": "putyoursecrethere"
+}

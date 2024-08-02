@@ -33,9 +33,11 @@ a {
   }
 }
 
-._blog-title {
-  margin-top: 120px;
-  padding-bottom: 30px;
+.icon {
+  @media (prefers-color-scheme: dark) {
+    filter: invert(0.7);
+  }
+  
 }
 
 label {

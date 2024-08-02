@@ -31,7 +31,6 @@ function register(){
         const data = response.data;
 
         if(data.error){
-            console.log(data);
             errorMessage.value = data.msg;
         } else {
             errorMessage.value = "";

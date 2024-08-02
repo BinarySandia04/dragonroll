@@ -1,7 +1,8 @@
 <script setup>
+import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition } from '@/services/Windows';
+import { onMounted, onUpdated, ref } from 'vue';
+import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
 
@@ -11,24 +12,21 @@ const emitter = useEmitter();
 const props = defineProps(['data']);
 const data = props.data;
 
+const handle = ref(null);
+
 let id = data.id;
 
 onMounted(() => {
-    SetupHandle(id);
+    SetupHandle(id, handle, {title: "Edit profile", close: true});
     SetSize(id, {x: 500, y: 380});
-    SetPosition(id, "center");
+    ResetPosition(id, "center");
 });
 </script>
 
 
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
-        <div class="window-handle" :id="'window-handle-' + id">
-            Edit profile
-        </div>
-
-        <!-- Body -->
-
+        <WindowHandle :window="id" ref="handle"></WindowHandle>
     </div>
 </template>
 

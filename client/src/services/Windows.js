@@ -1,15 +1,41 @@
-function SetupHandle(id){
+import { reactive, ref } from 'vue'
+
+const windows = {
+    login: ref([]),
+    register: ref([]),
+    test: ref([]),
+    main_menu: ref([]),
+    edit_profile: ref([]),
+};
+
+const reload = ref(0);
+
+let ReloadRef = () => { return reload };
+let Windows = () => { return windows };
+
+let currentIndex = 1;
+
+function SetupHandle(id, handle, handleData){
+
+    // Update window info with handle info
+    
+    let win = GetWindowWithId(id);
+    win.handle = handleData;
+
     let currentWindowId = "window-wrapper-" + id;
     let currentWindowHandleId = "window-handle-" + id;
     
     let mouseDown = false;
 
     let currentWindow = document.getElementById(currentWindowId);
-
     let handler = document.getElementById(currentWindowHandleId);
 
     let offsetX = 0;
     let offsetY = 0;
+
+    currentWindow.addEventListener("mousedown", (event) => {
+        SetOnTop(id);
+    });
 
     handler.addEventListener("mousedown", (event) => {
         mouseDown = true;
@@ -33,7 +59,11 @@ function SetupHandle(id){
 
     document.addEventListener("mouseup", (event) => {
         mouseDown = false;
+        // ummm suposo que no pots tancar mentres mous?
+        SaveWindowPos({id, x: parseInt(currentWindow.style.left, 10), y: parseInt(currentWindow.style.top, 10)});
     });
+
+    handle.value.setupHandle();
 }
 
 function SetSize(id, size){
@@ -60,11 +90,90 @@ function SetPosition(id, pos){
 
     currentWindow.style.top = pos.y + "px";
     currentWindow.style.left = pos.x + "px";
+
+    SaveWindowPos({id, x: pos.x, y: pos.y})
 }
 
+function ResetPosition(id, pos){
+    let win = GetWindowWithId(id);
+    let data = {x: win.x, y: win.y};
+
+    if(data.x && data.y){
+        SetPosition(id, data);
+        return;
+    }
+    SetPosition(id, pos);
+}
+
+
+function CreateWindow(data){
+    if(windows[data.type] === undefined){
+        console.error("Window type " + data.type + " is not defined!");
+        return;
+    }
+
+    let contains = false;
+    for (let i = 0; i < windows[data.type].length; i++) {
+        if(windows[data.type][i].id == data.id){
+            contains = true;
+            break;
+        }
+    }
+
+    if(!contains) {
+        windows[data.type].value.push(data);
+        // reload.value += 1;
+
+        setTimeout(() => SetOnTop(data.id), 0);
+    }
+}
+
+function ClearWindows(data){
+    windows[data.type].value = [];
+    // reload.value += 1;
+}
+
+function ClearWindow(id){
+    let win = GetWindowWithId(id);
+    windows[win.type].value = windows[win.type].value.filter((e) => {return e.id !== id});
+    // reload.value += 1;
+}
+
+function GetWindowWithId(id){
+    for(let key of Object.keys(windows)){
+        for(let i = 0; i < windows[key].value.length; i++){
+            if(windows[key].value[i].id == id){
+                return windows[key].value[i];
+            }
+        }
+    }
+}
+
+function SaveWindowPos(data){
+    let win = GetWindowWithId(data.id);
+    if(win === undefined) return;
+    win.x = data.x;
+    win.y = data.y;
+}
+
+function SetOnTop(id){
+    let currentWindowId = "window-wrapper-" + id;
+    let currentWindow = document.getElementById(currentWindowId);
+
+    currentIndex += 1;
+    currentWindow.style.zIndex = currentIndex;
+}
 
 export {
     SetupHandle,
     SetSize,
-    SetPosition
+    SetPosition,
+    ResetPosition,
+    Windows,
+    ReloadRef,
+    ClearWindows,
+    CreateWindow,
+    GetWindowWithId,
+    SaveWindowPos,
+    ClearWindow
 }

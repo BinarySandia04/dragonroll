@@ -2,22 +2,23 @@
 
 import VersionRender from '@/views/others/VersionRender.vue'
 import ErrorMessage from '@/views/others/ErrorMessage.vue'
+import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition } from '@/services/Windows';
+import { onMounted, onUpdated, ref } from 'vue';
+import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
 
-import useEmitter from '@/services/Emitter';
-const emitter = useEmitter();
+import { ClearWindows, CreateWindow } from '../../services/Windows';
 
 const email = ref("");
 const name = ref("");
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
-
 const errorMessage = ref("");
+
+const handle = ref(null);
 
 const props = defineProps(['data']);
 
@@ -27,10 +28,11 @@ let id = data.id;
 let title = data.title;
 
 onMounted(() => {
-    SetupHandle(id);
+    SetupHandle(id, handle, {title: "Register"});
     SetSize(id, {x: 700, y: 630});
-    SetPosition(id, "center");
+    ResetPosition(id, "center");
 });
+
 
 function register(){
   if(password.value != confirmPassword.value){
@@ -62,8 +64,8 @@ function register(){
 }
 
 function ShowLogin(msg){
-  emitter.emit("clear-windows", {type: "register"});
-  emitter.emit("create-window", {type: "login", id: "login", success: msg})
+    ClearWindows({type: "register"});
+    CreateWindow({type: "login", id: "login", success: msg});
 }
 
 </script>
@@ -71,9 +73,7 @@ function ShowLogin(msg){
 
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
-        <div class="window-handle" :id="'window-handle-' + id">
-            Register
-        </div>
+        <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="window-content">
         <img src="img/logo-splash.png" class="splash-image" draggable="false">

@@ -10,13 +10,18 @@
   --c-white-mute: #e2e2e2;
   --c-white-muter: #c4c4c4;
 
+  --c-white-blurred: #f8f8f8cc;
+
   --c-black: #181818;
-  --c-black-semisoft: #1d1d1d;
+  --c-black-semisoft:1 #1d1d1d;
   --c-black-soft: #222222;
   --c-black-softer: #282828;
   --c-black-softest: #3a3a3a;
   --c-black-mute: #383838;
   --c-black-muter: #585858;
+
+
+  --c-black-blurred: #222222cc;
 
   --c-indigo: #2c3e50;
 
@@ -44,6 +49,8 @@
 
 /* semantic color variables for this project */
 :root {
+  --window-background: var(--c-white-blurred);
+
   --color-background: var(--c-white);
   --color-background-semisoft: var(--c-white-semisoft);
   --color-background-soft: var(--c-white-soft);
@@ -63,6 +70,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --window-background: var(--c-black-blurred);
+
     --color-handler: var(--c-black-semisoft);
     --color-background: var(--c-black);
     --color-background-semisoft: var(--c-black-semisoft);

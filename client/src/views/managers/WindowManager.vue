@@ -7,58 +7,33 @@ import RegisterWindow from '@/views/windows/RegisterWindow.vue'
 import ExampleWindow from '@/views/windows/ExampleWindow.vue'
 import MainMenuWindow from '@/views/windows/MainMenuWindow.vue'
 import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
+import AccountSettingsWindow from '../windows/AccountSettingsWindow.vue'
+
+import { Windows, ReloadRef } from '@/services/Windows';
 
 // Gestionem ventanas
 import useEmitter from '@/services/Emitter';
-const emitter = useEmitter();
 
-const reload = ref(0);
+const reload = ReloadRef();
+const windows = Windows();
 
-const windows = {
-    login: reactive([]),
-    register: reactive([]),
-    test: reactive([]),
-    main_menu: reactive([]),
-    edit_profile: reactive([]),
-};
-
-emitter.on("create-window", (data) => {
-    if(windows[data.type] === undefined){
-        console.log("Window type " + data.type + " is not defined!");
-        return;
-    }
-
-    let contains = false;
-    for (var i = 0; i < windows[data.type].length; i++) {
-        if(windows[data.type][i].id == data.id){
-            contains = true;
-            break;
-        }
-    }
-
-    console.log(contains);
-
-    if(!contains) {
-        windows[data.type].push(data);
-        // reload.value += 1;
-    }
-})
-
-
-emitter.on("clear-windows", (data) => {
-    windows[data.type] = [];
-    reload.value += 1;
-})
+// Win names
+const login = windows.login;
+const register = windows.register;
+const test = windows.test;
+const main_menu = windows.main_menu;
+const edit_profile = windows.edit_profile;
 
 </script>
 
 <template>
   <div class="window-container" :key="reload">
-    <LoginWindow v-for="window in windows.login" :key="window.id" :data="window"></LoginWindow>
-    <RegisterWindow v-for="window in windows.register" :key="window.id" :data="window"></RegisterWindow>
-    <ExampleWindow v-for="window in windows.test" :key="window.id" :data="window"></ExampleWindow>
-    <MainMenuWindow v-for="window in windows.main_menu" :key="window.id" :data="window"></MainMenuWindow>
-    <EditProfileWindow v-for="window in windows.edit_profile" :key="window.id" :data="window"></EditProfileWindow>
+    <LoginWindow v-for="win in login" :key="win.id" :data="win"></LoginWindow>
+    <RegisterWindow v-for="win in register" :key="win.id" :data="win"></RegisterWindow>
+    <ExampleWindow v-for="win in test" :key="win.id" :data="win"></ExampleWindow>
+    <MainMenuWindow v-for="win in main_menu" :key="win.id" :data="win"></MainMenuWindow>
+    <EditProfileWindow v-for="win in edit_profile" :key="win.id" :data="win"></EditProfileWindow>
+    <AccountSettingsWindow v-for="win in account_settings" :key="win.id" :data="win"></AccountSettingsWindow>
   </div>
 </template>
 
@@ -66,23 +41,15 @@ emitter.on("clear-windows", (data) => {
 <style>
 
 .window-wrapper {
-    background-color: var(--color-background-soft);
+    background-color: var(--window-background);
 
+    backdrop-filter: blur(10px);
     position: fixed;
 
 
     display: flex;
     flex-direction: column;
     text-align: center;
-}
-
-.window-handle {
-    user-select: none;
-    font-family: MrEavesRemake;
-    justify-content: center;
-    width: 100%;
-
-    background-color: var(--color-handler);
 }
 
 </style>

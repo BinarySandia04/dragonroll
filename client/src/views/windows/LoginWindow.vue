@@ -4,14 +4,16 @@ import VersionRender from '@/views/others/VersionRender.vue'
 import ErrorMessage from '@/views/others/ErrorMessage.vue'
 import SuccessMessage from '@/views/others/SuccessMessage.vue'
 
-import { onMounted, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition } from '@/services/Windows';
+import { onMounted, onUpdated, ref } from 'vue';
+import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 import { SetUser } from '@/services/User'
 
 import Api from '@/services/Api.js'
 
-import useEmitter from '@/services/Emitter';
-const emitter = useEmitter();
+import WindowHandle from '@/views/partials/WindowHandle.vue';
+import { ClearWindows, CreateWindow } from '../../services/Windows';
+
+const handle = ref(null);
 
 const username = ref("");
 const password = ref("");
@@ -28,9 +30,10 @@ let success = data.msg;
 
 onMounted(() => {
   successMessage.value = success;
-  SetupHandle(id);
+
+  SetupHandle(id, handle, {title: "Login"});
   SetSize(id, {x: 700, y: 630});
-  SetPosition(id, "center");
+  ResetPosition(id, "center");
 });
 
 function login(){
@@ -58,13 +61,13 @@ function login(){
 }
 
 function ShowRegister(){
-  emitter.emit("clear-windows", {type: "login"});
-  emitter.emit("create-window", {type: "register", id: "register"})
+  ClearWindows({type: "login"});
+  CreateWindow({type: "register", id: "register"});
 }
 
 function ShowMainMenu(){
-  emitter.emit("clear-windows", {type: "login"});
-  emitter.emit("create-window", {type: "main_menu", id: "main_menu"})
+  ClearWindows({type: "login"});
+  CreateWindow({type: "main_menu", id: "main_menu"});
 }
 
 </script>
@@ -72,9 +75,7 @@ function ShowMainMenu(){
 
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
-        <div class="window-handle" :id="'window-handle-' + id">
-            Login
-        </div>
+        <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <img src="img/logo-splash.png" class="splash-image" draggable="false">
 
@@ -109,6 +110,7 @@ p {
 .window-wrapper {
     min-width: 700px;
     min-height: 630px;
+    user-select: none;
 
     display: flex;
     align-items: center;

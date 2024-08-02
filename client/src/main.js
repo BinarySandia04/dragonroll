@@ -1,7 +1,7 @@
 import './assets/main.css'
 import './assets/prism.css'
 
-import { createApp } from 'vue'
+import { createApp, reactive } from 'vue'
 import App from './App.vue'
 import router from './router'
 
@@ -35,7 +35,13 @@ VueMarkdownEditor.use(createKatexPlugin());
 const app = createApp(App).use(VueMarkdownEditor);
 
 
-app.config.globalProperties.emitter = emitter;
+app.config.globalProperties.rollWindows = {
+    login: reactive([]),
+    register: reactive([]),
+    test: reactive([]),
+    main_menu: reactive([]),
+    edit_profile: reactive([]),
+};
 
 app.use(router)
 

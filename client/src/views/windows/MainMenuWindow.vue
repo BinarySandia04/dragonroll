@@ -1,17 +1,18 @@
 <script setup>
 
 import VersionRender from '@/views/others/VersionRender.vue'
-import ErrorMessage from '@/views/others/ErrorMessage.vue'
+import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import EditUserPartial from '@/views/partials/EditUserPartial.vue'
 
-import { onMounted, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition } from '@/services/Windows';
+import { onMounted, onUpdated, ref } from 'vue';
+import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
 
 import useEmitter from '@/services/Emitter';
 const emitter = useEmitter();
+const handle = ref(null);
 
 const props = defineProps(['data']);
 
@@ -21,9 +22,9 @@ let id = data.id;
 let title = data.title;
 
 onMounted(() => {
-    SetupHandle(id);
-    SetSize(id, {x: 500, y: 380});
-    SetPosition(id, "center");
+    SetupHandle(id, handle, {title: "Dragonroll"});
+    SetSize(id, {x: 500, y: 450});
+    ResetPosition(id, "center", emitter);
 });
 
 </script>
@@ -31,9 +32,7 @@ onMounted(() => {
 
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
-        <div class="window-handle" :id="'window-handle-' + id">
-            Dragonroll
-        </div>
+        <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <EditUserPartial></EditUserPartial>
 
@@ -42,6 +41,7 @@ onMounted(() => {
         <div class="button-container">
             <button class="btn-primary button-expand">My campaings</button>
             <button class="btn-primary button-expand">Join existing campaign</button>
+            <button class="btn-primary button-expand">Database</button>
         </div>
         <VersionRender></VersionRender>
     </div>
@@ -74,6 +74,7 @@ p {
 .window-wrapper {
     display: flex;
     align-items: center;
+    user-select: none;
 }
 
 .splash-image {

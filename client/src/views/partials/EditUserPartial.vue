@@ -10,6 +10,7 @@ import Api from '@/services/Api'
 import url from '@/services/BackendURL'
 
 import useEmitter from '@/services/Emitter';
+import { ClearWindows, CreateWindow } from '../../services/Windows';
 const emitter = useEmitter();
 
 const username = ref("");
@@ -25,12 +26,12 @@ function retrieveAvatar(){
 function LogOut(){
     LogoutUser();
 
-    emitter.emit("clear-windows", {type: "main_menu"});
-    emitter.emit("create-window", {type: "login", id: "login"})
+    ClearWindows({type: "main_menu"});
+    CreateWindow({type: "login", id: "login"});
 }
 
 function EditProfile(){
-    emitter.emit("create-window", {type: "edit_profile", id: "edit_profile"})
+    CreateWindow({type: "edit_profile", id: "edit_profile"});
 }
 
 onMounted(() => {
@@ -67,13 +68,14 @@ onMounted(() => {
 
     <div class="main-user-container">
         <div class="main-user-container-inner">
-            <img class="user-icon" src="img/def-avatar.jpg" id="upload-image">
+            <img class="user-icon" src="img/def-avatar.jpg" id="upload-image" draggable="false">
             <div class="main-user-info">
                 <b>{{ username }}</b><br>Miauler
             </div>
 
             <div class="main-user-actions">
                 <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Edit profile</button>
+                <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Settings</button>
                 <button class="btn-primary button-small" v-on:click.prevent="LogOut">Log out</button>
             </div>
         </div>
@@ -95,7 +97,7 @@ onMounted(() => {
 .main-user-container {
     background-color: var(--color-background-softer);
     width: 100%;
-
+    user-select: none;
 }
 
 .main-user-container-inner {

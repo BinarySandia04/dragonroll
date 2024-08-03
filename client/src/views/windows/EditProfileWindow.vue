@@ -17,7 +17,7 @@ const handle = ref(null);
 let id = data.id;
 
 onMounted(() => {
-    SetupHandle(id, handle, {title: "Edit profile", close: true});
+    SetupHandle(id, handle);
     SetSize(id, {x: 500, y: 380});
     ResetPosition(id, "center");
 });

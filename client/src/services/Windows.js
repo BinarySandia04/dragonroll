@@ -6,6 +6,8 @@ const windows = {
     test: ref([]),
     main_menu: ref([]),
     edit_profile: ref([]),
+    account_settings: ref([]),
+    db_window: ref([])
 };
 
 const reload = ref(0);
@@ -15,12 +17,11 @@ let Windows = () => { return windows };
 
 let currentIndex = 1;
 
-function SetupHandle(id, handle, handleData){
+function SetupHandle(id, handle){
 
     // Update window info with handle info
     
     let win = GetWindowWithId(id);
-    win.handle = handleData;
 
     let currentWindowId = "window-wrapper-" + id;
     let currentWindowHandleId = "window-handle-" + id;

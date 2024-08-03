@@ -11,6 +11,7 @@ import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Win
 import Api from '@/services/Api.js'
 
 import useEmitter from '@/services/Emitter';
+import { ClearWindow, CreateWindow } from '../../services/Windows';
 const emitter = useEmitter();
 const handle = ref(null);
 
@@ -22,10 +23,35 @@ let id = data.id;
 let title = data.title;
 
 onMounted(() => {
-    SetupHandle(id, handle, {title: "Dragonroll"});
-    SetSize(id, {x: 500, y: 450});
+    SetupHandle(id, handle);
+    SetSize(id, {x: 500, y: 600});
     ResetPosition(id, "center", emitter);
 });
+
+function OpenDatabase(){
+    ClearWindow(id);
+    CreateWindow({
+        type: 'db_window',
+        id: 'db_window',
+        title: "Database",
+        back: () => {
+            ClearWindow('db_window');
+            CreateWindow({
+                type: 'main_menu',
+                id: 'main_menu',
+                title: 'Dragonroll'
+            })
+        }
+    });
+}
+
+function OpenJoinCampaign(){
+    ClearWindow(id);
+}
+
+function OpenMyCampaigns(){
+    ClearWindow(id);
+}
 
 </script>
 
@@ -39,9 +65,12 @@ onMounted(() => {
         <h1>Main Menu</h1>
 
         <div class="button-container">
-            <button class="btn-primary button-expand">My campaings</button>
-            <button class="btn-primary button-expand">Join existing campaign</button>
-            <button class="btn-primary button-expand">Database</button>
+            <button class="btn-primary button-expand" v-on:click="OpenMyCampaigns">My campaings</button>
+            <button class="btn-primary button-expand" v-on:click="OpenJoinCampaign">Join existing campaign</button>
+            <hr>
+            <button class="btn-primary button-expand" v-on:click="OpenCollection">Your Collection</button>
+            <button class="btn-primary button-expand" v-on:click="OpenLibrary">The Cosmic Library</button>
+            <button class="btn-primary button-expand" v-on:click="OpenLibrary">Book Anvil</button>
         </div>
         <VersionRender></VersionRender>
     </div>

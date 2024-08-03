@@ -1,23 +1,18 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
-import VersionRender from '@/views/others/VersionRender.vue'
-import ErrorMessage from '@/views/others/ErrorMessage.vue'
-
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 const handle = ref(null);
-
-import Api from '@/services/Api.js'
 
 const props = defineProps(['data']);
 const data = props.data;
 
 let id = data.id;
-let title = data.title;
 
 onMounted(() => {
-    SetupHandle(id, handle, {title: "Example window", close: true});
+    SetupHandle(id, handle);
     SetSize(id, {x: 500, y: 380});
     ResetPosition(id, "center");
 });
@@ -29,6 +24,7 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <!-- Body -->
+        Language: English
 
     </div>
 </template>

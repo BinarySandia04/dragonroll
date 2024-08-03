@@ -64,6 +64,7 @@
 
   --color-heading: var(--c-text-light-1);
   --color-text: var(--c-text-light-1);
+  --separator: var(--c-black-mute);
 
   --section-gap: 160px;
 }
@@ -86,6 +87,7 @@
 
     --color-heading: var(--c-text-dark-1);
     --color-text: var(--c-text-dark-2);
+    --separator: var(--c-white-mute);
 
     --color-hover: var()
   }

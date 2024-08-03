@@ -37,7 +37,35 @@ a {
   @media (prefers-color-scheme: dark) {
     filter: invert(0.7);
   }
-  
+}
+
+.icon-add-margin {
+  width: 16px;
+  height: 16px;
+  margin: 4.25px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  width: 30%;
+  overflow: visible;
+  position: relative;
+  margin: 16px auto 16px auto;
+  background-color: var(--separator);
+}
+
+hr:before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--separator);
+  position: absolute;
+  transform: rotate(45deg);
+  top: -2.5px;
+  left: 50%;
+  margin: -1px 0 0 -1px;
 }
 
 label {
@@ -59,7 +87,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 }
 
 button {
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 18px;
   font-size: 15px;
   border-radius: 6px;

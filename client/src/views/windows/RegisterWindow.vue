@@ -28,7 +28,7 @@ let id = data.id;
 let title = data.title;
 
 onMounted(() => {
-    SetupHandle(id, handle, {title: "Register"});
+    SetupHandle(id, handle);
     SetSize(id, {x: 700, y: 630});
     ResetPosition(id, "center");
 });
@@ -65,7 +65,12 @@ function register(){
 
 function ShowLogin(msg){
     ClearWindows({type: "register"});
-    CreateWindow({type: "login", id: "login", success: msg});
+    CreateWindow({
+        type: "login",
+        id: "login",
+        title: "Login",
+        success: msg
+    });
 }
 
 </script>

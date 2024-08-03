@@ -10,10 +10,9 @@ import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
 import AccountSettingsWindow from '../windows/AccountSettingsWindow.vue'
 
 import { Windows, ReloadRef } from '@/services/Windows';
+import DbWindow from '../windows/database/DbWindow.vue'
 
 // Gestionem ventanas
-import useEmitter from '@/services/Emitter';
-
 const reload = ReloadRef();
 const windows = Windows();
 
@@ -23,6 +22,8 @@ const register = windows.register;
 const test = windows.test;
 const main_menu = windows.main_menu;
 const edit_profile = windows.edit_profile;
+const account_settings = windows.account_settings;
+const db_window = windows.db_window;
 
 </script>
 
@@ -34,6 +35,7 @@ const edit_profile = windows.edit_profile;
     <MainMenuWindow v-for="win in main_menu" :key="win.id" :data="win"></MainMenuWindow>
     <EditProfileWindow v-for="win in edit_profile" :key="win.id" :data="win"></EditProfileWindow>
     <AccountSettingsWindow v-for="win in account_settings" :key="win.id" :data="win"></AccountSettingsWindow>
+    <DbWindow v-for="win in db_window" :key="win.id" :data="win"></DbWindow>
   </div>
 </template>
 

@@ -31,7 +31,7 @@ let success = data.msg;
 onMounted(() => {
   successMessage.value = success;
 
-  SetupHandle(id, handle, {title: "Login"});
+  SetupHandle(id, handle);
   SetSize(id, {x: 700, y: 630});
   ResetPosition(id, "center");
 });
@@ -62,12 +62,20 @@ function login(){
 
 function ShowRegister(){
   ClearWindows({type: "login"});
-  CreateWindow({type: "register", id: "register"});
+  CreateWindow({
+    type: "register",
+    id: "register",
+    title: "Register"
+  });
 }
 
 function ShowMainMenu(){
   ClearWindows({type: "login"});
-  CreateWindow({type: "main_menu", id: "main_menu"});
+  CreateWindow({
+    type: "main_menu",
+    id: "main_menu",
+    title: "Dragonroll"
+  });
 }
 
 </script>

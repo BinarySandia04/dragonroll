@@ -7,15 +7,23 @@ const props = defineProps(['window']);
 const id = props.window;
 
 const closeButton = ref(null);
+const backButton = ref(null);
 
 const title = ref("");
 const close = ref(false);
+const hasBack = ref(false);
+
+let backFunction;
 
 function setupHandle() {
-    let handleInfo = GetWindowWithId(id).handle;
+    let win = GetWindowWithId(id);
 
-    if(handleInfo.title) title.value = handleInfo.title;
-    if(handleInfo.close) close.value = true;
+    if(win.title) title.value = win.title;
+    if(win.close) close.value = true;
+    if(win.back) {
+        hasBack.value = true;
+        backFunction = win.back;
+    }
 }
 
 function CloseButton(){
@@ -31,7 +39,9 @@ defineExpose({
 <template>
     <div class="window-handle" :id="'window-handle-' + id">
 
-        <div class="left"></div>
+        <div class="left">
+            <img class="icon icon-add-margin" src="icons/iconoir/regular/arrow-left.svg" draggable="false" ref="backButton" v-if="hasBack" v-on:click="backFunction">
+        </div>
         <div class="center">
             <span>{{ title }}</span>
         </div>
@@ -64,9 +74,6 @@ defineExpose({
 
     span {
         font-family: MrEavesRemake;
-    }
-
-    img {
     }
 
     user-select: none;

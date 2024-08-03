@@ -26,12 +26,30 @@ function retrieveAvatar(){
 function LogOut(){
     LogoutUser();
 
-    ClearWindows({type: "main_menu"});
-    CreateWindow({type: "login", id: "login"});
+    ClearWindows({type: "main_menu", title: "Dragonroll"});
+    CreateWindow({
+        type: "login",
+        id: "login",
+        title: "Login"
+    });
 }
 
 function EditProfile(){
-    CreateWindow({type: "edit_profile", id: "edit_profile"});
+    CreateWindow({
+        type: "edit_profile",
+        id: "edit_profile",
+        title: "Edit Profile",
+        close: true
+    });
+}
+
+function EditSettings(){
+    CreateWindow({
+        type: "account_settings",
+        id: "account_settings",
+        title: "Dragonroll settings",
+        close: true
+    });
 }
 
 onMounted(() => {
@@ -75,7 +93,7 @@ onMounted(() => {
 
             <div class="main-user-actions">
                 <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Edit profile</button>
-                <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Settings</button>
+                <button class="btn-primary button-small" v-on:click.prevent="EditSettings">Settings</button>
                 <button class="btn-primary button-small" v-on:click.prevent="LogOut">Log out</button>
             </div>
         </div>
@@ -90,7 +108,6 @@ onMounted(() => {
 
 .button-small {
     height: 32px;
-    margin-bottom: 0px;
     padding: 10px;
 }
 

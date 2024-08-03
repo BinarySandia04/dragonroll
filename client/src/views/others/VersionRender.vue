@@ -4,7 +4,7 @@
 
 
 <template>
-    <p>Dragonroll v0.1</p>
+    <p>Dragonroll v0.1-dev</p>
 </template>
 
 

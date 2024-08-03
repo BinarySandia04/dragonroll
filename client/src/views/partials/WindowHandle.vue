@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { GetWindowWithId } from '@/services/Windows';
 import { ClearWindow } from '../../services/Windows';
 
@@ -24,15 +24,33 @@ function setupHandle() {
         hasBack.value = true;
         backFunction = win.back;
     }
+
+    // Setup sounds
+    let currentWindowId = "window-wrapper-" + id;
+    let currentWindow = document.getElementById(currentWindowId);
+    let soundClicks = currentWindow.getElementsByClassName("sound-click");
+    
+    
+    for (let i = 0; i < soundClicks.length; i++) {
+       soundClicks[i].addEventListener("click", async (event) => {
+            const audio = new Audio('/sounds/snap.wav');
+            audio.type = "audio/wav"
+            audio.play();
+       })
+    }
+
 }
 
 function CloseButton(){
+    const audio = new Audio('/sounds/close.wav');
+    audio.type = "audio/wav"
+    audio.play();
     ClearWindow(id)
 }
 
 defineExpose({
     setupHandle
-})
+});
 </script>
 
 

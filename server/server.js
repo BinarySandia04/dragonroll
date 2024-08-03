@@ -54,6 +54,7 @@ app.use(cors());
 
 // Routes (/ només)
 app.use('/user', require('./routes/user'));
+app.use('/campaign', require('./routes/campaign'));
 
 // app.use('/users', require('./routes/users'));
 app.listen(PORT, () => {

@@ -7,8 +7,65 @@ const windows = {
     main_menu: ref([]),
     edit_profile: ref([]),
     account_settings: ref([]),
-    db_window: ref([])
+    db_window: ref([]),
+    campaign_list: ref([]),
+    new_campaign: ref([]),
+    join_campaign: ref([]),
+    campaign_preview: ref([])
 };
+
+const defValues = {
+    'login': {
+        id: 'login',
+        title: 'Login'
+    },
+    'register': {
+        id: 'register',
+        title: 'Register'
+    },
+    'main_menu': {
+        id: 'main_menu',
+        title: "DragonRoll"
+    },
+    'edit_profile': {
+        id: 'edit_profile',
+        title: "Edit Profile",
+        close: true
+    },
+    'account_settings': {
+        id: 'account_settings',
+        title: "Dragonroll settings",
+        close: true
+    },
+    'campaign_list': {
+        id: 'campaign_list',
+        title: 'Campaigns',
+        back: () => {
+            ClearWindow('campaign_list');
+            CreateWindow('main_menu');
+        }
+    },
+    'new_campaign': {
+        id: 'new_campaign',
+        title: 'Create campaign',
+        parent: 'campaign_list',
+        close: true
+    },
+    'join_campaign': {
+        id: 'join_campaign',
+        title: 'Join campaign',
+        parent: 'campaign_list',
+        close: true
+    },
+    'campaign_preview': {
+        id: 'campaign_preview',
+        title: "Campaign Preview",
+        back: () => {
+            ClearWindow('campaign_preview');
+            CreateWindow('campaign_list')
+        }
+    }
+}
 
 const reload = ref(0);
 
@@ -107,35 +164,57 @@ function ResetPosition(id, pos){
 }
 
 
-function CreateWindow(data){
-    if(windows[data.type] === undefined){
-        console.error("Window type " + data.type + " is not defined!");
+function CreateWindow(type, data = {}){
+    let finalData = {...{type}, ...defValues[type], ...data}
+
+    console.log(finalData);
+
+    if(windows[finalData.type] === undefined){
+        console.error("Window type " + finalData.type + " is not defined!");
         return;
     }
 
     let contains = false;
-    for (let i = 0; i < windows[data.type].length; i++) {
-        if(windows[data.type][i].id == data.id){
+    for (let i = 0; i < windows[finalData.type].value.length; i++) {
+        if(windows[finalData.type].value[i].id == finalData.id){
             contains = true;
             break;
         }
     }
-
     if(!contains) {
-        windows[data.type].value.push(data);
+        windows[finalData.type].value.push(finalData);
         // reload.value += 1;
 
-        setTimeout(() => SetOnTop(data.id), 0);
+        setTimeout(() => SetOnTop(finalData.id), 0);
     }
 }
 
+function CreateChildWindow(parentId, type, data = {}){
+    let finalData = {...{type}, ...defValues[type], ...data}
+
+    let parent = GetWindowWithId(parentId);
+    if(parent.children) parent.children.push(finalData.id);
+    else parent.children = [finalData.id];
+    CreateWindow(type, data);
+}
+
+function ClearAll(){
+    Object.keys(windows).forEach((key) => {
+        windows[key].value = [];
+    });
+}
+
 function ClearWindows(data){
-    windows[data.type].value = [];
+    for (let i = 0; i < windows[data.type].value.length; i++) {
+        ClearWindow(windows[data.type].value[i].id);
+    }
     // reload.value += 1;
 }
 
 function ClearWindow(id){
     let win = GetWindowWithId(id);
+    if(!win) return;
+    if(win.children) for(let i = 0; i < win.children.length; i++) ClearWindow(win.children[i]);
     windows[win.type].value = windows[win.type].value.filter((e) => {return e.id !== id});
     // reload.value += 1;
 }
@@ -174,7 +253,9 @@ export {
     ReloadRef,
     ClearWindows,
     CreateWindow,
+    CreateChildWindow,
     GetWindowWithId,
     SaveWindowPos,
-    ClearWindow
+    ClearWindow,
+    ClearAll
 }

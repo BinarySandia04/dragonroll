@@ -10,7 +10,7 @@ import Api from '@/services/Api'
 import url from '@/services/BackendURL'
 
 import useEmitter from '@/services/Emitter';
-import { ClearWindows, CreateWindow } from '../../services/Windows';
+import { ClearWindows, CreateWindow, CreateChildWindow } from '../../services/Windows';
 const emitter = useEmitter();
 
 const username = ref("");
@@ -26,30 +26,16 @@ function retrieveAvatar(){
 function LogOut(){
     LogoutUser();
 
-    ClearWindows({type: "main_menu", title: "Dragonroll"});
-    CreateWindow({
-        type: "login",
-        id: "login",
-        title: "Login"
-    });
+    ClearWindows({type: "main_menu"});
+    CreateWindow('login');
 }
 
 function EditProfile(){
-    CreateWindow({
-        type: "edit_profile",
-        id: "edit_profile",
-        title: "Edit Profile",
-        close: true
-    });
+    CreateChildWindow('main_menu', 'edit_profile');
 }
 
 function EditSettings(){
-    CreateWindow({
-        type: "account_settings",
-        id: "account_settings",
-        title: "Dragonroll settings",
-        close: true
-    });
+    CreateChildWindow('main_menu', 'account_settings');
 }
 
 onMounted(() => {
@@ -92,9 +78,9 @@ onMounted(() => {
             </div>
 
             <div class="main-user-actions">
-                <button class="btn-primary button-small" v-on:click.prevent="EditProfile">Edit profile</button>
-                <button class="btn-primary button-small" v-on:click.prevent="EditSettings">Settings</button>
-                <button class="btn-primary button-small" v-on:click.prevent="LogOut">Log out</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditProfile">Edit profile</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditSettings">Settings</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="LogOut">Log out</button>
             </div>
         </div>
     </div>

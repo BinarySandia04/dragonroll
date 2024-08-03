@@ -24,10 +24,12 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 500, y: 600});
+    SetSize(id, {x: 500, y: 540});
     ResetPosition(id, "center", emitter);
 });
 
+// ???
+/*
 function OpenDatabase(){
     ClearWindow(id);
     CreateWindow({
@@ -44,13 +46,11 @@ function OpenDatabase(){
         }
     });
 }
+    */
 
-function OpenJoinCampaign(){
+function OpenCampaigns(){
     ClearWindow(id);
-}
-
-function OpenMyCampaigns(){
-    ClearWindow(id);
+    CreateWindow('campaign_list');
 }
 
 </script>
@@ -65,12 +65,11 @@ function OpenMyCampaigns(){
         <h1>Main Menu</h1>
 
         <div class="button-container">
-            <button class="btn-primary button-expand" v-on:click="OpenMyCampaigns">My campaings</button>
-            <button class="btn-primary button-expand" v-on:click="OpenJoinCampaign">Join existing campaign</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns">Campaigns</button>
             <hr>
-            <button class="btn-primary button-expand" v-on:click="OpenCollection">Your Collection</button>
-            <button class="btn-primary button-expand" v-on:click="OpenLibrary">The Cosmic Library</button>
-            <button class="btn-primary button-expand" v-on:click="OpenLibrary">Book Anvil</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCollection">Your Collection</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenLibrary">The Cosmic Library</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenLibrary">Book Anvil</button>
         </div>
         <VersionRender></VersionRender>
     </div>

@@ -32,7 +32,7 @@ onMounted(() => {
   successMessage.value = success;
 
   SetupHandle(id, handle);
-  SetSize(id, {x: 700, y: 630});
+  SetSize(id, {x: 450, y: 480});
   ResetPosition(id, "center");
 });
 
@@ -62,20 +62,12 @@ function login(){
 
 function ShowRegister(){
   ClearWindows({type: "login"});
-  CreateWindow({
-    type: "register",
-    id: "register",
-    title: "Register"
-  });
+  CreateWindow('register');
 }
 
 function ShowMainMenu(){
   ClearWindows({type: "login"});
-  CreateWindow({
-    type: "main_menu",
-    id: "main_menu",
-    title: "Dragonroll"
-  });
+  CreateWindow('main_menu');
 }
 
 </script>
@@ -97,7 +89,7 @@ function ShowMainMenu(){
                 <input id="password-field" type="password" placeholder="Enter your password..." name="password" v-model="password" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary">Log in</button>
+                <button class="btn-primary sound-click">Log in</button>
             </div>
         </form>
 
@@ -116,8 +108,6 @@ p {
 }
 
 .window-wrapper {
-    min-width: 700px;
-    min-height: 630px;
     user-select: none;
 
     display: flex;
@@ -125,17 +115,22 @@ p {
 }
 
 .splash-image {
-    width: 600px;
-    height: 250px;
+    width: 400px;
+}
+
+form {
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
 }
 
 .form-field {
-    padding: 10px;
-    display: flex;
-    align-items: left;
-    flex-direction: column;
-    justify-content: left;
-    width: 600px;
+  width: 100%;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  justify-content: left;
+  padding-top: 10px;
 }
 
 label {

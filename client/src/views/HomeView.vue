@@ -9,18 +9,10 @@ import { CreateWindow } from '@/services/Windows'
 
 onMounted(() => {
   if(GetUser()){
-    CreateWindow({
-      type: "main_menu",
-      id: "main_menu",
-      title: "Dragonroll"
-    })
+    CreateWindow('main_menu')
     return;
   }
-  CreateWindow({
-    type: "login",
-    id: "login",
-    title: "Login"
-  });
+  CreateWindow('login');
 }
 );
 

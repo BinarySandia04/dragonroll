@@ -11,6 +11,10 @@ import AccountSettingsWindow from '../windows/AccountSettingsWindow.vue'
 
 import { Windows, ReloadRef } from '@/services/Windows';
 import DbWindow from '../windows/database/DbWindow.vue'
+import CampaignListWindow from '../windows/campaigns/CampaignListWindow.vue'
+import NewCampaignWindow from '../windows/campaigns/NewCampaignWindow.vue'
+import JoinCampaignWindow from '../windows/campaigns/JoinCampaignWindow.vue'
+import CampaignPreviewWindow from '@/views/windows/campaigns/CampaignPreviewWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
@@ -24,6 +28,10 @@ const main_menu = windows.main_menu;
 const edit_profile = windows.edit_profile;
 const account_settings = windows.account_settings;
 const db_window = windows.db_window;
+const campaign_list = windows.campaign_list;
+const new_campaign = windows.new_campaign;
+const join_campaign = windows.join_campaign;
+const campaign_preview = windows.campaign_preview;
 
 </script>
 
@@ -36,6 +44,10 @@ const db_window = windows.db_window;
     <EditProfileWindow v-for="win in edit_profile" :key="win.id" :data="win"></EditProfileWindow>
     <AccountSettingsWindow v-for="win in account_settings" :key="win.id" :data="win"></AccountSettingsWindow>
     <DbWindow v-for="win in db_window" :key="win.id" :data="win"></DbWindow>
+    <CampaignListWindow v-for="win in campaign_list" :key="win.id" :data="win"></CampaignListWindow>
+    <NewCampaignWindow v-for="win in new_campaign" :key="win.id" :data="win"></NewCampaignWindow>
+    <JoinCampaignWindow v-for="win in join_campaign" :key="win.id" :data="win"></JoinCampaignWindow>
+    <CampaignPreviewWindow v-for="win in campaign_preview" :key="win.id" :data="win"></CampaignPreviewWindow>
   </div>
 </template>
 

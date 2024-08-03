@@ -29,7 +29,7 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 700, y: 630});
+    SetSize(id, {x: 450, y: 780});
     ResetPosition(id, "center");
 });
 
@@ -65,12 +65,7 @@ function register(){
 
 function ShowLogin(msg){
     ClearWindows({type: "register"});
-    CreateWindow({
-        type: "login",
-        id: "login",
-        title: "Login",
-        success: msg
-    });
+    CreateWindow('login', {success: msg});
 }
 
 </script>
@@ -106,7 +101,7 @@ function ShowLogin(msg){
                 <input id="confirm-password-field" type="password" placeholder="Enter again your password..." name="confirm-password" v-model="confirmPassword" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary">Register</button>
+                <button class="btn-primary sound-click">Register</button>
             </div>
         </form>
 
@@ -126,17 +121,11 @@ p {
 }
 
 .window-wrapper {
-    min-width: 700px;
-    min-height: 630px;
-
     display: flex;
     align-items: center;
 }
 
 .window-content {
-  overflow: auto;
-  min-width: 700px;
-
   flex-direction: column;
     display: flex;
     align-items: center;
@@ -144,8 +133,7 @@ p {
 }
 
 .splash-image {
-    width: 600px;
-    height: 250px;
+    width: 400px;
     user-select: none;
 }
 
@@ -155,7 +143,10 @@ p {
     align-items: left;
     flex-direction: column;
     justify-content: left;
-    width: 600px;
+}
+
+form {
+    width: 100%;
 }
 
 label {

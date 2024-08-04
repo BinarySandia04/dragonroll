@@ -116,6 +116,7 @@ router.post('/login', rateLimitMiddleware, (req, res) => {
     });
 });
 
+/*
 router.get('/test', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwtDecode(token);
@@ -126,10 +127,10 @@ router.get('/test', passport.authenticate('jwt', {session: false}), (req, res) =
     });
     return;
 });
+*/
 
 router.post("/upload-avatar", upload.single("image"), passport.authenticate('jwt', {session: false}), (req, res) => {
     const imageName = req.file.filename;
-    console.log(req.body);
 
     User.updateOne(req.user, {image: imageName}).then(() => {
         res.json({

@@ -53,4 +53,13 @@ router.get('/list', passport.authenticate('jwt', {session: false}), (req, res) =
     }).catch((err) => res.json({status: "error", msg: "internal"}));
 });
 
+router.get('/players', passport.authenticate('jwt', {session: false}), (req, res) => {
+    Campaign.findById(req.query.campaign).then((campaign) => {
+        CampaignUser.find({campaign}).populate('user').then((data) => {
+            res.json(data);
+            return;
+        }).catch((err) => res.json({status: "error", msg: "internal"}));
+    }).catch((err) => res.json({status: "error", msg: "not-found"}));
+});
+
 module.exports = router;

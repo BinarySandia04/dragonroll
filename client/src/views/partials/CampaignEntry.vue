@@ -4,6 +4,8 @@ import { onMounted, ref } from 'vue';
 
 import Api from '@/services/Api'
 import { DisplayCampaign } from '@/services/Dragonroll'
+import { AddSound } from '../../services/Sound';
+import { ConnectToCampaign } from '../../services/Dragonroll';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -11,21 +13,24 @@ const data = props.data;
 const title = ref("");
 const last_session = ref("");
 
+const container = ref(null);
+
 onMounted(() => {
-    console.log(data);
     title.value = data.name;
     last_session.value = new Date(data.last_opened).toISOString().slice(0, 10);
-    console.log(title);
+    
+    AddSound(container.value)
 });
 
 function ViewCampaign(){
+    ConnectToCampaign(data);
     DisplayCampaign(data);
 }
 </script>
 
 
 <template>
-    <div class="campaign-entry-container">
+    <div class="campaign-entry-container" ref="container">
         <div class="main-campaign-entry-container-inner">
             <img class="campaign-icon" src="img/def-avatar.jpg" draggable="false">
             <div class="campaign-info">

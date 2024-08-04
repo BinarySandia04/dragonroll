@@ -32,7 +32,7 @@ onMounted(() => {
   successMessage.value = success;
 
   SetupHandle(id, handle);
-  SetSize(id, {x: 450, y: 480});
+  SetSize(id, {x: 450, y: 500});
   ResetPosition(id, "center");
 });
 
@@ -115,7 +115,7 @@ p {
 }
 
 .splash-image {
-    width: 400px;
+    width: 450px;
 }
 
 form {

@@ -1,4 +1,5 @@
 import { reactive, ref } from 'vue'
+import { Disconnect } from './Dragonroll';
 
 const windows = {
     login: ref([]),
@@ -61,8 +62,9 @@ const defValues = {
         id: 'campaign_preview',
         title: "Campaign Preview",
         back: () => {
+            Disconnect();
             ClearWindow('campaign_preview');
-            CreateWindow('campaign_list')
+            CreateWindow('campaign_list');
         }
     }
 }
@@ -166,8 +168,6 @@ function ResetPosition(id, pos){
 
 function CreateWindow(type, data = {}){
     let finalData = {...{type}, ...defValues[type], ...data}
-
-    console.log(finalData);
 
     if(windows[finalData.type] === undefined){
         console.error("Window type " + finalData.type + " is not defined!");

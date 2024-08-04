@@ -7,10 +7,10 @@ import { onMounted, ref } from 'vue';
 import { GetUser, LogoutUser } from '@/services/User'
 
 import Api from '@/services/Api'
-import url from '@/services/BackendURL'
 
 import useEmitter from '@/services/Emitter';
 import { ClearWindows, CreateWindow, CreateChildWindow } from '../../services/Windows';
+import { backendUrl } from '../../services/BackendURL';
 const emitter = useEmitter();
 
 const username = ref("");
@@ -19,7 +19,7 @@ username.value = GetUser().username;
 function retrieveAvatar(){
     let userAvatarDisplay = document.getElementById("upload-image");
     Api().get('/user/retrieve-avatar?username=' + GetUser().username).then((response) => {
-        userAvatarDisplay.src = url + "public/" + response.data.image;
+        if(response.data.image) userAvatarDisplay.src = backendUrl + "public/" + response.data.image;
     }).catch((err) => console.log("Internal error"));
 }
 

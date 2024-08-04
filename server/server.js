@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http')
+const socketIo = require('socket.io');
 
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -9,6 +11,13 @@ const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: '*',
+    }
+});
 
 const PORT = 8081;
 
@@ -56,9 +65,12 @@ app.use(cors());
 app.use('/user', require('./routes/user'));
 app.use('/campaign', require('./routes/campaign'));
 
-// app.use('/users', require('./routes/users'));
-app.listen(PORT, () => {
-    console.log("Dragonroll backend started");
-});
 
 app.use('/public', express.static('uploads'));
+
+require('./io/campaign')(io);
+
+// app.use('/users', require('./routes/users'));
+server.listen(PORT, () => {
+    console.log("Dragonroll backend started");
+});

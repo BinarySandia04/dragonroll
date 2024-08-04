@@ -29,7 +29,7 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 450, y: 780});
+    SetSize(id, {x: 450, y: 800});
     ResetPosition(id, "center");
 });
 
@@ -133,7 +133,7 @@ p {
 }
 
 .splash-image {
-    width: 400px;
+    width: 450px;
     user-select: none;
 }
 

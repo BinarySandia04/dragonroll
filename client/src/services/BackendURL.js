@@ -6,4 +6,6 @@ if (import.meta.env.PROD) {
 }
 
 
-export default backendUrl;
+export {
+    backendUrl
+};

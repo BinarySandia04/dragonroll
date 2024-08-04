@@ -12,6 +12,7 @@
 
   --c-white-blurred: #f8f8f8cc;
 
+  --c-blacker: #1a1a1a;
   --c-black: #181818;
   --c-black-semisoft:1 #1d1d1d;
   --c-black-soft: #222222;
@@ -65,6 +66,7 @@
   --color-heading: var(--c-text-light-1);
   --color-text: var(--c-text-light-1);
   --separator: var(--c-black-mute);
+  --chat-background: var(--c-white);
 
   --section-gap: 160px;
 }
@@ -88,6 +90,8 @@
     --color-heading: var(--c-text-dark-1);
     --color-text: var(--c-text-dark-2);
     --separator: var(--c-white-mute);
+
+    --chat-background: var(--c-blacker);
 
     --color-hover: var()
   }

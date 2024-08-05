@@ -74,7 +74,7 @@ const reload = ref(0);
 let ReloadRef = () => { return reload };
 let Windows = () => { return windows };
 
-let currentIndex = 1;
+let currentIndex = 10;
 
 function SetupHandle(id, handle){
 

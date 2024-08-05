@@ -59,6 +59,8 @@
   --color-background-softest: var(--c-white-softest);
   --color-button-active: var(--c-white-muter);
 
+  --text-disabled: #7e7e7e;
+
   --color-scrollbar: var(--c-white-muter);
 
   --color-hover: var(--c-white-mute);
@@ -92,6 +94,7 @@
     --separator: var(--c-white-mute);
 
     --chat-background: var(--c-blacker);
+    --text-disabled: #7e7e7e;
 
     --color-hover: var()
   }

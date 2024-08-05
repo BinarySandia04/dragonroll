@@ -60,6 +60,13 @@ a {
   flex-grow: 1;
 }
 
+.btn-green {
+  background-color: var(--c-button-green);
+}
+.btn-green:hover {
+  background-color: var(--c-button-green-hover);
+}
+
 hr {
   border: 0;
   height: 1px;

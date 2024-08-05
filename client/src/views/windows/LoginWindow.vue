@@ -6,12 +6,13 @@ import SuccessMessage from '@/views/others/SuccessMessage.vue'
 
 import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
-import { SetUser } from '@/services/User'
+import { SetUser, GetUser } from '@/services/User'
 
 import Api from '@/services/Api.js'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { ClearWindows, CreateWindow } from '../../services/Windows';
+import { DisplayToast } from '../../services/Dragonroll';
 
 const handle = ref(null);
 
@@ -46,7 +47,6 @@ function login(){
       errorMessage.value = "";
       SetUser(data.token);
 
-      console.log("Logged successfully");
       ShowMainMenu();
     }
   }).catch((error) => {
@@ -68,6 +68,7 @@ function ShowRegister(){
 function ShowMainMenu(){
   ClearWindows({type: "login"});
   CreateWindow('main_menu');
+  DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
 }
 
 </script>

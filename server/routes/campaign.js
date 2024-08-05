@@ -46,9 +46,45 @@ router.post('/create', passport.authenticate('jwt', {session: false}), rateLimit
     }).catch((err) => {res.json({status: "error", msg: "internal"})});
 });
 
+router.post('/join', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
+    let {
+        invite_code
+    } = req.body;
+
+    if(!(invite_code)){
+        res.json({
+            status: "error",
+            msg: "params"
+        });
+        return;
+    }
+
+    Campaign.findOne({invite_code}).then(campaign => {
+        if(campaign){
+            let campaignUser = new CampaignUser({
+                user: req.user,
+                campaign,
+                is_dm: false
+            });
+
+            campaignUser.save().then(campaignUser => {
+                res.json({status: "ok", campaign});
+                return;
+            });
+        } else {
+            res.json({
+                status: "error",
+                msg: "not valid"
+            });
+            return;
+        }
+    }).catch(err => res.json({status: "error", msg: "internal"}))
+});
+
 router.get('/list', passport.authenticate('jwt', {session: false}), (req, res) => {
     CampaignUser.find({user: req.user}).populate("campaign").then((data) => {
         res.json(data);
+        console.log(data);
         return;
     }).catch((err) => res.json({status: "error", msg: "internal"}));
 });
@@ -56,6 +92,8 @@ router.get('/list', passport.authenticate('jwt', {session: false}), (req, res) =
 router.get('/players', passport.authenticate('jwt', {session: false}), (req, res) => {
     Campaign.findById(req.query.campaign).then((campaign) => {
         CampaignUser.find({campaign}).populate('user').then((data) => {
+            console.log("djskajdk")
+            console.log(data);
             res.json(data);
             return;
         }).catch((err) => res.json({status: "error", msg: "internal"}));

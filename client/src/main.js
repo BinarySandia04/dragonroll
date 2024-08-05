@@ -35,6 +35,7 @@ VueMarkdownEditor.use(createKatexPlugin());
 const app = createApp(App).use(VueMarkdownEditor);
 
 
+app.config.globalProperties.emitter = emitter
 app.config.globalProperties.rollWindows = {
     login: reactive([]),
     register: reactive([]),

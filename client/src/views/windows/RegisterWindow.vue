@@ -10,6 +10,7 @@ import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Win
 import Api from '@/services/Api.js'
 
 import { ClearWindows, CreateWindow } from '../../services/Windows';
+import { DisplayToast } from '../../services/Dragonroll';
 
 const email = ref("");
 const name = ref("");
@@ -56,7 +57,7 @@ function register(){
       } else {
           errorMessage.value = "";
           console.log("Logged successfully");
-          ShowLogin("Account created successfully");
+          DisplayToast('green', 'Account created successfully, now log in!', 3000);
       }
   }).catch((error) => {
       console.log(error);

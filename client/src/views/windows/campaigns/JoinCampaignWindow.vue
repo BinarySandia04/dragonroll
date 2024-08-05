@@ -3,6 +3,9 @@ import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
+import { DisplayToast } from '../../../services/Dragonroll';
+import { ClearWindow } from '../../../services/Windows';
+import Api from '@/services/Api'
 
 const handle = ref(null);
 
@@ -17,6 +20,26 @@ onMounted(() => {
     SetSize(id, {x: 300, y: 150});
     ResetPosition(id, "center");
 });
+
+function JoinCampaign(){
+    let invite_code = code.value;
+    Api().post('/campaign/join', {
+        invite_code
+    }).then(response => {
+        if(response.data.status == "ok"){
+            DisplayToast('green', "Successfully joined the campaign!", 2000);
+            let campaign = response.data.campaign;
+
+            ConnectToCampaign(campaign);
+            DisplayCampaign(campaign);
+        } else if(response.data.msg == "already"){
+            DisplayToast('red', "You are already in that campaign!", 2000);
+        } else {
+            DisplayToast('red', "Error joining this campaign (maybe the code is not valid?)", 2000);
+        }
+    }).catch((err) => console.log(err)); 
+}
+
 </script>
 
 
@@ -30,7 +53,7 @@ onMounted(() => {
                 <input id="username-field" type="text" placeholder="Enter campaign code..." name="code" v-model="code" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary sound-click">Join</button>
+                <button class="btn-primary sound-click" v-on:click.prevent="JoinCampaign">Join</button>
             </div>
         </form>
     </div>

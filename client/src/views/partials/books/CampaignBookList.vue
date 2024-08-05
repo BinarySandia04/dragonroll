@@ -2,14 +2,15 @@
 import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
-import Api from '@/services/Api.js'
-import PlayerEntry from './PlayerEntry.vue';
-import { GetPlayerList } from '../../services/Dragonroll';
+import BookItem from './BookItem.vue';
 
+/*
 const props = defineProps(['campaign']);
-const campaign = props.campaign;
-
 const players = GetPlayerList();
+*/
+
+const props = defineProps(['books']);
+const books = props.books;
 
 onMounted(() => {
 });
@@ -19,14 +20,15 @@ onMounted(() => {
 
 
 <template>
-    <div class="player-list">
-        <PlayerEntry v-for="player in players" :key="player._id" :player="player"></PlayerEntry>
+    <div class="book-list">
+        <BookItem v-for="book in books" :key="book._id" :book="book"></BookItem>
     </div>
 </template>
 
 
 <style scoped lang="scss">
-.player-list {
+.book-list {
     height: 100%;
+    background-color: var(--color-background);
 }
 </style>

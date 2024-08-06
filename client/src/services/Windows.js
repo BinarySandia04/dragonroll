@@ -12,7 +12,9 @@ const windows = {
     campaign_list: ref([]),
     new_campaign: ref([]),
     join_campaign: ref([]),
-    campaign_preview: ref([])
+    campaign_preview: ref([]),
+    chat: ref([]),
+    dice_menu: ref([]),
 };
 
 const defValues = {
@@ -66,6 +68,16 @@ const defValues = {
             ClearWindow('campaign_preview');
             CreateWindow('campaign_list');
         }
+    },
+    'chat': {
+        id: 'chat',
+        title: 'Chat',
+        close: true
+    },
+    'dice_menu': {
+        id: 'dice_menu',
+        title: 'Dice roll',
+        close: true
     }
 }
 

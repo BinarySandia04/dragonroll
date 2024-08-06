@@ -33,7 +33,8 @@ module.exports = io => {
                             socket.campaign = campaignId;
 
                             if(!sessions[campaignId]) sessions[campaignId] = {
-                                players: await GetOfflinePlayers(campaignId)
+                                players: await GetOfflinePlayers(campaignId),
+                                chat: []
                             };
                             
                             
@@ -55,5 +56,9 @@ module.exports = io => {
 
             console.log(socket.user.username + " ha salido!")
         });
+
+        socket.on('message', (data) => {
+            io.to(socket.campaign).emit('message', data);
+        })
     });
 }

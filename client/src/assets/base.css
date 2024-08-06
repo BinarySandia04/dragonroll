@@ -22,7 +22,7 @@
   --c-black-muter: #585858;
 
 
-  --c-black-blurred: #222222cc;
+  --c-black-blurred: #222222;
 
   --c-indigo: #2c3e50;
 
@@ -95,6 +95,9 @@
 
     --chat-background: var(--c-blacker);
     --text-disabled: #7e7e7e;
+
+    --color-chat-other: #1d1d1d;
+    --color-roll-dice-chat: #665750;
 
     --color-hover: var()
   }

@@ -15,6 +15,8 @@ import CampaignListWindow from '../windows/campaigns/CampaignListWindow.vue'
 import NewCampaignWindow from '../windows/campaigns/NewCampaignWindow.vue'
 import JoinCampaignWindow from '../windows/campaigns/JoinCampaignWindow.vue'
 import CampaignPreviewWindow from '@/views/windows/campaigns/CampaignPreviewWindow.vue'
+import ChatWindow from '../windows/game/ChatWindow.vue'
+import DiceWindow from '../windows/game/DiceWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
@@ -32,6 +34,8 @@ const campaign_list = windows.campaign_list;
 const new_campaign = windows.new_campaign;
 const join_campaign = windows.join_campaign;
 const campaign_preview = windows.campaign_preview;
+const chat = windows.chat;
+const dice_menu = windows.dice_menu;
 
 </script>
 
@@ -48,6 +52,8 @@ const campaign_preview = windows.campaign_preview;
     <NewCampaignWindow v-for="win in new_campaign" :key="win.id" :data="win"></NewCampaignWindow>
     <JoinCampaignWindow v-for="win in join_campaign" :key="win.id" :data="win"></JoinCampaignWindow>
     <CampaignPreviewWindow v-for="win in campaign_preview" :key="win.id" :data="win"></CampaignPreviewWindow>
+    <ChatWindow v-for="win in chat" :key="win.id" :data="win"></ChatWindow>
+    <DiceWindow v-for="win in dice_menu" :key="win.id" :data="win"></DiceWindow>
   </div>
 </template>
 
@@ -57,7 +63,7 @@ const campaign_preview = windows.campaign_preview;
 .window-wrapper {
     background-color: var(--window-background);
 
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     position: fixed;
 
 

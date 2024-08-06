@@ -4,23 +4,39 @@ import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Win
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import PlayerList from '../../partials/PlayerList.vue';
-import { DisplayToast, GetCampaign, GetClient } from '../../../services/Dragonroll';
+import { Disconnect, DisplayToast, GetCampaign, GetClient } from '../../../services/Dragonroll';
 import CampaignBookList from '../../partials/books/CampaignBookList.vue';
-import { ClearWindow } from '../../../services/Windows';
+import { ClearAll, ClearWindow, CreateWindow } from '../../../services/Windows';
 import { LaunchGame } from '../../../services/Game';
+import { AddSound } from '../../../services/Sound';
+import ChatComponent from '../../partials/ChatComponent.vue';
 
 const handle = ref(null);
 
 const props = defineProps(['data']);
 const data = props.data;
 
+const hide_start = ref(false);
+const hide_chat = ref(false);
+
+const container = ref(null);
+
 let id = data.id;
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 1200, y: 750});
+
+    if(data.style == 'compact') {
+        SetSize(id, {x: 800, y: 750});
+        hide_chat.value = true;
+    } else {
+        SetSize(id, {x: 1200, y: 750});
+    }
+    
     ResetPosition(id, "center");
 
-    console.log(data);
+    hide_start.value = data.hide_start;
+
+    AddSound(container.value)
 });
 
 function CopyCode(){
@@ -33,6 +49,12 @@ function Launch(){
     LaunchGame();
 }
 
+function Exit(){
+    Disconnect();
+    ClearAll();
+    CreateWindow('campaign_list');
+}
+
 </script>
 
 
@@ -43,7 +65,7 @@ function Launch(){
         <!-- Body 
          <h1>{{ data.campaign.name }}</h1> -->
 
-         <div class="campaign-preview-container">
+         <div class="campaign-preview-container" :class="hide_chat ? 'campaign-preview-compact' : ''" ref="container">
             <div class="campaign-preview-column left">
                 <h2>Players</h2>
                 <PlayerList :campaign="data.campaign"></PlayerList>
@@ -61,11 +83,12 @@ function Launch(){
                     </div>
                 </div>
                 <div class="buttons-row">
-                    <button class="btn-primary button-row sound-click btn-green" v-on:click.prevent="Launch">Launch game</button>
+                    <button class="btn-primary button-row sound-click btn-green" v-if="!hide_start" v-on:click.prevent="Launch">Launch game</button>
+                    <button class="btn-primary button-row sound-click btn-red" v-if="hide_start" v-on:click.prevent="Exit">Exit game</button>
                 </div>
             </div>
-            <div class="campaign-preview-column right">
-                <h2>Chat</h2>
+            <div v-if="!hide_chat" class="campaign-preview-column right">
+                <ChatComponent></ChatComponent>
             </div>
          </div>
 
@@ -115,6 +138,10 @@ function Launch(){
 
     display: grid;
     grid-template-columns: 3fr 5fr 4fr;
+
+    &.campaign-preview-compact {
+        grid-template-columns: 2fr 3fr;
+    }
 }
 
 .campaign-preview-column {

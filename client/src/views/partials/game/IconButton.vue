@@ -1,13 +1,16 @@
 <script setup>
-const props = defineProps(['icon']);
+const props = defineProps(['icon', 'action','size']);
 let icon = props.icon;
+let action = props.action;
+
+let size = props.size;
 </script>
 
 
 
 <template>
-    <div class="icon-button sound-click">
-        <img class="icon" :src="icon">
+    <div class="icon-button sound-click" :class="size" v-on:click.prevent="action">
+        <img class="icon" draggable="false" :src="icon" :class="size">
     </div>
 </template>
 
@@ -16,6 +19,12 @@ let icon = props.icon;
 .icon-button {
     height: 32px;
     width: 32px;
+
+    &.big {
+        height: 42px;
+        width: 42px;
+    }
+
     background-color: var(--color-background-soft);
     border-radius: 6px;
     display: flex;
@@ -33,5 +42,10 @@ let icon = props.icon;
 .icon {
     height: 24px;
     width: 24px;
+}
+
+.big {
+    height: 38px;
+    width: 38px;
 }
 </style>

@@ -115,12 +115,16 @@ onMounted(() => {
         offsetY = oldOffsetY + ((event.clientY - startY) * (1 / scale));
 
         draw();
-        console.log("x: " + offsetX + ", y: " + offsetY);
+        // console.log("x: " + offsetX + ", y: " + offsetY);
     });
 
     tilemap.addEventListener("mouseup", () => mouseDown = false);
 
     addEventListener("resize", draw)
+
+    offsetX = window.innerWidth / 2;
+    offsetY = window.innerHeight / 2;
+
     draw();
 });
 

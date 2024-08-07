@@ -71,13 +71,14 @@
   --chat-background: var(--c-white);
 
   --section-gap: 160px;
+  --separator-color: #2e2e2e;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --window-background: var(--c-black-blurred);
 
-    --color-handler: var(--c-black-semisoft);
+    --color-handler: #181818;
     --color-background: var(--c-black);
     --color-background-semisoft: var(--c-black-semisoft);
     --color-background-soft: var(--c-black-soft);
@@ -98,8 +99,9 @@
 
     --color-chat-other: #1d1d1d;
     --color-roll-dice-chat: #665750;
+    --separator-color: #363636;
 
-    --color-hover: var()
+    /* --color-hover: var() */
   }
 }
 

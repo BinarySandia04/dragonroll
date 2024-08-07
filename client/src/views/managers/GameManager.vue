@@ -4,11 +4,12 @@ import { InGameRef } from '../../services/Game';
 import IconButton from '../partials/game/IconButton.vue';
 import { AddSound } from '../../services/Sound';
 import TileMap from './TileMap.vue';
-import { DisplayCampaign, GetCampaign } from '../../services/Dragonroll';
+import { DisplayCampaign, GetCampaign, GetClient } from '../../services/Dragonroll';
 import { ClearAll, CreateWindow } from '../../services/Windows';
 
 const game = ref(null);
 const in_game = InGameRef();
+const is_dm = ref(false);
 
 function OpenCampaignPreview(){
     CreateWindow('campaign_preview', {campaign: GetCampaign(), style: 'compact', hide_start: true, back: undefined, close: true});
@@ -22,9 +23,16 @@ function OpenDiceMenu(){
     CreateWindow('dice_menu');
 }
 
+function OpenMapButtons(){
+    CreateWindow('map_buttons');
+}
+
 watch(game, () => {
     if(game.value && in_game.value){
         AddSound(game.value);
+
+        // Check if we are dm
+        is_dm.value = GetClient().is_dm;
     }
 });
 
@@ -40,6 +48,11 @@ watch(game, () => {
             <IconButton icon="icons/iconoir/regular/cursor-pointer.svg"></IconButton>
             <IconButton icon="icons/game-icons/000000/delapouite/rolling-dice-cup.svg" :action="OpenDiceMenu"></IconButton>
         </div>
+        
+        <div class="vertical-button gm" v-if="is_dm">
+            <IconButton icon="icons/iconoir/regular/map.svg" :action="OpenMapButtons"></IconButton>
+        </div>
+
         <div class="horizontal-button">
             <IconButton icon="icons/iconoir/regular/group.svg"></IconButton>
             <IconButton icon="icons/iconoir/regular/bookmark-book.svg"></IconButton>
@@ -62,6 +75,10 @@ watch(game, () => {
     z-index: 1;
 
     user-select: none;
+
+    &.gm {
+        left: 48px;
+    }
 }
 
 .horizontal-button {

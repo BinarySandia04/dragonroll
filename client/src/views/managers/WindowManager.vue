@@ -17,43 +17,33 @@ import JoinCampaignWindow from '../windows/campaigns/JoinCampaignWindow.vue'
 import CampaignPreviewWindow from '@/views/windows/campaigns/CampaignPreviewWindow.vue'
 import ChatWindow from '../windows/game/ChatWindow.vue'
 import DiceWindow from '../windows/game/DiceWindow.vue'
+import MapButtons from '../windows/dm/MapButtons.vue'
+import EnvironmentWindow from '../windows/dm/EnvironmentWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
 const windows = Windows();
 
-// Win names
-const login = windows.login;
-const register = windows.register;
-const test = windows.test;
-const main_menu = windows.main_menu;
-const edit_profile = windows.edit_profile;
-const account_settings = windows.account_settings;
-const db_window = windows.db_window;
-const campaign_list = windows.campaign_list;
-const new_campaign = windows.new_campaign;
-const join_campaign = windows.join_campaign;
-const campaign_preview = windows.campaign_preview;
-const chat = windows.chat;
-const dice_menu = windows.dice_menu;
-
+const WindowMap = {
+  login: LoginWindow,
+  main_menu: MainMenuWindow,
+  register: RegisterWindow,
+  edit_profile: EditProfileWindow,
+  account_settings: AccountSettingsWindow,
+  campaign_list: CampaignListWindow,
+  new_campaign: NewCampaignWindow,
+  join_campaign: JoinCampaignWindow,
+  campaign_preview: CampaignPreviewWindow,
+  chat: ChatWindow,
+  dice_menu: DiceWindow,
+  map_buttons: MapButtons,
+  environment: EnvironmentWindow
+};
 </script>
 
 <template>
   <div class="window-container" :key="reload">
-    <LoginWindow v-for="win in login" :key="win.id" :data="win"></LoginWindow>
-    <RegisterWindow v-for="win in register" :key="win.id" :data="win"></RegisterWindow>
-    <ExampleWindow v-for="win in test" :key="win.id" :data="win"></ExampleWindow>
-    <MainMenuWindow v-for="win in main_menu" :key="win.id" :data="win"></MainMenuWindow>
-    <EditProfileWindow v-for="win in edit_profile" :key="win.id" :data="win"></EditProfileWindow>
-    <AccountSettingsWindow v-for="win in account_settings" :key="win.id" :data="win"></AccountSettingsWindow>
-    <DbWindow v-for="win in db_window" :key="win.id" :data="win"></DbWindow>
-    <CampaignListWindow v-for="win in campaign_list" :key="win.id" :data="win"></CampaignListWindow>
-    <NewCampaignWindow v-for="win in new_campaign" :key="win.id" :data="win"></NewCampaignWindow>
-    <JoinCampaignWindow v-for="win in join_campaign" :key="win.id" :data="win"></JoinCampaignWindow>
-    <CampaignPreviewWindow v-for="win in campaign_preview" :key="win.id" :data="win"></CampaignPreviewWindow>
-    <ChatWindow v-for="win in chat" :key="win.id" :data="win"></ChatWindow>
-    <DiceWindow v-for="win in dice_menu" :key="win.id" :data="win"></DiceWindow>
+    <component v-for="win in windows" :is="WindowMap[win.type]" :key="win.id" :data="win"></component>
   </div>
 </template>
 

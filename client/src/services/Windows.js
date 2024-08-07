@@ -1,30 +1,16 @@
 import { reactive, ref } from 'vue'
 import { Disconnect } from './Dragonroll';
 
-const windows = {
-    login: ref([]),
-    register: ref([]),
-    test: ref([]),
-    main_menu: ref([]),
-    edit_profile: ref([]),
-    account_settings: ref([]),
-    db_window: ref([]),
-    campaign_list: ref([]),
-    new_campaign: ref([]),
-    join_campaign: ref([]),
-    campaign_preview: ref([]),
-    chat: ref([]),
-    dice_menu: ref([]),
-};
+const windows = ref([])
 
 const defValues = {
     'login': {
         id: 'login',
-        title: 'Login'
+        title: 'Login',
     },
     'register': {
         id: 'register',
-        title: 'Register'
+        title: 'Register',
     },
     'main_menu': {
         id: 'main_menu',
@@ -77,6 +63,16 @@ const defValues = {
     'dice_menu': {
         id: 'dice_menu',
         title: 'Dice roll',
+        close: true
+    },
+    'map_buttons': {
+        id: 'map_buttons',
+        title: '',
+        close: true
+    },
+    'environment': {
+        id: 'environment',
+        title: 'Edit environment',
         close: true
     }
 }
@@ -166,6 +162,11 @@ function SetPosition(id, pos){
     SaveWindowPos({id, x: pos.x, y: pos.y})
 }
 
+function GetPosition(id){
+    let win = GetWindowWithId(id);
+    return {x: win.x, y: win.y};
+}
+
 function ResetPosition(id, pos){
     let win = GetWindowWithId(id);
     let data = {x: win.x, y: win.y};
@@ -181,22 +182,18 @@ function ResetPosition(id, pos){
 function CreateWindow(type, data = {}){
     let finalData = {...{type}, ...defValues[type], ...data}
 
-    if(windows[finalData.type] === undefined){
-        console.error("Window type " + finalData.type + " is not defined!");
-        return;
-    }
-
     let contains = false;
-    for (let i = 0; i < windows[finalData.type].value.length; i++) {
-        if(windows[finalData.type].value[i].id == finalData.id){
+    for (let i = 0; i < windows.value.length; i++) {
+        if(windows.value[i].id == finalData.id){
             contains = true;
             break;
         }
     }
     if(!contains) {
-        windows[finalData.type].value.push(finalData);
+        windows.value.push(finalData);
         // reload.value += 1;
 
+        console.log(windows.value);
         setTimeout(() => SetOnTop(finalData.id), 0);
     }
 }
@@ -212,7 +209,7 @@ function CreateChildWindow(parentId, type, data = {}){
 
 function ClearAll(){
     Object.keys(windows).forEach((key) => {
-        windows[key].value = [];
+        windows.value = [];
     });
 }
 
@@ -227,16 +224,14 @@ function ClearWindow(id){
     let win = GetWindowWithId(id);
     if(!win) return;
     if(win.children) for(let i = 0; i < win.children.length; i++) ClearWindow(win.children[i]);
-    windows[win.type].value = windows[win.type].value.filter((e) => {return e.id !== id});
+    windows.value = windows.value.filter((e) => {return e.id !== id});
     // reload.value += 1;
 }
 
 function GetWindowWithId(id){
-    for(let key of Object.keys(windows)){
-        for(let i = 0; i < windows[key].value.length; i++){
-            if(windows[key].value[i].id == id){
-                return windows[key].value[i];
-            }
+    for(let i = 0; i < windows.value.length; i++){
+        if(windows.value[i].id == id){
+            return windows.value[i];
         }
     }
 }
@@ -268,6 +263,7 @@ export {
     CreateChildWindow,
     GetWindowWithId,
     SaveWindowPos,
+    GetPosition,
     ClearWindow,
     ClearAll
 }

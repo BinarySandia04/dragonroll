@@ -144,3 +144,24 @@ button:active {
   margin-right: auto;
   display: block;
 }
+
+.parameters {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+}
+
+.param-element {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.param-text {
+  margin-right: auto;
+}
+
+.param-value {
+  margin-left: auto;
+}

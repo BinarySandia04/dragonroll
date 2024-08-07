@@ -92,7 +92,7 @@ watch(chat, () => {
     flex-direction: column;
     
     overflow-y: auto;
-    max-height: 580px;
+    max-height: 620px;
 
     margin-bottom: 10px;
 }

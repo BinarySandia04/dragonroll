@@ -15,7 +15,7 @@ let id = data.id;
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {x: 400, y: 750});
-    ResetPosition(id, "center");
+    ResetPosition(id, {x: window.innerWidth - 420, y: 80});
 });
 </script>
 

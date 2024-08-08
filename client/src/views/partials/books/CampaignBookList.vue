@@ -28,7 +28,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .book-list {
-    height: 100%;
     background-color: var(--color-background);
 }
 </style>

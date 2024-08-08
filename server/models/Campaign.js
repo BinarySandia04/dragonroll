@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const CampaignSchema = new Schema({
     name: {type: String, required: true},
+    system: {type: String, required: true},
     creation_date: { type: Date, default: Date.now},
     last_opened: { type: Date, default: Date.now},
     invite_code: { type: String, unique: true },

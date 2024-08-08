@@ -4,6 +4,11 @@ import { Disconnect } from './Dragonroll';
 const windows = ref([])
 
 const defValues = {
+    'test': {
+        id: "example",
+        title: "Example",
+        close: true
+    },
     'login': {
         id: 'login',
         title: 'Login',
@@ -73,6 +78,11 @@ const defValues = {
     'environment': {
         id: 'environment',
         title: 'Edit environment',
+        close: true
+    },
+    'system_selector': {
+        id: 'system-selector',
+        title: "Select a game system",
         close: true
     }
 }
@@ -214,8 +224,8 @@ function ClearAll(){
 }
 
 function ClearWindows(data){
-    for (let i = 0; i < windows[data.type].value.length; i++) {
-        ClearWindow(windows[data.type].value[i].id);
+    for (let i = 0; i < windows.value.length; i++) {
+        ClearWindow(windows.value[i].id);
     }
     // reload.value += 1;
 }

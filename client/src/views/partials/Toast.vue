@@ -8,7 +8,16 @@ const emitter = useEmitter();
 const text = ref("");
 const toast = ref(null);
 
-emitter.on('toast', data => {
+let toastQueue = [];
+let displayingToast = false;
+
+function DisplayToast(){
+    if(displayingToast) return;
+    if(toastQueue.length == 0) return;
+
+    displayingToast = true;
+    let data = toastQueue.pop();
+
     text.value = data.text;
 
     toast.value.classList.add(data.color);
@@ -20,8 +29,15 @@ emitter.on('toast', data => {
             toast.value.classList.remove("show");
             toast.value.classList.remove("sliding");
             toast.value.classList.remove(data.color);
+            displayingToast = false;
+            DisplayToast();
         }, 400);
     }, data.duration);
+}
+
+emitter.on('toast', data => {
+    toastQueue.push(data);
+    DisplayToast();
 });
 
 </script>

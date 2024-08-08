@@ -7,6 +7,7 @@ import { CreateWindow, CreateChildWindow } from '../../../services/Windows';
 
 import Api from '@/services/Api.js'
 import CampaignEntry from '../../partials/CampaignEntry.vue';
+import { GetEmitter } from '../../../services/Dragonroll';
 
 const handle = ref(null);
 
@@ -23,6 +24,8 @@ onMounted(() => {
     ResetPosition(id, "center");
 
     RefreshCampaigns();
+
+    GetEmitter().on('refresh_campaign', () => { RefreshCampaigns() });
 });
 
 function CreateCampaign(){

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUpdated, ref, compile, render, h } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
@@ -10,6 +10,9 @@ const props = defineProps(['data']);
 const data = props.data;
 
 let id = data.id;
+
+const test = ref(null)
+
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {x: 500, y: 380});
@@ -23,6 +26,7 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <!-- Body -->
+        <div ref="test"></div>
 
     </div>
 </template>
@@ -30,29 +34,9 @@ onMounted(() => {
 
 <style scoped>
 .window-wrapper {
-    min-width: 700px;
-    min-height: 630px;
-
     display: flex;
     align-items: center;
 }
-
-.splash-image {
-    width: 600px;
-    height: 250px;
-}
-
-.form-field {
-    padding: 10px;
-    display: flex;
-    align-items: left;
-    flex-direction: column;
-    justify-content: left;
-    width: 600px;
-}
-
-label {
-    text-align: left;
-}
-
 </style>
+
+

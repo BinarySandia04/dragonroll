@@ -27,14 +27,11 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-ruby';
 import 'prismjs/components/prism-bash';
 
-
 VueMarkdownEditor.lang.use('es-Es', esEs);
 VueMarkdownEditor.use(vuepressTheme, { Prism }); 
 VueMarkdownEditor.use(createKatexPlugin());
 
 const app = createApp(App).use(VueMarkdownEditor);
-
-
 app.config.globalProperties.emitter = emitter
 app.config.globalProperties.rollWindows = {
     login: reactive([]),
@@ -47,3 +44,4 @@ app.config.globalProperties.rollWindows = {
 app.use(router)
 
 app.mount('#app')
+

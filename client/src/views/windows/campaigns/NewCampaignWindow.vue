@@ -1,10 +1,13 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, onUpdated, ref, provide } from 'vue';
+import { SetupHandle, SetSize, SetPosition, ResetPosition, ClearWindow } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
+import ErrorMessage from '@/components/partials/ErrorMessage.vue'
 
 import Api from '@/services/Api.js'
+import SystemSelector from '../../partials/SystemSelector.vue';
+import { GetEmitter } from '../../../services/Dragonroll';
 
 const handle = ref(null);
 
@@ -12,20 +15,41 @@ const props = defineProps(['data']);
 const data = props.data;
 
 const campaignName = ref("");
+const systemSelector = ref(null);
+
+const errorMessage = ref("");
 
 let id = data.id;
+let system = "";
+
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 150});
+    SetSize(id, {x: 300, y: 240});
     ResetPosition(id, "center");
+    GetEmitter().on('select', (system_id) => Select(system_id))
+
+    console.log(system);
 });
+
+function Select(system_id){
+    system = system_id;
+    try {
+        systemSelector.value.selectedSystem = system_id;
+    } catch {}
+}
 
 
 function NewCampaign(){
     Api().post('/campaign/create', {
-        name: campaignName.value
+        name: campaignName.value,
+        system
     }).then((response) => {
-        console.log(response);
+        if(response.data.status == "error"){
+            errorMessage.value = response.data.msg;
+        } else {
+            ClearWindow(id);
+            GetEmitter().emit('refresh_campaign');
+        }
     });
 }
 </script>
@@ -41,9 +65,14 @@ function NewCampaign(){
                 <input id="username-field" type="text" placeholder="Enter campaign name..." name="campaignName" v-model="campaignName" autocomplete="off" >
             </div>
             <div class="form-field">
+                <SystemSelector :windowId="id" ref="systemSelector"></SystemSelector>
+            </div>
+            <div class="form-field">
                 <button class="btn-primary sound-click">Create</button>
             </div>
         </form>
+    
+        <ErrorMessage v-if="errorMessage">{{ errorMessage }}</ErrorMessage>
     </div>
 </template>
 

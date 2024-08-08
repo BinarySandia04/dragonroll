@@ -10,6 +10,8 @@ import { ClearAll, ClearWindow, CreateWindow } from '../../../services/Windows';
 import { LaunchGame } from '../../../services/Game';
 import { AddSound } from '../../../services/Sound';
 import ChatComponent from '../../partials/ChatComponent.vue';
+import GameSystem from '@/views/partials/GameSystem.vue'
+import { GetModule } from '../../../services/Modules';
 
 const handle = ref(null);
 
@@ -18,6 +20,7 @@ const data = props.data;
 
 const hide_start = ref(false);
 const hide_chat = ref(false);
+const campaign_title = ref(null);
 
 const container = ref(null);
 
@@ -37,6 +40,8 @@ onMounted(() => {
     hide_start.value = data.hide_start;
 
     AddSound(container.value)
+
+    campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
 });
 
 function CopyCode(){
@@ -74,10 +79,10 @@ function Exit(){
                 </div>
             </div>
             <div class="campaign-preview-column center">
-                <h1 class="campaign-title">{{ data.campaign.name }}</h1>
+                <h1 class="campaign-title" ref="campaign_title">{{ data.campaign.name }}</h1>
                 <div class="campaign-main-container">
                     <div class="campaign-main-container-scroll">
-                        <div class="">Dnd 5e</div>
+                        <GameSystem :data="GetModule(data.campaign.system)"></GameSystem>
                         <h2>Books</h2>
                         <CampaignBookList class="small-book-list"></CampaignBookList>
                     </div>
@@ -98,7 +103,6 @@ function Exit(){
 
 <style scoped lang="scss">
 .small-book-list {
-    height: 400px;
     margin: 20px;
     overflow: auto;
 }
@@ -137,10 +141,10 @@ function Exit(){
     height: 100%;
 
     display: grid;
-    grid-template-columns: 3fr 5fr 4fr;
+    grid-template-columns: 2fr 4fr 3fr;
 
     &.campaign-preview-compact {
-        grid-template-columns: 2fr 3fr;
+        grid-template-columns: 2fr 4fr;
     }
 }
 
@@ -171,6 +175,10 @@ function Exit(){
 
 h1, h2 {
     font-family: MrEavesRemake;
+}
+
+h1 {
+    background-color: rgb(143, 39, 39);
 }
 
 </style>

@@ -19,12 +19,14 @@ import ChatWindow from '../windows/game/ChatWindow.vue'
 import DiceWindow from '../windows/game/DiceWindow.vue'
 import MapButtons from '../windows/dm/MapButtons.vue'
 import EnvironmentWindow from '../windows/dm/EnvironmentWindow.vue'
+import SystemSelectorWindow from '../windows/campaigns/SystemSelectorWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
 const windows = Windows();
 
 const WindowMap = {
+  test: ExampleWindow,
   login: LoginWindow,
   main_menu: MainMenuWindow,
   register: RegisterWindow,
@@ -37,7 +39,8 @@ const WindowMap = {
   chat: ChatWindow,
   dice_menu: DiceWindow,
   map_buttons: MapButtons,
-  environment: EnvironmentWindow
+  environment: EnvironmentWindow,
+  system_selector: SystemSelectorWindow
 };
 </script>
 

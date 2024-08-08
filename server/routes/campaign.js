@@ -16,10 +16,11 @@ router.post('/register', passport.authenticate('jwt', {session: false}), rateLim
 
 router.post('/create', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
     let {
-        name
+        name,
+        system
     } = req.body;
 
-    if(!(name)){
+    if(!(name && system)){
         res.json({
             status: "error",
             msg: "params"
@@ -28,7 +29,7 @@ router.post('/create', passport.authenticate('jwt', {session: false}), rateLimit
     }
 
     // Create the campaign
-    let campaign = new Campaign({name});
+    let campaign = new Campaign({name, system});
     campaign.invite_code = Campaign.generateInvite();
 
     campaign.save().then(campaign => {

@@ -6,9 +6,42 @@ import { RouterLink, RouterView } from 'vue-router'
 import { GetUser, UserStatus, LoadUser } from '@/services/User.js'
 import { IsAdmin } from './services/User'
 
+import useEmitter from '@/services/Emitter';
+const emitter = useEmitter();
+
+import { DisplayToast, SetEmitter } from './services/Dragonroll'
+import { ImportModule, GetModulesToLoad } from './services/Modules'
+import { CreateWindow } from './services/Windows';
+
 console.clear();
 console.log("%cLoaded!!!", "color: #22ff22; font-size: 24px");
 LoadUser();
+
+SetEmitter(emitter);
+onMounted(() => {
+  async function preloadModules(){
+    const modules = GetModulesToLoad();
+    let moduleLoads = [];
+
+    modules.forEach(moduleName => {
+        moduleLoads.push(ImportModule(moduleName));
+    });
+
+    await Promise.all(moduleLoads);
+    DisplayToast('aqua', 'All modules loaded successfully');
+
+    if(GetUser()){
+      CreateWindow('main_menu')
+      // CreateWindow('test');
+      DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
+      return;
+    }
+    CreateWindow('login');
+  }
+
+  preloadModules();
+})
+
 
 </script>
 

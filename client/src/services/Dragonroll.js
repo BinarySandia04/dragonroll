@@ -5,12 +5,15 @@ import Api from '@/services/Api'
 import { backendUrl } from './BackendURL';
 import { GetUser } from './User';
 import { ExitGame } from './Game';
+import { GetModule } from './Modules';
 
 let emitter;
 
 function SetEmitter(newEmitter){
     emitter = newEmitter
 }
+
+let GetEmitter = () => emitter;
 
 function DisplayToast(color, text, duration = 1000){
     emitter.emit("toast", {color, text, duration});
@@ -109,8 +112,13 @@ function GetPlayer(player_campaign){
     if(index != -1) return players.value[index];
 }
 
+function GetSystem(){
+    if(currentCampaign) return GetModule(currentCampaign.system)
+}
+
 export {
     SetEmitter,
+    GetEmitter,
 
     DisplayToast,
 
@@ -122,6 +130,7 @@ export {
     GetClient,
     GetPlayerList,
     GetPlayer,
+    GetSystem,
 
     GetChatRef,
     SendMessage

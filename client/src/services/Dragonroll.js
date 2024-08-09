@@ -46,7 +46,6 @@ const chat = ref([
 let GetChatRef = () => chat;
 
 socket.on('update-players', data => {
-    console.log(data);
     players.value = [];
     Object.keys(data).forEach((key) => {
         players.value.push(data[key]);
@@ -107,7 +106,6 @@ function Disconnect(){
 }
 
 function GetPlayer(player_campaign){
-    console.log(players.value);
     let index = players.value.findIndex((p) => {return p._id == player_campaign});
     if(index != -1) return players.value[index];
 }

@@ -1,5 +1,21 @@
 import { initCustomFormatter, ref } from 'vue';
 
+import Api from '@/services/Api'
+import { GetCampaign } from './Dragonroll';
+import { backendUrl } from './BackendURL';
+
+function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[arr.length - 1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}
+
 let offsetX = 0;
 let offsetY = 0;
 let scale = 1;
@@ -77,6 +93,7 @@ function zoom(amount){
     Draw();
 }
 
+
 let xUpperLeft = -Infinity;
 let yUpperLeft = -Infinity;
 let xDownRight = Infinity;
@@ -112,19 +129,21 @@ function drawGrid(cellSize){
     
 
     ctx.stroke();
-
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 1;
-
-    ctx.beginPath();
-    ctx.rect(toMapX(-10), toMapY(-10), 10 * scale, 10 * scale);
-    ctx.stroke();
 }
 
 // Ok aqui coses del mapa en si
-let gridSize = 150;
-let images = [];
-let lines_of_sight = [];
+let currentMap = {
+    gridSize: undefined,
+    images: [],
+    lines_of_sight: [],
+    backgroundColor: '#0f0f0f',
+    title: "Untitled map"
+};
+let imageData = [];
+
+const currentMapId = ref('');
+let GetMapId = () => currentMapId;
+
 let backgroundColor = ref('#0f0f0f');
 
 function Draw(){
@@ -135,7 +154,7 @@ function Draw(){
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    images.forEach((image) => {
+    imageData.forEach((image) => {
         ctx.drawImage(image, toMapX(0), toMapY(0), image.naturalWidth * scale, image.naturalHeight * scale);
     });
 
@@ -143,39 +162,117 @@ function Draw(){
     ctx.beginPath();
     ctx.strokeStyle = "white";
     ctx.lineWidth = 3;
-    lines_of_sight.forEach((line) => {
-        ctx.moveTo(toMapX(line[0].x * gridSize), toMapY(line[0].y * gridSize));
-        ctx.lineTo(toMapX(line[1].x * gridSize), toMapY(line[1].y * gridSize));
+    currentMap.lines_of_sight.forEach((line) => {
+        ctx.moveTo(toMapX(line[0].x * currentMap.gridSize), toMapY(line[0].y * currentMap.gridSize));
+        ctx.lineTo(toMapX(line[1].x * currentMap.gridSize), toMapY(line[1].y * currentMap.gridSize));
     });
     ctx.stroke();
 
-    drawGrid(gridSize);
+    if(currentMap.gridSize) drawGrid(currentMap.gridSize);
 }
 
 function ImportDD2VTT(data){
-    console.log(data);
-
     var image = new Image();
     image.onload = function() {
-        images.push(image);
-        Draw();
+        UploadResource(image).then((imagePath) => {
+            currentMap.images.push(imagePath);
+            CreateMap(currentMap);
+            ReloadImages();
+        })
     };
 
-    gridSize = data.resolution.pixels_per_grid;
-    lines_of_sight = data.line_of_sight;
+    currentMap.gridSize = data.resolution.pixels_per_grid;
+    currentMap.lines_of_sight = data.line_of_sight;
+
     backgroundColor.value = '#' + data.environment.ambient_light;
+    currentMap.backgroundColor = '#' + data.environment.ambient_light;
 
     xUpperLeft = data.resolution.map_origin.x * data.resolution.pixels_per_grid;
     yUpperLeft = data.resolution.map_origin.y * data.resolution.pixels_per_grid;
     xDownRight = xUpperLeft + data.resolution.map_size.x * data.resolution.pixels_per_grid;
     yDownRight = yUpperLeft + data.resolution.map_size.y * data.resolution.pixels_per_grid;
     
-
     image.src = "data:image/png;base64," + data.image;
+}
+
+
+const mapList = ref([]);
+let GetMapList = () => mapList;
+
+function UpdateMapList(){
+    Api().get('/maps/list?campaign=' + GetCampaign()._id).then(response => {
+        mapList.value = response.data.data;
+        console.log(mapList.value);
+    }).catch((err) => console.log(err));
+}
+
+function ReloadImages(){
+    imageData = [];
+    currentMap.images.forEach(path => {
+        let image = new Image();
+        image.src = backendUrl + "public/" + path;
+        imageData.push(image);
+
+        image.onload = Draw;
+    });
+}
+
+function RenameMap(id, new_title){
+    currentMap.title = new_title;
+    SaveMap(id);
+}
+
+function SaveMap(id){
+    Api().post('/maps/update?campaign=' + GetCampaign()._id + "&map=" + id, {data: currentMap}).then(response => {
+        console.log("Map updated");
+    }).catch(err => console.log(err));
+}
+
+function NewMap(){
 
 }
 
+function DeleteMap(map_id){
+
+}
+
+function LoadMap(map){
+    currentMap = map.data;
+    currentMapId.value = map._id;
+    backgroundColor.value = currentMap.backgroundColor;
+    ReloadImages();
+
+}
+
+function UploadResource(image){
+    return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append("image", dataURLtoFile(image.src));
+
+        Api().post('/maps/create-resource?campaign=' + GetCampaign()._id, formData, {
+            headers: { "Content-Type": "multipart/form-data"}
+        }).then(response => {
+            resolve(response.data.data);
+        }).catch(err => console.log(err));
+    });
+}
+
+function CreateMap(){
+    Api().post('/maps/create', {
+        campaign: GetCampaign()._id,
+        data: currentMap,
+    }).then(response => {
+        UpdateMapList();
+    }).catch(err => console.log(err));
+    
+}
+
 let GetBackgroundColor = () => backgroundColor;
+function ChangeBackgroundColor(color){
+    backgroundColor.value = color; // XD
+    currentMap.backgroundColor = color;
+    SaveMap(currentMapId.value);
+}
 
 export {
     toMapX,
@@ -188,4 +285,11 @@ export {
     // Draw,
     ImportDD2VTT,
     GetBackgroundColor,
+    ChangeBackgroundColor,
+    GetMapId,
+
+    UpdateMapList,
+    GetMapList,
+    LoadMap,
+    RenameMap,
 };

@@ -5,7 +5,7 @@ import { onMounted, onUpdated, ref, watch } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 import IconButton from '@/views/partials/game/IconButton.vue'
 import ColorValue from '../../partials/parameters/ColorValue.vue';
-import { GetBackgroundColor } from '../../../services/Map';
+import { GetBackgroundColor, ChangeBackgroundColor } from '../../../services/Map';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -24,7 +24,7 @@ onMounted(() => {
 
     console.log(env_background.value.GetColor());
     watch(env_background.value.GetColor(), () => {
-        GetBackgroundColor().value = env_background.value.GetColor().value; // XD
+        ChangeBackgroundColor(env_background.value.GetColor().value);
     });
 });
 

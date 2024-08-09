@@ -20,6 +20,8 @@ import DiceWindow from '../windows/game/DiceWindow.vue'
 import MapButtons from '../windows/dm/MapButtons.vue'
 import EnvironmentWindow from '../windows/dm/EnvironmentWindow.vue'
 import SystemSelectorWindow from '../windows/campaigns/SystemSelectorWindow.vue'
+import MapWindow from '../windows/dm/MapWindow.vue'
+import CombatWindow from '../windows/game/CombatWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
@@ -40,7 +42,9 @@ const WindowMap = {
   dice_menu: DiceWindow,
   map_buttons: MapButtons,
   environment: EnvironmentWindow,
-  system_selector: SystemSelectorWindow
+  system_selector: SystemSelectorWindow,
+  map_window: MapWindow,
+  combat_window: CombatWindow
 };
 </script>
 

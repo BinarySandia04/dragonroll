@@ -27,6 +27,18 @@ function OpenMapButtons(){
     CreateWindow('map_buttons');
 }
 
+function OpenMapWindows(){
+    CreateWindow('map_window');
+}
+
+function OpenCombatMenu(){
+    CreateWindow('combat_window');
+}
+
+function ToggleGrid(){
+    
+}
+
 watch(game, () => {
     if(game.value && in_game.value){
         AddSound(game.value);
@@ -46,11 +58,14 @@ watch(game, () => {
         <div class="vertical-button">
             <IconButton icon="icons/iconoir/regular/menu.svg" :action="OpenCampaignPreview"></IconButton>
             <IconButton icon="icons/iconoir/regular/cursor-pointer.svg"></IconButton>
+            <IconButton icon="icons/iconoir/regular/orthogonal-view.svg" :action="ToggleGrid"></IconButton>
             <IconButton icon="icons/game-icons/000000/delapouite/rolling-dice-cup.svg" :action="OpenDiceMenu"></IconButton>
+            <IconButton icon="icons/game-icons/000000/lorc/crossed-sabres.svg" :action="OpenCombatMenu"></IconButton>
         </div>
         
         <div class="vertical-button gm" v-if="is_dm">
-            <IconButton icon="icons/iconoir/regular/map.svg" :action="OpenMapButtons"></IconButton>
+            <IconButton icon="icons/iconoir/regular/map.svg" :action="OpenMapWindows"></IconButton>
+            <IconButton icon="icons/iconoir/regular/hammer.svg" :action="OpenMapButtons"></IconButton>
         </div>
 
         <div class="horizontal-button">

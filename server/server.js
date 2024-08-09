@@ -64,6 +64,7 @@ app.use(cors());
 // Routes (/ només)
 app.use('/user', require('./routes/user'));
 app.use('/campaign', require('./routes/campaign'));
+app.use('/maps', require('./routes/map'))
 
 
 app.use('/public', express.static('uploads'));

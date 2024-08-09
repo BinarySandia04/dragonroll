@@ -74,6 +74,8 @@ emitter.on('toast', data => {
     border-radius: 6px;
     text-align: center;
 
+    z-index: 9999999;
+
 
     animation: slide-in 0.4s ease-in-out;
     @keyframes slide-in {

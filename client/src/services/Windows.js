@@ -84,6 +84,16 @@ const defValues = {
         id: 'system-selector',
         title: "Select a game system",
         close: true
+    },
+    'map_window': {
+        id: 'map_window',
+        title: 'Maps',
+        close: true
+    },
+    'combat_window': {
+        id: 'combat_window',
+        title: "Combat",
+        close: true
     }
 }
 
@@ -203,7 +213,6 @@ function CreateWindow(type, data = {}){
         windows.value.push(finalData);
         // reload.value += 1;
 
-        console.log(windows.value);
         setTimeout(() => SetOnTop(finalData.id), 0);
     }
 }

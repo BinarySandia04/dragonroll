@@ -5,7 +5,6 @@ let InGameRef = () => inGameRef;
 
 function LaunchGame(){
     inGameRef.value = true;
-    console.log("jdksadjlo")
 }
 
 function ExitGame(){

@@ -94,6 +94,21 @@ const defValues = {
         id: 'combat_window',
         title: "Combat",
         close: true
+    },
+    'entity_window': {
+        id: 'entity_window',
+        title: "Entities",
+        close: true
+    },
+    'characters_window': {
+        id: 'characters_window',
+        title: "Characters",
+        close: true
+    },
+    'compendium_window': {
+        id: 'compendium_window',
+        title: "Compendium",
+        close: true
     }
 }
 

@@ -1,7 +1,7 @@
-import { initCustomFormatter, ref } from 'vue';
+import { initCustomFormatter, ref, toRaw } from 'vue';
 
 import Api from '@/services/Api'
-import { GetCampaign } from './Dragonroll';
+import { _SendMap, GetCampaign } from './Dragonroll';
 import { backendUrl } from './BackendURL';
 
 function dataURLtoFile(dataurl, filename) {
@@ -144,6 +144,9 @@ let imageData = [];
 const currentMapId = ref('');
 let GetMapId = () => currentMapId;
 
+const currentGlobalMapId = ref('');
+let GetGlobalMapId = () => currentGlobalMapId;
+
 let backgroundColor = ref('#0f0f0f');
 
 function Draw(){
@@ -199,11 +202,21 @@ function ImportDD2VTT(data){
 const mapList = ref([]);
 let GetMapList = () => mapList;
 
+function GetMap(id){
+    let map = undefined;
+    mapList.value.forEach((m) => {
+        if(m._id == id) map = m;
+    });
+    return toRaw(map);
+}
+
 function UpdateMapList(){
-    Api().get('/maps/list?campaign=' + GetCampaign()._id).then(response => {
-        mapList.value = response.data.data;
-        console.log(mapList.value);
-    }).catch((err) => console.log(err));
+    return new Promise((resolve, reject) => {
+        Api().get('/maps/list?campaign=' + GetCampaign()._id).then(response => {
+            mapList.value = response.data.data;
+            resolve();
+        }).catch((err) => console.log(err));
+    })
 }
 
 function ReloadImages(){
@@ -267,6 +280,11 @@ function CreateMap(){
     
 }
 
+function SendMap(id){
+    currentGlobalMapId.value = id;
+    _SendMap(id);
+}
+
 let GetBackgroundColor = () => backgroundColor;
 function ChangeBackgroundColor(color){
     backgroundColor.value = color; // XD
@@ -287,9 +305,12 @@ export {
     GetBackgroundColor,
     ChangeBackgroundColor,
     GetMapId,
+    GetGlobalMapId,
 
     UpdateMapList,
     GetMapList,
     LoadMap,
     RenameMap,
+    GetMap,
+    SendMap
 };

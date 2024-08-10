@@ -6,6 +6,7 @@ import { backendUrl } from './BackendURL';
 import { GetUser } from './User';
 import { ExitGame } from './Game';
 import { GetModule } from './Modules';
+import { GetMap, LoadMap, UpdateMapList } from './Map';
 
 let emitter;
 
@@ -30,20 +31,15 @@ let GetCampaign = () => { return currentCampaign; };
 let GetClient = () => { return currentPlayer; };
 
 let chatMessageId = 0;
-const chat = ref([
-    /* {
-        id: 1,
-        author: "66ae8aea3e78bb669e25010d",
-        chunks: [
-            {
-                id: 1,
-                type: "text",
-                content: "Hola test"
-            }
-        ]
-    } */
-]);
+const chat = ref([]);
 let GetChatRef = () => chat;
+
+socket.on('change_map', data => {
+    console.log("ChangeMap")
+    UpdateMapList().then(() => {
+        LoadMap(GetMap(data.id));
+    });
+})
 
 socket.on('update-players', data => {
     players.value = [];
@@ -79,6 +75,10 @@ socket.on('message', (data) => {
         ]
     });
 });
+
+function _SendMap(id){
+    socket.emit('send_map', {id});
+}
 
 function SendMessage(data){
     socket.emit('message', data);
@@ -131,5 +131,6 @@ export {
     GetSystem,
 
     GetChatRef,
-    SendMessage
+    SendMessage,
+    _SendMap
 };

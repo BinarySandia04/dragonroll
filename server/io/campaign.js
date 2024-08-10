@@ -30,12 +30,22 @@ module.exports = io => {
                     CampaignUser.findOne({campaign: campaignId, user}).then(async campaignUser => {
                         if(campaignUser){
                             socket.join(campaignId);
+                            socket.campaignUser = campaignUser;
                             socket.campaign = campaignId;
 
-                            if(!sessions[campaignId]) sessions[campaignId] = {
-                                players: await GetOfflinePlayers(campaignId),
-                                chat: []
-                            };
+                            if(!sessions[campaignId]){ sessions[campaignId] = {
+                                    players: await GetOfflinePlayers(campaignId),
+                                    chat: []
+                                };
+                            } else {
+                                newPlayers = await GetOfflinePlayers(campaignId);
+                                newPlayers.forEach(player => {
+                                    for(let i = 0; i < sessions[campaignId].players.length; i++){
+                                        if(player._id == sessions[campaignId].players[i]._id) return;
+                                    }
+                                    sessions[campaignId].players.push(FilterUser(player));
+                                })
+                            }
                             
                             
                             console.log(socket.user.username + " ha entrado!");
@@ -59,6 +69,15 @@ module.exports = io => {
 
         socket.on('message', (data) => {
             io.to(socket.campaign).emit('message', data);
+        })
+
+        socket.on('send_map', (data) => {
+            console.log("SENDMAP")
+            if(!socket.campaignUser) return;
+            if(socket.campaignUser.is_dm){
+                console.log("Sended!")
+                socket.to(socket.campaign).emit('change_map', data);
+            }
         })
     });
 }

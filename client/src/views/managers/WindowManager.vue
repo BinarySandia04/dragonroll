@@ -22,6 +22,9 @@ import EnvironmentWindow from '../windows/dm/EnvironmentWindow.vue'
 import SystemSelectorWindow from '../windows/campaigns/SystemSelectorWindow.vue'
 import MapWindow from '../windows/dm/MapWindow.vue'
 import CombatWindow from '../windows/game/CombatWindow.vue'
+import EntityWindow from '../windows/dm/EntityWindow.vue'
+import CharactersWindow from '../windows/game/CharactersWindow.vue'
+import CompendiumWindow from '../windows/game/CompendiumWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
@@ -44,7 +47,10 @@ const WindowMap = {
   environment: EnvironmentWindow,
   system_selector: SystemSelectorWindow,
   map_window: MapWindow,
-  combat_window: CombatWindow
+  combat_window: CombatWindow,
+  entity_window: EntityWindow,
+  characters_window: CharactersWindow,
+  compendium_window: CompendiumWindow
 };
 </script>
 

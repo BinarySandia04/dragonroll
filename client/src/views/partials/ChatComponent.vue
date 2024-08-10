@@ -58,7 +58,7 @@ watch(chat, () => {
         <textarea ref="textInput" class="chat-input"></textarea>
         <div class="chat-input-actions">
             <div class="chat-input-actions-left">
-
+                <IconButton icon="icons/iconoir/regular/trash.svg"></IconButton>
             </div>
             <div class="chat-input-actions-right">
                 <IconButton icon="icons/iconoir/regular/send.svg"></IconButton>
@@ -126,7 +126,7 @@ watch(chat, () => {
 
 .chat-input-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 8px;
     margin-left: 10px;
     margin-right: 10px;

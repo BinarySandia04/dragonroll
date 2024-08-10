@@ -39,6 +39,18 @@ function ToggleGrid(){
     
 }
 
+function OpenEntityWindow(){
+    CreateWindow('entity_window');
+}
+
+function OpenCharactersWindow(){
+    CreateWindow('characters_window');
+}
+
+function OpenCompendiumWindow(){
+    CreateWindow('compendium_window');
+}
+
 watch(game, () => {
     if(game.value && in_game.value){
         AddSound(game.value);
@@ -63,14 +75,15 @@ watch(game, () => {
             <IconButton icon="icons/game-icons/000000/lorc/crossed-sabres.svg" :action="OpenCombatMenu"></IconButton>
         </div>
         
-        <div class="vertical-button gm" v-if="is_dm">
+        <div class="vertical-button gm" v-show="is_dm">
             <IconButton icon="icons/iconoir/regular/map.svg" :action="OpenMapWindows"></IconButton>
             <IconButton icon="icons/iconoir/regular/hammer.svg" :action="OpenMapButtons"></IconButton>
+            <IconButton icon="icons/iconoir/solid/wolf.svg" :action="OpenEntityWindow"></IconButton>
         </div>
 
         <div class="horizontal-button">
-            <IconButton icon="icons/iconoir/regular/group.svg"></IconButton>
-            <IconButton icon="icons/iconoir/regular/bookmark-book.svg"></IconButton>
+            <IconButton icon="icons/iconoir/regular/group.svg" :action="OpenCharactersWindow"></IconButton>
+            <IconButton icon="icons/iconoir/regular/bookmark-book.svg" :action="OpenCompendiumWindow"></IconButton>
             <IconButton icon="icons/iconoir/regular/chat-bubble.svg" :action="OpenChat"></IconButton>
         </div>
 

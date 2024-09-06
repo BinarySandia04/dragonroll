@@ -37,11 +37,126 @@ onMounted(() => {
                 <div class="header-xp-level">13</div>
             </div>
         </div>
+
+        <div class="bookmarks">
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/lorc/cog.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/sbed/electric.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/light-backpack.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/lorc/burning-blobs.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/skills.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/willdabeast/white-book.svg">
+            </div>
+        </div>
+
+        <div class="header-attr">
+            <div class="header-hex">
+                <span class="attr-name">STR</span>
+                <span class="attr-bonus">+1</span>
+                <span class="attr-score">13</span>
+            </div>
+            <div class="header-hex">
+                <span class="attr-name">DEX</span>
+                <span class="attr-bonus">+3</span>
+                <span class="attr-score">16</span>
+            </div>
+            <div class="header-hex">
+                <span class="attr-name">CON</span>
+                <span class="attr-bonus">+2</span>
+                <span class="attr-score">14</span>
+            </div>
+            <div class="header-hex">
+                <span class="attr-name">INT</span>
+                <span class="attr-bonus">+1</span>
+                <span class="attr-score">12</span>
+            </div>
+            <div class="header-hex">
+                <span class="attr-name">WIS</span>
+                <span class="attr-bonus">-1</span>
+                <span class="attr-score">8</span>
+            </div>
+            <div class="header-hex">
+                <span class="attr-name">CHA</span>
+                <span class="attr-bonus">+1</span>
+                <span class="attr-score">13</span>
+            </div>
+        </div>
+        Hola
     </div>
 </template>
 
 
 <style scoped lang="scss">
+.bookmarks {
+    position: absolute;
+    top: 120px;
+    left: 750px;
+
+    .bookmark {
+        background-color: #181818;
+        padding: 10px;
+        margin-top: 10px;
+        padding-bottom: 0px;
+        padding-top: 9px;
+        border: solid 1px #9e9e9e22;
+        border-left-width: 0px;
+
+        .icon-no-filter {
+            width: 24px;
+            height: 24px;
+        }   
+    }
+}
+
+
+.header-attr {
+    position: absolute;
+    top: 70px;
+    right: 100px;
+    display: flex;
+}
+
+.header-hex {
+    width: 70px;
+    height: 70px;
+    margin-right: 5px;
+    background: #DED4D6;
+    -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+    clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+
+    display: flex;
+    flex-direction: column;
+
+    .attr-name {
+        margin-top: 7px;
+        color: #1B1A18;
+        font-size: 10px;
+    }
+
+    .attr-bonus {
+        color: #1B1A18;
+        font-weight: bold;
+        margin-top: -5px;
+        font-size: 22px;
+    }
+
+    .attr-score {
+        font-size: 12px;
+        margin-top: -5px;
+        color: #1B1A18;
+    }
+}
+
 .header-info {
     height: 105px;
     pointer-events: none;
@@ -125,6 +240,7 @@ onMounted(() => {
 .window-wrapper {
     display: flex;
     align-items: center;
+    border: solid 1px #AA9E89aa;
 
     user-select: none;
 }

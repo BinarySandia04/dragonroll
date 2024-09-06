@@ -3,6 +3,8 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
+import GameEntry from '../../partials/GameEntry.vue';
+import { CreateWindow } from '../../../services/Windows';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -15,6 +17,12 @@ onMounted(() => {
     SetSize(id, {x: 400, y: 850});
     ResetPosition(id, {x: window.innerWidth - 420, y: 60});
 });
+
+// temp
+function openCharacterSheet(){
+    CreateWindow('character_sheet');
+}
+
 </script>
 
 
@@ -22,7 +30,14 @@ onMounted(() => {
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <WindowHandle :window="id" ref="handle"></WindowHandle>
         
-        
+        <div class="map-list-container">
+            <GameEntry :data='{
+                height: "10px",
+                icon: "img/game/weaponIcons32x32_png_Transparent/icon_axe1.png",
+                name: "Axe",
+                click: openCharacterSheet,
+                }'></GameEntry>
+        </div>
     </div>
 </template>
 
@@ -35,4 +50,14 @@ onMounted(() => {
 
     user-select: none;
 }
+
+.map-list-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
 </style>

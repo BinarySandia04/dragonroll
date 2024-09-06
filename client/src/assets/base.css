@@ -21,6 +21,9 @@
   --c-black-mute: #383838;
   --c-black-muter: #585858;
 
+  --c-black-icon-background: #000;
+  --c-white-icon-background: #fff;
+
 
   --c-black-blurred: #222222;
 
@@ -64,6 +67,7 @@
   --color-scrollbar: var(--c-white-muter);
 
   --color-hover: var(--c-white-mute);
+  --icon-background: var(--c-white-icon-background);
 
   --color-heading: var(--c-text-light-1);
   --color-text: var(--c-text-light-1);
@@ -89,6 +93,7 @@
 
     --color-scrollbar: var(--c-black-muter);
     --color-hover: var(--c-black-mute);
+    --icon-background: var(--c-black-icon-background);
 
     --color-heading: var(--c-text-dark-1);
     --color-text: var(--c-text-dark-2);
@@ -155,7 +160,7 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -5,8 +5,9 @@ import { ClearWindow } from '../../services/Windows';
 
 import { AddSound } from '../../services/Sound';
 
-const props = defineProps(['window']);
+const props = defineProps(['window', 'handleHeight', 'custom', 'color']);
 const id = props.window;
+const handleHeight = props.handleHeight;
 
 const closeButton = ref(null);
 const backButton = ref(null);
@@ -14,6 +15,7 @@ const backButton = ref(null);
 const title = ref("");
 const close = ref(false);
 const hasBack = ref(false);
+const def = ref(true);
 
 let backFunction;
 
@@ -25,6 +27,11 @@ function setupHandle() {
     if(win.back) {
         hasBack.value = true;
         backFunction = win.back;
+    }
+
+    if(handleHeight) {
+        let handle = document.getElementById('window-handle-' + id);
+        handle.style.height = handleHeight;
     }
 
     // Setup sounds
@@ -42,6 +49,14 @@ function CloseButton(){
     ClearWindow(id)
 }
 
+onMounted(() => {
+    if(props.custom) def.value = false;
+    if(props.color) {
+        let handle = document.getElementById('window-handle-' + id);
+        handle.style.backgroundColor = props.color;
+    }
+});
+
 defineExpose({
     setupHandle
 });
@@ -51,13 +66,13 @@ defineExpose({
 <template>
     <div class="window-handle" :id="'window-handle-' + id">
 
-        <div class="left">
+        <div class="left" v-if="def">
             <img class="icon icon-add-margin" src="icons/iconoir/regular/arrow-left.svg" draggable="false" ref="backButton" v-if="hasBack" v-on:click="backFunction">
         </div>
-        <div class="center">
+        <div class="center" v-if="def">
             <span>{{ title }}</span>
         </div>
-        <div class="right">
+        <div class="right" v-if="def">
             <img class="icon" src="icons/iconoir/regular/xmark.svg" draggable="false" ref="closeButton" v-if="close" v-on:click="CloseButton">
         </div>
         <!-- span>{{ title }}</span>

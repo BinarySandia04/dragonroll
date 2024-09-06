@@ -46,11 +46,12 @@ onMounted(() => {
     display: flex;
     margin-top: 2px;
     padding-left: 10px;
+    font-size: 0.9rem;
 }
 
 .content-container {
     max-width: 75%;
-    padding: 7px 15px;
+    padding: 1px 15px;
     margin-bottom: 7px;
 
     text-align: left;

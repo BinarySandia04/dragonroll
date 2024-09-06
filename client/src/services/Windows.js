@@ -109,6 +109,11 @@ const defValues = {
         id: 'compendium_window',
         title: "Compendium",
         close: true
+    },
+    'character_sheet': {
+        id: 'character_sheet',
+        title: 'Character Sheet',
+        close: "true"
     }
 }
 

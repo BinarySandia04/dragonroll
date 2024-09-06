@@ -1,6 +1,7 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { defineAsyncComponent } from 'vue'
 
 import LoginWindow from '@/views/windows/LoginWindow.vue'
 import RegisterWindow from '@/views/windows/RegisterWindow.vue'
@@ -25,12 +26,14 @@ import CombatWindow from '../windows/game/CombatWindow.vue'
 import EntityWindow from '../windows/dm/EntityWindow.vue'
 import CharactersWindow from '../windows/game/CharactersWindow.vue'
 import CompendiumWindow from '../windows/game/CompendiumWindow.vue'
+import CharacterSheet from '../windows/game/dnd-5e/CharacterSheet.vue'
+
 
 // Gestionem ventanas
 const reload = ReloadRef();
 const windows = Windows();
 
-const WindowMap = {
+let WindowMap = {
   test: ExampleWindow,
   login: LoginWindow,
   main_menu: MainMenuWindow,
@@ -50,8 +53,22 @@ const WindowMap = {
   combat_window: CombatWindow,
   entity_window: EntityWindow,
   characters_window: CharactersWindow,
-  compendium_window: CompendiumWindow
+  compendium_window: CompendiumWindow,
 };
+
+async function InjectSystemWindows(system){
+  // Hack
+  let systemWidows = {
+    character_sheet: (await import(`../windows/game/${system}/CharacterSheet.vue`)).default
+  };
+
+  WindowMap = {...WindowMap, ...systemWidows};
+
+  console.log(WindowMap)
+}
+
+InjectSystemWindows('dnd-5e')
+console.log(WindowMap);
 </script>
 
 <template>

@@ -72,10 +72,8 @@ module.exports = io => {
         })
 
         socket.on('send_map', (data) => {
-            console.log("SENDMAP")
             if(!socket.campaignUser) return;
             if(socket.campaignUser.is_dm){
-                console.log("Sended!")
                 socket.to(socket.campaign).emit('change_map', data);
             }
         })

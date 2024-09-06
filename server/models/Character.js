@@ -5,7 +5,7 @@ const CharacterSchema = new Schema({
     name: {type: String, required: true},
     data: { type: Object },
     campaign_user: {type: mongoose.Types.ObjectId, ref: "CampaignUser"},
-    image: { type: String },
+    splash_image: { type: String },
 });
 
 module.exports = mongoose.model('Character', CharacterSchema);

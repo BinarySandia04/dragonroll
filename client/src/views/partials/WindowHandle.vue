@@ -51,10 +51,6 @@ function CloseButton(){
 
 onMounted(() => {
     if(props.custom) def.value = false;
-    if(props.color) {
-        let handle = document.getElementById('window-handle-' + id);
-        handle.style.backgroundColor = props.color;
-    }
 });
 
 defineExpose({

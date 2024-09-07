@@ -7,15 +7,31 @@ const props = defineProps(['data']);
 const data = props.data;
 
 const handle = ref(null);
+const bookmarks = ref(null);
+const selectedBookmark = ref(0);
 
 let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 750, y: 850});
+    SetSize(id, {x: 700, y: 850});
     ResetPosition(id, {x: window.innerWidth - 600, y: 60});
+
+    ConfigureBookmarks();
 });
 
+function ConfigureBookmarks(){
+    let children = bookmarks.value.children;
+    for(let i = 0; i < children.length; i++){
+        children[i].addEventListener('click', () => {
+            selectedBookmark.value = i;
+            for(let p = 0; p < children.length; p++){
+                children[p].classList.remove('active');
+            }
+            children[i].classList.add('active');
+        })
+    }
+}
 </script>
 
 
@@ -38,8 +54,8 @@ onMounted(() => {
             </div>
         </div>
 
-        <div class="bookmarks">
-            <div class="bookmark">
+        <div class="bookmarks" ref="bookmarks">
+            <div class="bookmark active">
                 <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/lorc/cog.svg">
             </div>
             <div class="bookmark">
@@ -49,9 +65,6 @@ onMounted(() => {
                 <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/light-backpack.svg">
             </div>
             <div class="bookmark">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/lorc/burning-blobs.svg">
-            </div>
-            <div class="bookmark">
                 <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/skills.svg">
             </div>
             <div class="bookmark">
@@ -59,50 +72,93 @@ onMounted(() => {
             </div>
         </div>
 
-        <div class="header-attr">
-            <div class="header-hex">
-                <span class="attr-name">STR</span>
-                <span class="attr-bonus">+1</span>
-                <span class="attr-score">13</span>
+        <!-- Sheet content -->
+        <div class="sheet-content" v-show="selectedBookmark == 0">
+            <div class="header-attr">
+                <div class="header-hex">
+                    <span class="attr-name">STR</span>
+                    <span class="attr-bonus">+1</span>
+                    <span class="attr-score">13</span>
+                </div>
+                <div class="header-hex">
+                    <span class="attr-name">DEX</span>
+                    <span class="attr-bonus">+3</span>
+                    <span class="attr-score">16</span>
+                </div>
+                <div class="header-hex">
+                    <span class="attr-name">CON</span>
+                    <span class="attr-bonus">+2</span>
+                    <span class="attr-score">14</span>
+                </div>
+                <div class="header-hex">
+                    <span class="attr-name">INT</span>
+                    <span class="attr-bonus">+1</span>
+                    <span class="attr-score">12</span>
+                </div>
+                <div class="header-hex">
+                    <span class="attr-name">WIS</span>
+                    <span class="attr-bonus">-1</span>
+                    <span class="attr-score">8</span>
+                </div>
+                <div class="header-hex">
+                    <span class="attr-name">CHA</span>
+                    <span class="attr-bonus">+1</span>
+                    <span class="attr-score">13</span>
+                </div>
             </div>
-            <div class="header-hex">
-                <span class="attr-name">DEX</span>
-                <span class="attr-bonus">+3</span>
-                <span class="attr-score">16</span>
-            </div>
-            <div class="header-hex">
-                <span class="attr-name">CON</span>
-                <span class="attr-bonus">+2</span>
-                <span class="attr-score">14</span>
-            </div>
-            <div class="header-hex">
-                <span class="attr-name">INT</span>
-                <span class="attr-bonus">+1</span>
-                <span class="attr-score">12</span>
-            </div>
-            <div class="header-hex">
-                <span class="attr-name">WIS</span>
-                <span class="attr-bonus">-1</span>
-                <span class="attr-score">8</span>
-            </div>
-            <div class="header-hex">
-                <span class="attr-name">CHA</span>
-                <span class="attr-bonus">+1</span>
-                <span class="attr-score">13</span>
+            <div class="two-column-layout">
+                <div class="flex-container">
+                    
+                </div>
+                <div class="flex-container"></div>
             </div>
         </div>
-        Hola
+        <div class="sheet-content" v-show="selectedBookmark == 1">
+            Actions
+        </div>
+        <div class="sheet-content" v-show="selectedBookmark == 2">
+            Inventory
+        </div>
+        <div class="sheet-content" v-show="selectedBookmark == 3">
+            Traits
+        </div>
+        <div class="sheet-content" v-show="selectedBookmark == 4">
+            Bio
+        </div>
     </div>
 </template>
 
 
 <style scoped lang="scss">
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .flex-container {
+        margin: auto;
+        width: 300px;
+        display: flex;
+        
+    }
+}
+
+.sheet-content {
+    width: 100%;
+    height: calc(100% - 90px);
+    overflow-y: auto;
+}
+
 .bookmarks {
     position: absolute;
     top: 120px;
-    left: 750px;
+    left: 700px;
 
     .bookmark {
+        width: 50px;
         background-color: #181818;
         padding: 10px;
         margin-top: 10px;
@@ -110,11 +166,16 @@ onMounted(() => {
         padding-top: 9px;
         border: solid 1px #9e9e9e22;
         border-left-width: 0px;
+        transition: width 0.3s, border-color 0.2s;
 
-        .icon-no-filter {
-            width: 24px;
-            height: 24px;
-        }   
+        &:hover {
+            width: 70px;
+        }
+
+        &.active {
+            width: 80px;
+            border-color: var(--color-golden-border)
+        }
     }
 }
 
@@ -240,7 +301,7 @@ onMounted(() => {
 .window-wrapper {
     display: flex;
     align-items: center;
-    border: solid 1px #AA9E89aa;
+    border: solid 1px var(--color-golden-border);
 
     user-select: none;
 }

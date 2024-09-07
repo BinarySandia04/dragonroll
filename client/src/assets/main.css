@@ -39,10 +39,22 @@ a {
   }
 }
 
+.icon-no-filter {
+  width: 24px;
+  height: 24px;
+}
+
 .icon-add-margin {
   width: 16px;
   height: 16px;
   margin: 4.25px;
+}
+
+.user-icon {
+  border: solid 1px var(--color-border);
+  -webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
 }
 
 .buttons-row {
@@ -123,7 +135,11 @@ button {
   font-size: 15px;
   border-radius: 6px;
   outline: none;
-  border: none;
+  
+  border: solid 1px var(--color-border);
+  -webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
 
   transition: 300ms background-color;
   background-color: var(--color-background-softer);
@@ -170,7 +186,7 @@ button:active {
 .window-wrapper {
   display: flex;
   align-items: center;
-  border: solid 1px #a5a5a533;
+  border: solid 1px var(--color-border);
 
   user-select: none;
   -webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);

@@ -23,6 +23,8 @@
 
   --c-black-icon-background: #000;
   --c-white-icon-background: #fff;
+  --c-white-border: #a5a5a533;
+  --c-black-border: #a5a5a533;
 
 
   --c-black-blurred: #222222;
@@ -49,10 +51,13 @@
   --c-gradient-col-1: #034159;
   --c-gradient-col-2: #02735E;
   --c-gradient-col-3: #0CF25D;
+
+  --c-golden-border: #AA9E89aa;
 }
 
 /* semantic color variables for this project */
 :root {
+  --color-golden-border: var(--c-golden-border);
   --window-background: var(--c-white-blurred);
 
   --color-background: var(--c-white);
@@ -73,6 +78,8 @@
   --color-text: var(--c-text-light-1);
   --separator: var(--c-black-mute);
   --chat-background: var(--c-white);
+
+  --color-border: var(--c-white-border);
 
   --section-gap: 160px;
   --separator-color: #2e2e2e;
@@ -100,6 +107,8 @@
     --separator: var(--c-white-mute);
 
     --chat-background: var(--c-blacker);
+
+    --color-border: var(--c-black-border);
     --text-disabled: #7e7e7e;
 
     --color-chat-other: #1d1d1d;

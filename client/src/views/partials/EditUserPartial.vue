@@ -123,5 +123,9 @@ onMounted(() => {
 
 .main-user-actions {
     margin-left: auto;
+
+    button {
+        margin-left: 10px;
+    }
 }
 </style>

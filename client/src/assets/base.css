@@ -66,6 +66,7 @@
   --color-background-softer: var(--c-white-softer);
   --color-background-softest: var(--c-white-softest);
   --color-button-active: var(--c-white-muter);
+  --tooltip-background: #2b2b2b;
 
   --text-disabled: #7e7e7e;
 

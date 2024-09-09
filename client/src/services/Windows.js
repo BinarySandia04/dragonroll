@@ -21,6 +21,14 @@ const defValues = {
     'main_menu': {
         id: 'main_menu',
         title: "DragonRoll",
+        create: () => {
+            CreateChildWindow('main_menu', 'welcome');
+        }
+    },
+    'welcome': {
+        id: 'welcome',
+        title: "Welcome",
+        close: true
     },
     'edit_profile': {
         id: 'edit_profile',
@@ -305,7 +313,10 @@ function CreateWindow(type, data = {}){
         windows.value.push(finalData);
         // reload.value += 1;
 
-        setTimeout(() => SetOnTop(finalData.id), 0);
+        setTimeout(() => {
+            SetOnTop(finalData.id);
+            if(finalData.create) finalData.create();
+        }, 0);
     }
 }
 

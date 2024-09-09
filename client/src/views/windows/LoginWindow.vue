@@ -11,7 +11,7 @@ import { SetUser, GetUser } from '@/services/User'
 import Api from '@/services/Api.js'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import { ClearWindows, CreateWindow } from '../../services/Windows';
+import { ClearWindows, CreateChildWindow, CreateWindow } from '../../services/Windows';
 import { DisplayToast } from '../../services/Dragonroll';
 
 const handle = ref(null);

@@ -31,8 +31,7 @@ onMounted(() => {
     DisplayToast('aqua', 'All modules loaded successfully');
 
     if(GetUser()){
-      CreateWindow('main_menu')
-      // CreateWindow('test');
+      CreateWindow('main_menu');
       DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
       return;
     }

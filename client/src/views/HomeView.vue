@@ -9,6 +9,7 @@ import { CreateWindow } from '@/services/Windows'
 import Toast from './partials/Toast.vue';
 import { DisplayToast, SetEmitter } from '../services/Dragonroll';
 import GameManager from './managers/GameManager.vue';
+import TooltipManager from './managers/TooltipManager.vue';
 
 
 </script>
@@ -16,6 +17,7 @@ import GameManager from './managers/GameManager.vue';
 <template>
   <Toast></Toast>
   <GameManager></GameManager>
+  <TooltipManager></TooltipManager>
   <WindowManager></WindowManager>
 </template>
 

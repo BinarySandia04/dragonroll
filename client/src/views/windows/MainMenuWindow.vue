@@ -5,19 +5,22 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import EditUserPartial from '@/views/partials/EditUserPartial.vue'
 
-import { onMounted, onUpdated, ref } from 'vue';
+import { capitalize, onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetResizable, SetMinSize, SetMaxSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
 
 import useEmitter from '@/services/Emitter';
 import { ClearWindow, CreateWindow, Windows } from '../../services/Windows';
+import { AddTooltip } from '../../services/Tooltip';
 const emitter = useEmitter();
 const handle = ref(null);
 
 const props = defineProps(['data']);
 
 const data = props.data;
+
+const campaignButton = ref(null);
 
 let id = data.id;
 let title = data.title;
@@ -26,6 +29,8 @@ onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 500, height: 540});
     ResetPosition(id, "center", emitter);
+
+    AddTooltip(campaignButton.value, "<h2>Hey</h2>Hola test");
 });
 
 // ???
@@ -65,7 +70,7 @@ function OpenCampaigns(){
         <h1>Main Menu</h1>
 
         <div class="button-container">
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns">Campaigns</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns" ref="campaignButton">Campaigns</button>
             <hr>
             <button class="btn-primary button-expand sound-click" v-on:click="OpenCollection">Your Collection</button>
             <button class="btn-primary button-expand sound-click" v-on:click="OpenLibrary">The Cosmic Library</button>

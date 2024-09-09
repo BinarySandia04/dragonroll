@@ -27,6 +27,7 @@ import EntityWindow from '../windows/dm/EntityWindow.vue'
 import CharactersWindow from '../windows/game/CharactersWindow.vue'
 import CompendiumWindow from '../windows/game/CompendiumWindow.vue'
 import CharacterSheet from '../windows/game/dnd-5e/CharacterSheet.vue'
+import WelcomeWindow from '../windows/WelcomeWindow.vue'
 
 
 // Gestionem ventanas
@@ -37,6 +38,7 @@ let WindowMap = {
   test: ExampleWindow,
   login: LoginWindow,
   main_menu: MainMenuWindow,
+  welcome: WelcomeWindow,
   register: RegisterWindow,
   edit_profile: EditProfileWindow,
   account_settings: AccountSettingsWindow,

@@ -56,19 +56,22 @@ function ConfigureBookmarks(){
 
         <div class="bookmarks" ref="bookmarks">
             <div class="bookmark active">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/lorc/cog.svg">
+                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/cog.svg">
             </div>
             <div class="bookmark">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/sbed/electric.svg">
+                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/locked-chest.svg">
             </div>
             <div class="bookmark">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/light-backpack.svg">
+                <img class="icon bookmark-icon white" draggable="false" src="icons/iconoir/regular/list.svg">
             </div>
             <div class="bookmark">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/delapouite/skills.svg">
+                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/book-cover.svg">
             </div>
             <div class="bookmark">
-                <img class="icon-no-filter" draggable="false" src="icons/game-icons/ffffff/willdabeast/white-book.svg">
+                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/power-lightning.svg">
+            </div>
+            <div class="bookmark">
+                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/feather.svg">
             </div>
         </div>
 
@@ -609,13 +612,23 @@ div.player-info-div {
         border-left-width: 0px;
         transition: width 0.3s, border-color 0.2s;
 
+        .bookmark-icon {
+            width: 24px;
+            height: 24px;
+            filter: invert(0.1);
+        }
+
+        .bookmark-icon.white {
+            filter: invert(1);
+        }
+
         &:hover {
             width: 70px;
         }
 
         &.active {
             width: 80px;
-            border-color: var(--color-golden-border)
+            border-color: var(--color-golden-border);
         }
     }
 }

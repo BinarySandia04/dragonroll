@@ -12,7 +12,7 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 400, y: 900});
+    SetSize(id, {width: 400, height: 900});
     ResetPosition(id, {x: 100, y: 20});
 });
 </script>

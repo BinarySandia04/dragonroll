@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { GetWindowWithId } from '@/services/Windows';
-import { ClearWindow } from '../../services/Windows';
+import { ClearWindow, Windows } from '../../services/Windows';
 
 import { AddSound } from '../../services/Sound';
 
@@ -15,23 +15,18 @@ const backButton = ref(null);
 const title = ref("");
 const close = ref(false);
 const hasBack = ref(false);
-const resizable = ref(false);
 const def = ref(true);
+const resizable = ref(false);
 
 let backFunction;
 
 function setupHandle() {
     let win = GetWindowWithId(id);
-
     if(win.title) title.value = win.title;
     if(win.close) close.value = true;
     if(win.back) {
         hasBack.value = true;
         backFunction = win.back;
-    }
-
-    if(win.resizable){
-        resizable.value = true;
     }
 
     if(handleHeight) {
@@ -56,6 +51,10 @@ function CloseButton(){
 
 onMounted(() => {
     if(props.custom) def.value = false;
+    let win = GetWindowWithId(id);
+    watch(GetWindowWithId(id), () => {
+        resizable.value = win.resizable;
+    })
 });
 
 defineExpose({
@@ -83,7 +82,7 @@ defineExpose({
 
 
     <div v-show="resizable" class="window-resize-handle" :id="'window-resize-handle-' + id">
-        <img src="icons/ui/resize-handle.svg">
+        <img src="icons/ui/resize-handle.svg" draggable="false">
     </div>
 </template>
 
@@ -102,6 +101,7 @@ defineExpose({
         width: 18px;
         height: 18px;
     }
+    z-index: 100;
 }
 
 .window-handle {

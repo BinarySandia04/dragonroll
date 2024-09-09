@@ -71,7 +71,7 @@ function ThrowCustomDice(){
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 210});
+    SetSize(id, {width: 300, height: 210});
     ResetPosition(id, {x: 100, y: 150});
 });
 </script>

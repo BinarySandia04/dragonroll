@@ -14,7 +14,7 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 700, y: 850});
+    SetSize(id, {width: 700, height: 850});
     ResetPosition(id, {x: window.innerWidth - 600, y: 60});
 
     ConfigureBookmarks();
@@ -108,8 +108,8 @@ function ConfigureBookmarks(){
             </div>
             <div class="two-column-layout">
                 <div class="flex-container border">
-                    <!--<img class="player-sheet-splash" src="img/monke.jpg">-->
-                    <img class="player-sheet-splash" src="img/dracblau.png">
+                    <img class="player-sheet-splash" src="img/monke.jpg">
+                    <!--<img class="player-sheet-splash" src="img/dracblau.png">-->
                     <div class="player-info-div">
 
                         <div class="ac-container">

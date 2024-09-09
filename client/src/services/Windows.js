@@ -21,7 +21,6 @@ const defValues = {
     'main_menu': {
         id: 'main_menu',
         title: "DragonRoll",
-        resizable: true,
     },
     'edit_profile': {
         id: 'edit_profile',
@@ -136,7 +135,8 @@ function SetupHandle(id, handle){
     let currentWindowHandleId = "window-handle-" + id;
     let currentWindowResizerId = "window-resize-handle-" + id;
     
-    let mouseDown = false;
+    let draggingWindow = false;
+    let resizingWindow = false;
 
     let currentWindow = document.getElementById(currentWindowId);
     let handler = document.getElementById(currentWindowHandleId);
@@ -145,6 +145,9 @@ function SetupHandle(id, handle){
     let offsetX = 0;
     let offsetY = 0;
 
+    let resizeOffsetX = 0;
+    let resizeOffsetY = 0;
+
     // Programar un resizer mitjanament competent
 
     currentWindow.addEventListener("mousedown", (event) => {
@@ -152,15 +155,16 @@ function SetupHandle(id, handle){
     });
 
     handler.addEventListener("mousedown", (event) => {
-        mouseDown = true;
+        draggingWindow = true;
 
         let windowRect = currentWindow.getBoundingClientRect();
         offsetX = windowRect.left - event.clientX;
         offsetY = windowRect.top - event.clientY;
     })
 
+    // Move window listeners
     document.addEventListener("mousemove", (event) => {
-        if(!mouseDown) return;
+        if(!draggingWindow) return;
 
         if(event.clientX + offsetX < -currentWindow.getBoundingClientRect().width + 20) currentWindow.style.left = (-currentWindow.getBoundingClientRect().width + 20) + "px";
         else if(event.clientX + offsetX > window.innerWidth - 20) currentWindow.style.left = (window.innerWidth - 20) + "px";
@@ -172,12 +176,50 @@ function SetupHandle(id, handle){
     })
 
     document.addEventListener("mouseup", (event) => {
-        mouseDown = false;
+        draggingWindow = false;
         // ummm suposo que no pots tancar mentres mous?
         SaveWindowPos({id, x: parseInt(currentWindow.style.left, 10), y: parseInt(currentWindow.style.top, 10)});
     });
 
+    // Resize window listeners
+    resizer.addEventListener("mousedown", (event) => {
+        resizingWindow = true;
+
+        let windowRect = currentWindow.getBoundingClientRect();
+        resizeOffsetX = parseInt(currentWindow.style.width) - event.clientX;
+        resizeOffsetY = parseInt(currentWindow.style.height) - event.clientY;
+    });
+
+    document.addEventListener("mousemove", (event) => {
+        if(!resizingWindow) return;
+
+        let newWidth = event.clientX + resizeOffsetX;
+        let newHeight = event.clientY + resizeOffsetY;
+
+        if(win.minHeight) if(win.minHeight > newHeight) newHeight = win.minHeight;
+        if(win.maxHeight) if(win.maxHeight < newHeight) newHeight = win.maxHeight;
+
+        if(win.minWidth) if(win.minWidth > newWidth) newWidth = win.minWidth;
+        if(win.maxWidth) if(win.maxWidth < newWidth) newWidth = win.maxWidth;
+
+        currentWindow.style.width = newWidth + "px";
+        currentWindow.style.height = newHeight + "px";
+    });
+
+    document.addEventListener("mouseup", (event) => {
+        resizingWindow = false;
+        
+        win.width = parseInt(currentWindow.style.width, 10);
+        win.height = parseInt(currentWindow.style.height, 10);
+    });
+
     handle.value.setupHandle();
+}
+
+function SetResizable(id, resizable){
+    let win = GetWindowWithId(id);
+    console.log(win);
+    win.resizable = resizable;
 }
 
 function SetSize(id, size){
@@ -185,20 +227,30 @@ function SetSize(id, size){
     let currentWindow = document.getElementById(currentWindowId);
     let win = GetWindowWithId(id);
 
-    currentWindow.style.width = size.x + "px";
-    currentWindow.style.height = size.y + "px";
+    currentWindow.style.width = size.width + "px";
+    currentWindow.style.height = size.height + "px";
 
-    win.size = size;
+    win.width = size.width;
 }
 
 function SetMaxSize(id, maxSize){
     let win = GetWindowWithId(id);
-    win.maxSize = maxSize;
+
+    if(maxSize.width) win.maxWidth = maxSize.width;
+    else win.maxWidth = win.width;
+
+    if(maxSize.height) win.maxHeight = maxSize.height;
+    else win.maxHeight = win.height;
 }
 
 function SetMinSize(id, minSize){
     let win = GetWindowWithId(id);
-    win.minSize = minSize;
+
+    if(minSize.width) win.minWidth = minSize.width;
+    else win.minWidth = win.width;
+
+    if(minSize.height) win.minHeight = minSize.height;
+    else win.minHeight = win.height;
 }
 
 function SetPosition(id, pos){
@@ -239,6 +291,7 @@ function ResetPosition(id, pos){
 
 
 function CreateWindow(type, data = {}){
+
     let finalData = {...{type}, ...defValues[type], ...data}
 
     let contains = false;
@@ -312,6 +365,7 @@ function SetOnTop(id){
 export {
     SetupHandle,
     SetSize,
+    SetResizable,
     SetMaxSize,
     SetMinSize,
     SetPosition,

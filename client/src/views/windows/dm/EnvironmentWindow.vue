@@ -19,7 +19,7 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 200, y: 300});
+    SetSize(id, {width: 200, height: 300});
     ResetPosition(id, {x: data.x, y: data.y});
 
     console.log(env_background.value.GetColor());

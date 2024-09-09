@@ -33,7 +33,7 @@ onMounted(() => {
   successMessage.value = success;
 
   SetupHandle(id, handle);
-  SetSize(id, {x: 450, y: 500});
+  SetSize(id, {width: 450, height: 500});
   ResetPosition(id, "center");
 });
 

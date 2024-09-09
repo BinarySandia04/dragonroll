@@ -26,7 +26,7 @@ function NewMapButton(){
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 600});
+    SetSize(id, {width: 300, height: 600});
     ResetPosition(id, {x: 100, y: 10});
 
     mapUploader.value.addEventListener('change', (event) => {

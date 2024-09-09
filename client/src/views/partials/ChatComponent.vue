@@ -74,7 +74,7 @@ watch(chat, () => {
 
 .chat-container {
     display: flex;
-    height: 720px;
+    height: calc(100% - 24px);
     width: 100%;
     flex-direction: column;
 
@@ -92,7 +92,6 @@ watch(chat, () => {
     flex-direction: column;
     
     overflow-y: auto;
-    max-height: 620px;
 
     margin-bottom: 10px;
 }

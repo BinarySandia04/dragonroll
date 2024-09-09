@@ -28,12 +28,8 @@ let id = data.id;
 onMounted(() => {
     SetupHandle(id, handle);
 
-    if(data.style == 'compact') {
-        SetSize(id, {x: 800, y: 750});
-        hide_chat.value = true;
-    } else {
-        SetSize(id, {x: 1200, y: 750});
-    }
+    SetSize(id, {width: 800, height: 750});
+    hide_chat.value = true;
     
     ResetPosition(id, "center");
 

@@ -2,8 +2,9 @@
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { SetupHandle, SetSize, SetResizable, SetMinSize, SetPosition, ResetPosition } from '@/services/Windows';
 import ChatComponent from '../../partials/ChatComponent.vue';
+import { SetMaxSize } from '../../../services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -14,7 +15,11 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 400, y: 750});
+    SetSize(id, {width: 400, height: 750});
+    SetResizable(id, true);
+    SetMinSize(id, {height: 300});
+    SetMaxSize(id, {width: 400})
+
     ResetPosition(id, {x: window.innerWidth - 420, y: 80});
 });
 </script>

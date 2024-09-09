@@ -28,7 +28,7 @@ provide('clearParent', Clear);
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 600});
+    SetSize(id, {width: 300, height: 600});
     ResetPosition(id, "center");
 
     console.log(systems.value)

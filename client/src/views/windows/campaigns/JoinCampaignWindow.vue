@@ -17,7 +17,7 @@ const code = ref("");
 let id = data.id;
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 150});
+    SetSize(id, {width: 300, height: 150});
     ResetPosition(id, "center");
 });
 

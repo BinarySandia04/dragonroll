@@ -24,7 +24,7 @@ let system = "";
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 300, y: 240});
+    SetSize(id, {width: 300, height: 240});
     ResetPosition(id, "center");
     GetEmitter().on('select', (system_id) => Select(system_id))
 

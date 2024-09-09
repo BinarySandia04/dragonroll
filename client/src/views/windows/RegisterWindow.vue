@@ -30,7 +30,7 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 450, y: 800});
+    SetSize(id, {width: 450, height: 800});
     ResetPosition(id, "center");
 });
 

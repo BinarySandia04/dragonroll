@@ -15,7 +15,7 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 40, y: 200});
+    SetSize(id, {width: 40, height: 200});
     ResetPosition(id, {x: 10, y: 200});
 });
 

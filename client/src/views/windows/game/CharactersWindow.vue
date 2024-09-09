@@ -4,7 +4,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import GameEntry from '../../partials/GameEntry.vue';
-import { CreateWindow } from '../../../services/Windows';
+import { CreateWindow, SetMinSize, SetMaxSize, SetResizable } from '../../../services/Windows';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -14,7 +14,11 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 400, y: 850});
+
+    SetSize(id, {width: 300, height: 540});
+    SetResizable(id, true);
+    SetMinSize(id, {height: 300});
+    SetMaxSize(id, {height: 700});
     ResetPosition(id, {x: window.innerWidth - 420, y: 60});
 });
 

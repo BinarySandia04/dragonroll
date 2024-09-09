@@ -20,7 +20,7 @@ const otherCampaigns = ref([]);
 let id = data.id;
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 500, y: 680});
+    SetSize(id, {width: 500, height: 680});
     ResetPosition(id, "center");
 
     RefreshCampaigns();

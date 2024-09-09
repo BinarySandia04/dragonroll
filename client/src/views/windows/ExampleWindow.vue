@@ -15,7 +15,7 @@ const test = ref(null)
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {x: 500, y: 380});
+    SetSize(id, {width: 500, height: 380});
     ResetPosition(id, "center");
 });
 </script>

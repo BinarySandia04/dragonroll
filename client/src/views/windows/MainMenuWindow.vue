@@ -25,9 +25,6 @@ let title = data.title;
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 500, height: 540});
-    SetResizable(id, true);
-    SetMinSize(id, {width: 500, height: 540});
-    SetMaxSize(id, {width: 700, height: 700});
     ResetPosition(id, "center", emitter);
 });
 

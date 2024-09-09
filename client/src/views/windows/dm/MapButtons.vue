@@ -4,7 +4,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 import IconButton from '@/views/partials/game/IconButton.vue'
-import { CreateChildWindow, GetPosition } from '../../../services/Windows';
+import { CreateChildWindow, GetPosition, SetMaxSize, SetMinSize, SetResizable } from '../../../services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -15,10 +15,13 @@ let id = data.id;
 
 onMounted(() => {
     SetupHandle(id, handle);
+    SetResizable(id, true);
     SetSize(id, {width: 40, height: 200});
+    SetMinSize(id, {width: 40, height: 200});
+    SetMaxSize(id, {width: 40, height: 300});
+
     ResetPosition(id, {x: 10, y: 200});
 });
-
 
 
 function EditEnvironment(){

@@ -43,6 +43,7 @@ let toggled = props.toggled;
     margin: 2px;
 
     transition: .3s background-color;
+    border: 1px solid var(--color-border);
 }
 
 .icon-button:hover {

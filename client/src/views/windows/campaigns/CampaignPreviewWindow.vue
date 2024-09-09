@@ -6,7 +6,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import PlayerList from '../../partials/PlayerList.vue';
 import { Disconnect, DisplayToast, GetCampaign, GetClient } from '../../../services/Dragonroll';
 import CampaignBookList from '../../partials/books/CampaignBookList.vue';
-import { ClearAll, ClearWindow, CreateWindow } from '../../../services/Windows';
+import { ClearAll, ClearWindow, CreateWindow, SetMinSize, SetResizable } from '../../../services/Windows';
 import { LaunchGame } from '../../../services/Game';
 import { AddSound } from '../../../services/Sound';
 import ChatComponent from '../../partials/ChatComponent.vue';
@@ -29,6 +29,9 @@ onMounted(() => {
     SetupHandle(id, handle);
 
     SetSize(id, {width: 800, height: 750});
+    SetResizable(id, true);
+    SetMinSize(id, {width: 600, height: 500});
+
     hide_chat.value = true;
     
     ResetPosition(id, "center");
@@ -135,13 +138,8 @@ function Exit(){
 .campaign-preview-container {
     width: 100%;
     height: 100%;
-
-    display: grid;
-    grid-template-columns: 2fr 4fr 3fr;
-
-    &.campaign-preview-compact {
-        grid-template-columns: 2fr 4fr;
-    }
+    display: flex;
+    flex-direction: row;
 }
 
 .campaign-preview-column {
@@ -150,12 +148,17 @@ function Exit(){
 
     &.left {
         background-color: var(--color-background-soft);
+        border-right: 1px solid var(--color-border);
+        flex-grow: 1;
+        min-width: 100px;
+        max-width: 300px;
     }
 
     &.center {
         background-color: var(--color-background-semisoft);
 
         display: flex;
+        flex-grow: 3;
     }
 
     &.right {

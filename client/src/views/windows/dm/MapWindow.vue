@@ -7,6 +7,7 @@ import { ImportDD2VTT } from '../../../services/Map';
 
 import MapList from '../../partials/MapList.vue';
 import IconButton from '@/views/partials/game/IconButton.vue';
+import { SetMinSize, SetResizable, SetMaxSize } from '../../../services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -27,6 +28,9 @@ function NewMapButton(){
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 300, height: 600});
+    SetResizable(id, true);
+    SetMinSize(id, {width: 300, height: 300});
+    SetMaxSize(id, {width: 300});
     ResetPosition(id, {x: 100, y: 10});
 
     mapUploader.value.addEventListener('change', (event) => {

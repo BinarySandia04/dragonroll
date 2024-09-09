@@ -3,6 +3,7 @@ import { Disconnect } from './Dragonroll';
 
 const windows = ref([])
 
+// Presets
 const defValues = {
     'test': {
         id: "example",
@@ -19,7 +20,8 @@ const defValues = {
     },
     'main_menu': {
         id: 'main_menu',
-        title: "DragonRoll"
+        title: "DragonRoll",
+        resizable: true,
     },
     'edit_profile': {
         id: 'edit_profile',
@@ -132,14 +134,18 @@ function SetupHandle(id, handle){
 
     let currentWindowId = "window-wrapper-" + id;
     let currentWindowHandleId = "window-handle-" + id;
+    let currentWindowResizerId = "window-resize-handle-" + id;
     
     let mouseDown = false;
 
     let currentWindow = document.getElementById(currentWindowId);
     let handler = document.getElementById(currentWindowHandleId);
+    let resizer = document.getElementById(currentWindowResizerId);
 
     let offsetX = 0;
     let offsetY = 0;
+
+    // Programar un resizer mitjanament competent
 
     currentWindow.addEventListener("mousedown", (event) => {
         SetOnTop(id);
@@ -177,9 +183,22 @@ function SetupHandle(id, handle){
 function SetSize(id, size){
     let currentWindowId = "window-wrapper-" + id;
     let currentWindow = document.getElementById(currentWindowId);
+    let win = GetWindowWithId(id);
 
     currentWindow.style.width = size.x + "px";
     currentWindow.style.height = size.y + "px";
+
+    win.size = size;
+}
+
+function SetMaxSize(id, maxSize){
+    let win = GetWindowWithId(id);
+    win.maxSize = maxSize;
+}
+
+function SetMinSize(id, minSize){
+    let win = GetWindowWithId(id);
+    win.minSize = minSize;
 }
 
 function SetPosition(id, pos){
@@ -293,6 +312,8 @@ function SetOnTop(id){
 export {
     SetupHandle,
     SetSize,
+    SetMaxSize,
+    SetMinSize,
     SetPosition,
     ResetPosition,
     Windows,

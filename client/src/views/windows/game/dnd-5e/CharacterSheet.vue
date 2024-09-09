@@ -539,7 +539,7 @@ div.player-info-div {
 .ac-container {
     width: 70px;
     height: 70px;
-    background-image: url('icons/other/noun-shield.svg');
+    background-image: url('icons/ui/noun-shield.svg');
     background-size: cover;
     background-repeat: no-repeat;
 

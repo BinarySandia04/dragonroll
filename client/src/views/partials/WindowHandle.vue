@@ -15,6 +15,7 @@ const backButton = ref(null);
 const title = ref("");
 const close = ref(false);
 const hasBack = ref(false);
+const resizable = ref(false);
 const def = ref(true);
 
 let backFunction;
@@ -27,6 +28,10 @@ function setupHandle() {
     if(win.back) {
         hasBack.value = true;
         backFunction = win.back;
+    }
+
+    if(win.resizable){
+        resizable.value = true;
     }
 
     if(handleHeight) {
@@ -68,20 +73,39 @@ defineExpose({
         <div class="center" v-if="def">
             <span>{{ title }}</span>
         </div>
-        <div class="right" v-if="def">
+        <div class="right">
             <img class="icon" src="icons/iconoir/regular/xmark.svg" draggable="false" ref="closeButton" v-if="close" v-on:click="CloseButton">
         </div>
         <!-- span>{{ title }}</span>
             
         -->
     </div>
+
+
+    <div v-show="resizable" class="window-resize-handle" :id="'window-resize-handle-' + id">
+        <img src="icons/ui/resize-handle.svg">
+    </div>
 </template>
 
 
 <style scoped lang="scss">
+.window-resize-handle {
+    position: absolute;
+    filter: invert(0.8);
+    opacity: 0.6;
+    right: 0px;
+    bottom: 0px;
+    width: 18px;
+    height: 18px;
+
+    img {
+        width: 18px;
+        height: 18px;
+    }
+}
 
 .window-handle {
-    
+
     .left, .right {
         flex: 1;
         display: flex;
@@ -92,6 +116,7 @@ defineExpose({
     }
 
     .right {
+        height: 24px;
         justify-content: right;
     }
 

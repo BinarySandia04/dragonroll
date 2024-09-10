@@ -12,6 +12,7 @@ import { AddSound } from '../../../services/Sound';
 import ChatComponent from '../../partials/ChatComponent.vue';
 import GameSystem from '@/views/partials/GameSystem.vue'
 import { GetModule } from '../../../services/Modules';
+import { AddTooltip } from '../../../services/Tooltip';
 
 const handle = ref(null);
 
@@ -21,6 +22,7 @@ const data = props.data;
 const hide_start = ref(false);
 const hide_chat = ref(false);
 const campaign_title = ref(null);
+const copy_code_button = ref(null);
 
 const container = ref(null);
 
@@ -41,6 +43,8 @@ onMounted(() => {
     AddSound(container.value)
 
     campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
+
+    AddTooltip(copy_code_button.value, "<p>Click this button to copy the invite code of your campaign to the clipboard</p>", {max_width: 300})
 });
 
 function CopyCode(){
@@ -74,7 +78,7 @@ function Exit(){
                 <h2>Players</h2>
                 <PlayerList :campaign="data.campaign"></PlayerList>
                 <div class="buttons-row">
-                    <button class="btn-primary button-row sound-click" v-on:click.prevent="CopyCode">Copy invite code</button>
+                    <button class="btn-primary button-row sound-click" v-on:click.prevent="CopyCode" ref="copy_code_button">Copy invite code</button>
                 </div>
             </div>
             <div class="campaign-preview-column center">

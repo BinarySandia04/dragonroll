@@ -34,7 +34,7 @@ onMounted(() => {
             textInput.value.style.height = "1px";
             textInput.value.style.height = (textInput.value.scrollHeight)+"px";
         }
-    })
+    });
 });
 
 watch(chat, () => {
@@ -58,10 +58,10 @@ watch(chat, () => {
         <textarea ref="textInput" class="chat-input"></textarea>
         <div class="chat-input-actions">
             <div class="chat-input-actions-left">
-                <IconButton icon="icons/iconoir/regular/trash.svg"></IconButton>
+                <IconButton icon="icons/iconoir/regular/trash.svg" tooltip="Clear chat"></IconButton>
             </div>
             <div class="chat-input-actions-right">
-                <IconButton icon="icons/iconoir/regular/send.svg"></IconButton>
+                <IconButton icon="icons/iconoir/regular/send.svg" tooltip="Send message"></IconButton>
             </div>
         </div>
     </div>

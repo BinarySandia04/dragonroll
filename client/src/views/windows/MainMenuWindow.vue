@@ -13,6 +13,7 @@ import Api from '@/services/Api.js'
 import useEmitter from '@/services/Emitter';
 import { ClearWindow, CreateWindow, Windows } from '../../services/Windows';
 import { AddTooltip } from '../../services/Tooltip';
+import { AddContextMenu } from '../../services/ContextMenu';
 const emitter = useEmitter();
 const handle = ref(null);
 
@@ -30,28 +31,24 @@ onMounted(() => {
     SetSize(id, {width: 500, height: 540});
     ResetPosition(id, "center", emitter);
 
+    /*
     AddTooltip(campaignButton.value, "<h2>Hey</h2>Hola test");
-});
-
-// ???
-/*
-function OpenDatabase(){
-    ClearWindow(id);
-    CreateWindow({
-        type: 'db_window',
-        id: 'db_window',
-        title: "Database",
-        back: () => {
-            ClearWindow('db_window');
-            CreateWindow({
-                type: 'main_menu',
-                id: 'main_menu',
-                title: 'Dragonroll'
-            })
-        }
-    });
-}
+    AddContextMenu(campaignButton.value, [
+        {name: "Test", action: () => {alert("Test")}},
+        {name: "A", action: () => {alert("A")}},
+        {name: "B", action: () => {alert("B")}},
+        {name: "Patata", action: () => {alert("Patata")}, context: [
+            {name: "Test 2dsadsadsdsadasdasdsad", action: () => {alert("Test context")}},
+            {name: "A 3", action: () => {alert("A context")}, context: [
+                {name: "Test", action: () => {alert("Test")}},
+                {name: "A", action: () => {alert("A")}},
+                {name: "B", action: () => {alert("B")}},
+            ]},
+            {name: "B 5", action: () => {alert("B context")}},
+        ]},
+    ])
     */
+});
 
 function OpenCampaigns(){
     ClearWindow(id);

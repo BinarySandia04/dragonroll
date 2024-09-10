@@ -16,20 +16,19 @@ function HideTooltip(){
     tooltip.style.display = "none";
 }
 
-function AddTooltip(element, val){
-    element._dr_tooltip = val;
+function AddTooltip(element, val, data = {}){
+    element._dr_tooltip = {value: val, ...data};
 }
 
 function UpdateVisibilityThread(){
-    let hiding = true;
-    document.elementsFromPoint(cursorX, cursorY).forEach(element => {
-        if(element._dr_tooltip){
-            hiding = false;
-            content.value = element._dr_tooltip;
-        }
-    });
-    if(hiding) HideTooltip();
-    else ShowTooltip();
+    let tooltip = document.getElementById('mouse-tooltip');
+    let element = document.elementFromPoint(cursorX, cursorY);
+    if(element._dr_tooltip){
+        ShowTooltip();
+        content.value = element._dr_tooltip.value;
+        if(element._dr_tooltip.max_width) tooltip.style.maxWidth = element._dr_tooltip.max_width + "px";
+        else tooltip.style.maxWidth = "none";
+    } else HideTooltip();
 
     setTimeout(UpdateVisibilityThread, 0);
 }

@@ -10,6 +10,7 @@ import Toast from './partials/Toast.vue';
 import { DisplayToast, SetEmitter } from '../services/Dragonroll';
 import GameManager from './managers/GameManager.vue';
 import TooltipManager from './managers/TooltipManager.vue';
+import ContextMenuManager from './managers/ContextMenuManager.vue';
 
 
 </script>
@@ -18,6 +19,7 @@ import TooltipManager from './managers/TooltipManager.vue';
   <Toast></Toast>
   <GameManager></GameManager>
   <TooltipManager></TooltipManager>
+  <ContextMenuManager></ContextMenuManager>
   <WindowManager></WindowManager>
 </template>
 

@@ -17,7 +17,9 @@ onMounted(() => {
 
 <template>
 <div id="mouse-tooltip" class="mouse-tooltip">
-    <span v-html="contentRef"></span>
+    <div class="document">
+        <span v-html="contentRef"></span>
+    </div>
 </div>
 </template>
 

@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import { GetBackgroundColor, SetupTilemap } from '../../services/Map';
+import { AddContextMenu } from '../../services/ContextMenu';
 
 const backgroundColor = GetBackgroundColor();
 
+const canvas = ref(null);
+
 onMounted(() => {
     SetupTilemap();
+
+    AddContextMenu(canvas.value, [
+        {name: "Ping"}
+    ]);
 });
 
 watch(backgroundColor, () => {
@@ -16,7 +23,7 @@ watch(backgroundColor, () => {
 </script>
 
 <template>
-    <canvas class="tilemap" id="tilemap"></canvas>
+    <canvas class="tilemap" id="tilemap" ref="canvas"></canvas>
 </template>
 
 <style scoped lang="scss">

@@ -158,7 +158,7 @@ function ConfigureBookmarks(){
                         </div>
                     </div>
                 </div>
-                <div class="flex-container">
+                <div class="flex-container overflow">
                     <div class="saving-throws">
                         <span class="span-header">Saving Throws</span>
                         <div class="saving-throws-container">
@@ -289,20 +289,130 @@ function ConfigureBookmarks(){
                             </div>
                         </div>
                     </div>
+                    <div class="skill-throws">
+                        <span class="span-header">Skills</span>
+                        <div class="skill-throws-container">
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Acrobatics (Dex)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Animal Handling (Wis)</span>
+                                <span class="skill-throw-modifier">+5</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Arcana (Int)</span>
+                                <span class="skill-throw-modifier">+2</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Athletics (Str)</span>
+                                <span class="skill-throw-modifier">+3</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Deception (Cha)</span>
+                                <span class="skill-throw-modifier">-1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">History (Int)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Insight (Wis)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Intimidation (Cha)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Investigation (Int)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Medicine (Wis)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Nature (Int)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Perception (Wis)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Performance (Cha)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Persuasion (Cha)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Religion (Int)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Sleight of Hand (Dex)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Stealth (Dex)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                            <div class="skill-throw">
+                                <input type="checkbox" name="str-saving">
+                                <span class="skill-throw-class">Survival (Wis)</span>
+                                <span class="skill-throw-modifier">+1</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="sheet-content" v-show="selectedBookmark == 1">
-            Actions
+            <!-- Inventory -->
+            <div class="fixed-container">
+                <div class="weight-container"></div>
+                <div class="money-container"></div>
+                <div class="filter-container"></div>
+                <div class="inventory-container"></div>
+            </div>
         </div>
         <div class="sheet-content" v-show="selectedBookmark == 2">
-            Inventory
+            <div class="classes-container"></div>
+            <div class="features-container"></div>
         </div>
         <div class="sheet-content" v-show="selectedBookmark == 3">
-            Traits
+            <!-- spells -->
+            <div class="spellcasting-container"></div>
+            <div class="spells-container"></div>
         </div>
         <div class="sheet-content" v-show="selectedBookmark == 4">
-            Bio
+            <div class="effects-container"></div>
+            <div class="conditions-container"></div>
+        </div>
+        <div class="sheet-content" v-show="selectedBookmark == 5">
+            <div class="properties-container"></div>
+            <div class="bio-traits-container"></div>
+            <div class="bio-container"></div>
         </div>
     </div>
 </template>
@@ -571,8 +681,7 @@ div.player-info-div {
 }
 
 .two-column-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     flex-direction: row;
     margin-top: 50px;
     margin-left: 20px;
@@ -582,6 +691,11 @@ div.player-info-div {
         &.border {
             border: 1px solid var(--color-border);
             background-color: #1b1b1b;
+            /* Change */
+            position: sticky;
+            align-self: flex-start;
+            top: 50px;
+            margin-top: 0px;
         }
         margin: auto;
         width: 300px;

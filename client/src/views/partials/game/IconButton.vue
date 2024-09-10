@@ -1,16 +1,28 @@
 <script setup>
-const props = defineProps(['icon', 'action', 'size', 'toggled']);
+
+import { onMounted, ref } from 'vue';
+import { AddTooltip } from '../../../services/Tooltip';
+const props = defineProps(['icon', 'action', 'size', 'toggled', 'tooltip']);
 let icon = props.icon;
 let action = props.action;
 
 let size = props.size;
 let toggled = props.toggled;
+let tooltip = props.tooltip;
+
+const button = ref(null);
+
+onMounted(() => {
+    if(tooltip){
+        AddTooltip(button.value, tooltip);
+    }
+})
 </script>
 
 
 
 <template>
-    <div class="icon-button sound-click" :class="size + ' ' + toggled" v-on:click.prevent="action">
+    <div class="icon-button sound-click" :class="size + ' ' + toggled" v-on:click.prevent="action" ref="button">
         <img class="icon" draggable="false" :src="icon" :class="size">
     </div>
 </template>
@@ -53,6 +65,7 @@ let toggled = props.toggled;
 .icon {
     height: 24px;
     width: 24px;
+    pointer-events: none;
 
     &.big {
         height: 38px;

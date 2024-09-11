@@ -28,7 +28,7 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 540});
+    SetSize(id, {width: 500, height: 460});
     ResetPosition(id, "center", emitter);
 
     /*
@@ -55,6 +55,22 @@ function OpenCampaigns(){
     CreateWindow('campaign_list');
 }
 
+function OpenCompendium(){
+    ClearWindow(id);
+    CreateWindow('compendium_window', {
+        back: () => {
+            CreateWindow('main_menu');
+            ClearWindow('compendium_window');
+        },
+        close: false
+    });
+}
+
+function OpenBookAnvil(){
+    ClearWindow(id);
+    CreateWindow('book_anvil_window');
+}
+
 </script>
 
 
@@ -69,9 +85,8 @@ function OpenCampaigns(){
         <div class="button-container">
             <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns" ref="campaignButton">Campaigns</button>
             <hr>
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenCollection">Your Collection</button>
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenLibrary">The Cosmic Library</button>
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenLibrary">Book Anvil</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCompendium">The Cosmic Compendium</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenBookAnvil">Book Anvil</button>
         </div>
         <VersionRender></VersionRender>
     </div>

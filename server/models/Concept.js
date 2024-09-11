@@ -6,6 +6,8 @@ const ConceptSchema = new Schema({
     system: {type: String, required: true},
     type: { type: String },
     data: { type: Object },
+    book: {type: mongoose.Types.ObjectId, ref: "Book"},
+    campaign: {type: mongoose.Types.ObjectId, ref: "Campaign"},
 });
 
 module.exports = mongoose.model('Concept', ConceptSchema);

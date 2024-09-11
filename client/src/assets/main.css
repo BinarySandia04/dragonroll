@@ -198,3 +198,9 @@ button:active {
   font-weight: normal;
   font-size: 32px;
 }
+
+.text-icon {
+  height: 18px;
+  width: 18px;
+  margin-right: 5px;
+}

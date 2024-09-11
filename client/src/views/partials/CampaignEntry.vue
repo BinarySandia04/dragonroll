@@ -44,7 +44,7 @@ function ViewCampaign(){
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .button-small {
     height: 32px;
     padding: 10px;
@@ -54,6 +54,11 @@ function ViewCampaign(){
     background-color: var(--color-background-softer);
     width: 100%;
     user-select: none;
+
+    border-bottom: 1px solid var(--color-border);
+    &:first-child {
+        border-top: 1px solid var(--color-border);
+    }
 }
 
 .main-campaign-entry-container-inner {

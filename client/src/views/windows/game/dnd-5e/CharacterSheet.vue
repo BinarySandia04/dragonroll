@@ -390,8 +390,41 @@ function ConfigureBookmarks(){
         <div class="sheet-content" v-show="selectedBookmark == 1">
             <!-- Inventory -->
             <div class="fixed-container">
-                <div class="weight-container"></div>
-                <div class="money-container"></div>
+                <div class="weight-info-container">
+                    <div class="weight-container">
+                        <div class="weight-bar">
+                            <div class="weight-bar-value-content" style="width: 130px;"></div>
+                            <div class="weight-bar-content"><img class="text-icon" src="icons/game-icons/ffffff/delapouite/weight.svg"> 30 / 150</div>
+                        </div>
+                        <div class="three-columns">
+                            <div class="grid-element-col">
+                                <div class="big-number-container">
+                                    <span class="small">Strength</span>
+                                    <span class="big">10</span>
+                                </div>
+                            </div>
+                            <div class="grid-element-col">
+                                <div class="big-number-container">
+                                    <span class="small">Size</span>
+                                    <span class="big">Md</span>
+                                </div>
+                            </div>
+                            <div class="grid-element-col">
+                                <div class="big-number-container">
+                                    <span class="small">Multiplier</span>
+                                    <span class="big">x1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="money-container">
+                        <div class="money-entry grid-element"><span>100</span></div>
+                        <div class="money-entry grid-element"><span>100</span></div>
+                        <div class="money-entry grid-element"><span>100</span></div>
+                        <div class="money-entry grid-element"><span>100</span></div>
+                        <div class="money-entry grid-element"><span>100</span></div>
+                    </div>
+                </div>
                 <div class="filter-container"></div>
                 <div class="inventory-container"></div>
             </div>
@@ -419,6 +452,108 @@ function ConfigureBookmarks(){
 
 
 <style scoped lang="scss">
+@mixin shadow {
+  -moz-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.25);
+}
+
+@mixin panel {
+    @include shadow();
+    background-color: #1B1B1B;
+    border: 1px solid var(--color-border);
+}
+
+.money-entry {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include panel();
+}
+
+.money-container {
+    height: 95px;
+    width: 200px;
+    margin-left: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.weight-info-container {
+    display: flex;
+}
+
+.weight-container {
+    @include panel();
+    width: 300px;
+    height: 95px;
+    display: flex;
+    flex-direction: column;
+}
+
+.big-number-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .small {
+        margin-top: 5px;
+        flex-grow: 1;
+    }
+
+    .big {
+        font-size: 24px;
+        font-weight: bold;
+        flex-grow: 1;
+    }
+}
+
+.three-columns {
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-element-col, .grid-element {
+    position: relative;
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        background-color: #333;
+        z-index: 1;
+    }
+
+    &::before {
+        width: 1px;
+        height: 100%;
+        left: -1px;
+        top: 0;
+    }
+}
+
+.grid-element {
+    &::after {
+        width: 100%;
+        height: 1px;
+        left: 0;
+        top: -1px;
+    }
+}
+
+.fixed-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
 .skill-throws-container {
     display: flex;
     flex-direction: column;
@@ -448,6 +583,7 @@ function ConfigureBookmarks(){
 }
 
 .saving-throws, .skill-throws {
+    @include shadow();
     display: flex;
     flex-direction: column;
     background-color: #1B1B1B;
@@ -563,6 +699,39 @@ span.player-info-div {
 
         line-height: 30px;
         font-size: 18px;
+        margin-left: 12px;
+        font-weight: bold;
+    }
+}
+
+.weight-bar {
+    background-size: 99.5px 100px;
+  background-image:
+    linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, transparent 1px);
+    
+    height: 24px;
+    border-bottom: 1px solid var(--color-golden-border);
+    border-right: 1px solid var(--color-golden-border);
+    position: relative;
+    margin-top: 0px;
+
+    .weight-bar-value-content {
+        position: absolute;
+        height: 24px;
+        border: 1px solid var(--color-border);
+        width: 100%;
+        background-color: rgb(71, 134, 206);
+    }
+
+    .weight-bar-content {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        height: 22px;
+
+        line-height: 22px;
+        font-size: 16px;
         margin-left: 12px;
         font-weight: bold;
     }
@@ -689,6 +858,7 @@ div.player-info-div {
 
     .flex-container {
         &.border {
+            @include shadow();
             border: 1px solid var(--color-border);
             background-color: #1b1b1b;
             /* Change */

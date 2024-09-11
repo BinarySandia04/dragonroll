@@ -36,6 +36,11 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.msg-chunk {
+    border-bottom: 1px solid #ffffff08;
+    margin: 2px 0px 2px 0px;
+}
+
 .msg-title {
     font-weight: bold;
 }
@@ -44,13 +49,12 @@ onMounted(() => {
     width: 100%;
     background-color: var(--color-chat-other);
     display: flex;
-    margin-top: 2px;
     padding-left: 10px;
     font-size: 0.9rem;
 }
 
 .content-container {
-    max-width: 75%;
+    width: 100%;
     padding: 1px 15px;
     margin-bottom: 7px;
 

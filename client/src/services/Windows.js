@@ -22,7 +22,7 @@ const defValues = {
         id: 'main_menu',
         title: "DragonRoll",
         create: () => {
-            CreateChildWindow('main_menu', 'welcome');
+            // CreateChildWindow('main_menu', 'welcome');
         }
     },
     'welcome': {
@@ -123,7 +123,15 @@ const defValues = {
         id: 'character_sheet',
         title: 'Character Sheet',
         close: "true"
-    }
+    },
+    'book_anvil_window': {
+        id: 'book_anvil_window',
+        title: "Book Anvil",
+        back: () => {
+            ClearWindow('book_anvil_window');
+            CreateWindow('main_menu');
+        }
+    },
 }
 
 const reload = ref(0);

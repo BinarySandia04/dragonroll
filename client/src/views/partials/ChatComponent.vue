@@ -116,6 +116,7 @@ watch(chat, () => {
     height: 41px;
     max-height: 100px;
     resize: none;
+    border: 1px solid var(--color-border);
 
     &:focus {
         outline: none;

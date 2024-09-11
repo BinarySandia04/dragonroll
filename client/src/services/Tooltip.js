@@ -23,7 +23,7 @@ function AddTooltip(element, val, data = {}){
 function UpdateVisibilityThread(){
     let tooltip = document.getElementById('mouse-tooltip');
     let element = document.elementFromPoint(cursorX, cursorY);
-    if(element._dr_tooltip){
+    if(element) if(element._dr_tooltip){
         ShowTooltip();
         content.value = element._dr_tooltip.value;
         if(element._dr_tooltip.max_width) tooltip.style.maxWidth = element._dr_tooltip.max_width + "px";

@@ -8,7 +8,7 @@ let cursorY = 0;
 
 let arrowIcon = "icons/iconoir/regular/nav-arrow-right.svg";
 
-function ShowContextMenu(){
+function Show(){
     let contextMenu = document.getElementById('context-menu');
     contextMenu.style.display = "flex";
     contextMenu.style.top = (cursorY + margin) + "px";
@@ -29,7 +29,7 @@ function PopulateContext(val){
             contextMenuElement.addEventListener("click", element.action);
         
         let spanInfo = document.createElement('span');
-        spanInfo.innerText = element.name;
+        spanInfo.innerHTML = element.name;
         contextMenuElement.appendChild(spanInfo);
 
         if(element.context){
@@ -76,11 +76,11 @@ function AddContextMenu(element, val){
     element.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         PopulateContextMenu(val);
-        ShowContextMenu();
+        Show();
     });
-
-
 }
+
+
 
 function UpdateVisibility(){
     let contextMenu = document.getElementById('context-menu');
@@ -105,6 +105,11 @@ function SetupContextMenu(){
     });
 
     document.addEventListener('mousedown', UpdateVisibility);
+}
+
+function ShowContextMenu(val){
+    PopulateContextMenu(val);
+    Show();
 }
 
 export {

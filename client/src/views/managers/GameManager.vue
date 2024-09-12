@@ -5,14 +5,20 @@ import IconButton from '../partials/game/IconButton.vue';
 import { AddSound } from '../../services/Sound';
 import TileMap from './TileMap.vue';
 import { DisplayCampaign, GetCampaign, GetClient } from '../../services/Dragonroll';
-import { ClearAll, CreateWindow } from '../../services/Windows';
+import { ClearAll, ClearWindow, CreateWindow } from '../../services/Windows';
 
 const game = ref(null);
 const in_game = InGameRef();
 const is_dm = ref(false);
 
 function OpenCampaignPreview(){
-    CreateWindow('campaign_preview', {campaign: GetCampaign(), style: 'compact', hide_start: true, back: undefined, close: true});
+    CreateWindow('campaign_preview', {
+        campaign: GetCampaign(),
+        style: 'compact',
+        hide_start: true,
+        back: undefined,
+        close: () => ClearWindow('campaign_preview')
+    });
 }
 
 function OpenChat(){
@@ -47,8 +53,8 @@ function OpenCharactersWindow(){
     CreateWindow('characters_window');
 }
 
-function OpenCompendiumWindow(){
-    CreateWindow('compendium_window');
+function OpenDatabaseWindow(){
+    CreateWindow('database');
 }
 
 watch(game, () => {
@@ -83,7 +89,7 @@ watch(game, () => {
 
         <div class="horizontal-button">
             <IconButton icon="icons/iconoir/regular/group.svg" :action="OpenCharactersWindow"></IconButton>
-            <IconButton icon="icons/iconoir/regular/bookmark-book.svg" :action="OpenCompendiumWindow"></IconButton>
+            <IconButton icon="icons/iconoir/regular/bookmark-book.svg" :action="OpenDatabaseWindow"></IconButton>
             <IconButton icon="icons/iconoir/regular/chat-bubble.svg" :action="OpenChat"></IconButton>
         </div>
 

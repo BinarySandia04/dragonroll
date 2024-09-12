@@ -12,31 +12,38 @@ const emitter = useEmitter();
 import { DisplayToast, SetEmitter } from './services/Dragonroll'
 import { ImportModule, GetModulesToLoad } from './services/Modules'
 import { CreateWindow } from './services/Windows';
+import { FetchVanillaResources } from './services/Resources';
 
 console.clear();
 console.log("%cLoaded!!!", "color: #22ff22; font-size: 24px");
 LoadUser();
 
 SetEmitter(emitter);
+
+async function preloadModules(){
+  if(GetUser()){
+    CreateWindow('main_menu');
+    // DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
+  } else CreateWindow('login');
+
+  const modules = GetModulesToLoad();
+  let moduleLoads = [];
+
+  modules.forEach(moduleName => {
+      moduleLoads.push(ImportModule(moduleName));
+  });
+
+  await Promise.all(moduleLoads);
+
+  await FetchVanillaResources();
+
+  DisplayToast('aqua', 'All modules loaded successfully');
+
+
+}
+
 onMounted(() => {
-  async function preloadModules(){
-    const modules = GetModulesToLoad();
-    let moduleLoads = [];
-
-    modules.forEach(moduleName => {
-        moduleLoads.push(ImportModule(moduleName));
-    });
-
-    await Promise.all(moduleLoads);
-    DisplayToast('aqua', 'All modules loaded successfully');
-
-    if(GetUser()){
-      CreateWindow('main_menu');
-      DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
-      return;
-    }
-    CreateWindow('login');
-  }
+  
 
   preloadModules();
 })

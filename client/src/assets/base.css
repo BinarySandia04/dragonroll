@@ -53,6 +53,13 @@
   --c-gradient-col-3: #0CF25D;
 
   --c-golden-border: #AA9E89aa;
+
+  --color-common: var(--color-text);
+  --color-uncommon: #27AE60;
+  --color-rare: #3a7eac;
+  --color-very-rare: #b43876;
+  --color-legendary: #f1a90f;
+  --color-artifact: #c73e43;
 }
 
 /* semantic color variables for this project */

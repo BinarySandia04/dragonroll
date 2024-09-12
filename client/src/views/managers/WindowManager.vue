@@ -29,6 +29,8 @@ import CharacterSheet from '../windows/game/dnd-5e/CharacterSheet.vue'
 import WelcomeWindow from '../windows/WelcomeWindow.vue'
 import CompendiumWindow from '../windows/CompendiumWindow.vue'
 import BookAnvilWindow from '../windows/BookAnvilWindow.vue'
+import IconSelectorWindow from '../windows/selectors/IconSelectorWindow.vue'
+import DatabaseWindow from '../windows/game/DatabaseWindow.vue'
 
 
 // Gestionem ventanas
@@ -58,13 +60,16 @@ let WindowMap = {
   characters_window: CharactersWindow,
   compendium_window: CompendiumWindow,
   book_anvil_window: BookAnvilWindow,
+  icon_selector: IconSelectorWindow,
+  database: DatabaseWindow
 };
 
 async function InjectSystemWindows(system){
   // Hack
   let systemWidows = {
     character_sheet: (await import(`../windows/game/${system}/CharacterSheet.vue`)).default,
-    concept_sheet: (await import(`../windows/game/${system}/ConceptSheet.vue`)).default
+    item_sheet: (await import(`../windows/game/${system}/ItemSheet.vue`)).default,
+    create_item_prompt: (await import(`../windows/game/${system}/CreateItemPrompt.vue`)).default,
   };
 
   WindowMap = {...WindowMap, ...systemWidows};

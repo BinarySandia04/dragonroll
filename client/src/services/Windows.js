@@ -8,7 +8,7 @@ const defValues = {
     'test': {
         id: "example",
         title: "Example",
-        close: true
+        close: () => ClearWindow('example')
     },
     'login': {
         id: 'login',
@@ -28,17 +28,17 @@ const defValues = {
     'welcome': {
         id: 'welcome',
         title: "Welcome",
-        close: true
+        close: () => ClearWindow('welcome')
     },
     'edit_profile': {
         id: 'edit_profile',
         title: "Edit Profile",
-        close: true
+        close: () => ClearWindow('edit_profile')
     },
     'account_settings': {
         id: 'account_settings',
         title: "Dragonroll settings",
-        close: true
+        close: () => ClearWindow('account_settings')
     },
     'campaign_list': {
         id: 'campaign_list',
@@ -52,13 +52,13 @@ const defValues = {
         id: 'new_campaign',
         title: 'Create campaign',
         parent: 'campaign_list',
-        close: true
+        close: () => ClearWindow('new_campaign')
     },
     'join_campaign': {
         id: 'join_campaign',
         title: 'Join campaign',
         parent: 'campaign_list',
-        close: true
+        close: () => ClearWindow('join_campaign')
     },
     'campaign_preview': {
         id: 'campaign_preview',
@@ -72,57 +72,57 @@ const defValues = {
     'chat': {
         id: 'chat',
         title: 'Chat',
-        close: true
+        close: () => ClearWindow('chat')
     },
     'dice_menu': {
         id: 'dice_menu',
         title: 'Dice roll',
-        close: true
+        close: () => ClearWindow('dice_menu')
     },
     'map_buttons': {
         id: 'map_buttons',
         title: '',
-        close: true
+        close: () => ClearWindow('map_buttons')
     },
     'environment': {
         id: 'environment',
         title: 'Edit environment',
-        close: true
+        close: () => ClearWindow('environment')
     },
     'system_selector': {
         id: 'system-selector',
         title: "Select a game system",
-        close: true
+        close: () => ClearWindow('system-selector')
     },
     'map_window': {
         id: 'map_window',
         title: 'Maps',
-        close: true
+        close: () => ClearWindow('map_window')
     },
     'combat_window': {
         id: 'combat_window',
         title: "Combat",
-        close: true
+        close: () => ClearWindow('combat_window')
     },
     'entity_window': {
         id: 'entity_window',
         title: "Entities",
-        close: true
+        close: () => ClearWindow('entity_window')
     },
     'characters_window': {
         id: 'characters_window',
         title: "Characters",
-        close: true
+        close: () => ClearWindow('characters_window')
     },
     'compendium_window': {
         id: 'compendium_window',
         title: "Compendium",
-        close: true
+        close: () => ClearWindow('compendium_window')
     },
     'character_sheet': {
         id: 'character_sheet',
         title: 'Character Sheet',
-        close: "true"
+        close: () => ClearWindow('character_sheet')
     },
     'book_anvil_window': {
         id: 'book_anvil_window',
@@ -132,6 +132,15 @@ const defValues = {
             CreateWindow('main_menu');
         }
     },
+    'icon_selector': {
+        id: 'icon-selector',
+        title: "Select an Icon",
+    },
+    'database': {
+        id: 'database',
+        title: "Database",
+        close: () => ClearWindow('database')
+    }
 }
 
 const reload = ref(0);
@@ -366,6 +375,11 @@ function GetWindowWithId(id){
     }
 }
 
+function CallWindow(id, callableName, arg){
+    let win = GetWindowWithId(id);
+    win[callableName](arg);
+}
+
 function SaveWindowPos(data){
     let win = GetWindowWithId(data.id);
     if(win === undefined) return;
@@ -394,6 +408,7 @@ export {
     ClearWindows,
     CreateWindow,
     CreateChildWindow,
+    CallWindow,
     GetWindowWithId,
     SaveWindowPos,
     GetPosition,

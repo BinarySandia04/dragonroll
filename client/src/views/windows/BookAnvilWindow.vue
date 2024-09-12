@@ -4,10 +4,12 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { SetMinSize, SetMaxSize, SetResizable } from '../../services/Windows';
+import IconSelector from '../partials/IconSelector.vue';
 const props = defineProps(['data']);
 const data = props.data;
 
 const handle = ref(null);
+const bookIcon = ref(null);
 
 let id = data.id;
 
@@ -28,6 +30,7 @@ onMounted(() => {
         
         <div class="book-anvil-container">
             <div class="book-anvil-header">
+                <IconSelector :window="id" ref="bookIcon"></IconSelector>
                 <img class="img-selector"> <!-- TODO: Canviar això per un component ben fet -->
                 <div class="book-info">
                     <h1>New book</h1>
@@ -39,10 +42,6 @@ onMounted(() => {
 
 
 <style scoped>
-.img-selector {
-    width: 72px;
-    height: 72px;
-}
 
 .book-anvil-header {
     display: flex;

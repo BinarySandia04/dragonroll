@@ -18,12 +18,17 @@ const hasBack = ref(false);
 const def = ref(true);
 const resizable = ref(false);
 
+let closeAction;
+
 let backFunction;
 
 function setupHandle() {
     let win = GetWindowWithId(id);
     if(win.title) title.value = win.title;
-    if(win.close) close.value = true;
+    if(win.close){
+        close.value = true;
+        closeAction = win.close;
+    }
     if(win.back) {
         hasBack.value = true;
         backFunction = win.back;
@@ -46,7 +51,8 @@ function CloseButton(){
     const audio = new Audio('/sounds/close.wav');
     audio.type = "audio/wav"
     audio.play();
-    ClearWindow(id)
+    if(typeof closeAction === 'function') closeAction();
+    // ClearWindow(id)
 }
 
 onMounted(() => {

@@ -11,24 +11,24 @@ const Character = require('../models/Character');
 const upload = require("../config/storage");
 
 // Get characters from a campaign
-router.get('/list', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.get('/list', (req, res) => {
     
 });
 
 // Character info
-router.post('/create', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
+router.post('/create', rateLimitMiddleware, (req, res) => {
     
 });
 
-router.delete('/delete', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
+router.delete('/delete', rateLimitMiddleware, (req, res) => {
 
 });
 
-router.get('/get', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.get('/get', (req, res) => {
     
 });
 
-router.put('/update', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.put('/update', (req, res) => {
     
 });
 

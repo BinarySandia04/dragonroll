@@ -1,79 +1,91 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
+import Api from '@/services/Api'
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { CreateWindow } from '../../../../services/Windows';
 import IconSelector from '../../../partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '../../../../services/ContextMenu';
+import { GetCampaign } from '../../../../services/Dragonroll';
 const props = defineProps(['data']);
 const data = props.data;
 
 const handle = ref(null);
 const item_type = ref("");
-
 const rarity = ref(null);
 const weaponType = ref(null);
+const item_name = ref(null);
+const icon_selector = ref(null);
+
+function GenRarities(){
+    let rarities = [];
+    let raritiesNames = ['', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary', 'Artifact'];
+    raritiesNames.forEach(name => {
+        let lowerName = name.replace(/\s+/g, '-').toLowerCase();
+        rarities.push({
+            name: `<span class='${lowerName}'>${name}</span>`,
+            action: () => {
+                rarity.value.innerHTML = `<span class='important ${lowerName}'>${name}</span>`;
+                HideContextMenu();
+                SetParam('rarity', name);
+            } 
+        })
+    });
+    return rarities;
+}
+
+function GenTypes(list){
+    let types = [];
+    list.forEach(name => {
+        types.push({
+            name,
+            action: () => {
+                weaponType.value.innerHTML = `<span class="important">${name}</span>`;
+                HideContextMenu();
+                SetParam('weapon_type', name);
+            }
+        });
+    });
+    return types;
+}
 
 let id = data.id;
+let concept = shallowRef({});
+let oldInfo;
 
-onMounted(() => {
-    SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 400});
-    ResetPosition(id, "center");
+function Upload(){
+    let extraParams = "";
+    if(oldInfo != concept.value.info){
+        extraParams = "&fireUpdate=true";
+        oldInfo = structuredClone(concept.value.info);
+        console.log("MAIASIUDHSAHJ")
+    }
+    Api().put('/concept/update?campaign=' + GetCampaign()._id + "&id=" + concept.value._id + extraParams, {concept: concept.value}).then(response => {
+        console.log(response);
+    });
+}
 
-    item_type.value = data.item_type;
+function SetParam(param, value){
+    concept.value.info[param] = value;
+    Upload();
+}
 
-    const rarities = [
-        {name: "⠀",
-            action: () => { rarity.value.innerHTML = ""; HideContextMenu(); }
-        },
-        {name: "<span class='common'>Common</span>",
-            action: () => { rarity.value.innerHTML = "<span class='important common'>Common</span>"; HideContextMenu(); }
-        },
-        {name: "<span class='uncommon'>Uncommon</span>",
-        action: () => { rarity.value.innerHTML = "<span class='important uncommon'>Uncommon</span>"; HideContextMenu(); }
-        },
-        {name: "<span class='rare'>Rare</span>",
-        action: () => { rarity.value.innerHTML = "<span class='important rare'>Rare</span>"; HideContextMenu(); }
-        },
-        {name: "<span class='very-rare'>Very rare</span>",
-        action: () => { rarity.value.innerHTML = "<span class='important very-rare'>Very rare</span>"; HideContextMenu(); }
-        },
-        {name: "<span class='legendary'>Legendary</span>",
-        action: () => { rarity.value.innerHTML = "<span class='important legendary'>Legendary</span>"; HideContextMenu(); }
-        },
-        {name: "<span class='artifact'>Artifact</span>",
-        action: () => { rarity.value.innerHTML = "<span class='important artifact'>Artifact</span>"; HideContextMenu(); }
-        }
-    ]
+function IconSelected(val){
+    SetParam('icon', val.selected.path);
+    Upload();
+}
 
-    const weapon_types = [
-        {name: "⠀",
-            action: () => { weaponType.value.innerHTML = ""; HideContextMenu(); }
-        },
-        {name: "Melee",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Melee</span>"; HideContextMenu(); }
-        },
-        {name: "Ranged",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Ranged</span>"; HideContextMenu(); }
-        },
-        {name: "Martial Melee",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Martial Melee</span>"; HideContextMenu(); }
-        },
-        {name: "Martial Ranged",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Martial Ranged</span>"; HideContextMenu(); }
-        },
-        {name: "Natural",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Natural</span>"; HideContextMenu(); }
-        },
-        {name: "Improvised",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Improvised</span>"; HideContextMenu(); }
-        },
-        {name: "Siege Weapon",
-            action: () => { weaponType.value.innerHTML = "<span class='important'>Siege Weapon</span>"; HideContextMenu(); }
-        }
-    ]
+function InitValues(){
+    let rarities = GenRarities();
+    let weapon_types = GenTypes(["", "Melee", "Ranged", "Martial Melee", "Martial Ranged", "Natural", "Improvised", "Siege Weapon"]);
+
+    if(!concept.value.data) concept.value.data = {};
+    if(!concept.value.info) concept.value.info = {};
+    
+    if(concept.value.info.icon) icon_selector.value.icon = concept.value.info.icon;
+    if(concept.value.info.rarity) rarity.value.innerHTML = `<span class='important ${concept.value.info.rarity.replace(/\s+/g, '-').toLowerCase()}'>${concept.value.info.rarity}</span>`;
+    if(concept.value.info.weapon_type) weaponType.value.innerHTML = `<span class='important'>${concept.value.info.weapon_type}</span>`;
 
     rarity.value.addEventListener("click", () => {
         ShowContextMenu(rarities)
@@ -83,11 +95,39 @@ onMounted(() => {
     weaponType.value.addEventListener("click", () => {
         ShowContextMenu(weapon_types)
     });
-    AddContextMenu(weaponType.value, weapon_types)
+    AddContextMenu(weaponType.value, weapon_types);
 
-    weaponType.value.addEventListener("click", () => {
-
+    item_name.value.addEventListener('blur', () => {
+        concept.value.name = item_name.value.textContent;
+        Upload();
     });
+}
+
+onMounted(() => {
+
+    SetupHandle(id, handle);
+    SetSize(id, {width: 500, height: 400});
+    ResetPosition(id, "center");
+    item_type.value = data.item_type;
+
+    if(data.item_create){
+        Api().post('/concept/create?campaign=' + GetCampaign()._id, {
+            data: {
+                type: data.item_type,
+                name: "New " + data.item_type
+            },
+        }).then(response => {
+            concept.value = response.data.concept;
+            InitValues();
+
+        }).catch(err => console.log(err));
+    } else {
+        // Get concept
+        Api().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + data.item_id).then(response => {
+            concept.value = response.data.concept;
+            InitValues();
+        }).catch(err => console.log(err));
+    }
 });
 
 </script>
@@ -99,20 +139,12 @@ onMounted(() => {
         
         <div class="main-container">
             <div class="item-header">
-                <IconSelector :window="id"></IconSelector>
+                <IconSelector :window="id" ref="icon_selector" :done="IconSelected"></IconSelector>
                 <div class="header-info">
-                    <h1 contenteditable="true" spellcheck="false">New Item</h1>
+                    <h1 contenteditable="true" spellcheck="false" ref="item_name">{{ concept.name }}</h1>
                     <div class="row">
                         <div class="grow subsection" ref="weaponType"></div>
                         <div class="grow subsection" ref="rarity"></div>
-                        <!--
-                        <option value="none"><span></span></option>
-                            <option value="common"><span class="common">Common</span></option>
-                            <option value="uncommon"><span class="uncommon">Uncommon</span></option>
-                            <option value="rare"><span class="rare">Rare</span></option>
-                            <option value="very rare"><span class="very-rare">Very Rare</span></option>
-                            <option value="legendary"><span class="legendary">Legendary</span></option>
-                            <option value="artifact"><span class="artifact">Artifact</span></option>-->
                     </div>
                 </div>
             </div>

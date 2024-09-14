@@ -20,7 +20,7 @@ function DisplayToast(color, text, duration = 1000){
     emitter.emit("toast", {color, text, duration});
 }
 
-export const socket = io(backendUrl)
+const socket = io(backendUrl)
 
 let currentCampaign = null;
 let currentPlayer = null;
@@ -115,6 +115,7 @@ function GetSystem(){
 }
 
 export {
+    socket,
     SetEmitter,
     GetEmitter,
 

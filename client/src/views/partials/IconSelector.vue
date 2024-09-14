@@ -4,18 +4,19 @@ import { onMounted, ref, getCurrentInstance, defineExpose } from 'vue';
 import { ClearWindow, CreateChildWindow } from '../../services/Windows';
 
 const image = ref(null);
-const props = defineProps(['window']);
+const props = defineProps(['window', 'done']);
 
 const uuid = getCurrentInstance().uid;
-const icon = ref(null);
+const icon = ref('icons/game-icons/ffffff/lorc/crossed-swords.svg');
+const done = props.done;
 
 function SelectIcon(){
     CreateChildWindow(props.window, 'icon_selector', {
         id: 'icon-selector-' + uuid,
         done: (res) => {
-            icon.value = res;
             console.log(res);
-            image.value.src = res.selected.path;
+            icon.value = res.selected.path;
+            done(res);
             ClearWindow('icon-selector-' + uuid);
         },
         close: () => {
@@ -33,7 +34,7 @@ defineExpose({
 
 <template>
     <div class="icon-selector">
-        <img ref="image" src="icons/sundries/books/book-red-exclamation.webp" v-on:click.prevent="SelectIcon">
+        <img ref="image" :src="icon" v-on:click.prevent="SelectIcon">
     </div>
 </template>
 

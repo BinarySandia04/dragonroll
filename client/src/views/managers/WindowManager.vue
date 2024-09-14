@@ -11,7 +11,6 @@ import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
 import AccountSettingsWindow from '../windows/AccountSettingsWindow.vue'
 
 import { Windows, ReloadRef } from '@/services/Windows';
-import DbWindow from '../windows/database/DbWindow.vue'
 import CampaignListWindow from '../windows/campaigns/CampaignListWindow.vue'
 import NewCampaignWindow from '../windows/campaigns/NewCampaignWindow.vue'
 import JoinCampaignWindow from '../windows/campaigns/JoinCampaignWindow.vue'
@@ -73,12 +72,9 @@ async function InjectSystemWindows(system){
   };
 
   WindowMap = {...WindowMap, ...systemWidows};
-
-  console.log(WindowMap)
 }
 
 InjectSystemWindows('dnd-5e')
-console.log(WindowMap);
 </script>
 
 <template>

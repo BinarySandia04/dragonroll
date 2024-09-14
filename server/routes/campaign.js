@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const passport = require('passport');
-const rateLimitMiddleware = require("../config/rate-limiter");
 
 const Campaign = require("../models/Campaign");
 const CampaignUser = require("../models/CampaignUser");
@@ -13,8 +12,7 @@ const upload = require("../config/storage");
 router.post('/register', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
 });
 */
-
-router.post('/create', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
+router.post('/create', (req, res) => {
     let {
         name,
         system
@@ -47,7 +45,7 @@ router.post('/create', passport.authenticate('jwt', {session: false}), rateLimit
     }).catch((err) => {res.json({status: "error", msg: "internal"})});
 });
 
-router.post('/join', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {
+router.post('/join', (req, res) => {
     let {
         invite_code
     } = req.body;
@@ -82,16 +80,16 @@ router.post('/join', passport.authenticate('jwt', {session: false}), rateLimitMi
     }).catch(err => res.json({status: "error", msg: "internal"}))
 });
 
-router.get('/list', passport.authenticate('jwt', {session: false}), (req, res) => {
-    CampaignUser.find({user: req.user}).populate("campaign").then((data) => {
+router.get('/list', (req, res) => {
+    CampaignUser.find({user: req.user}).populate("campaign").lean().then((data) => {
         res.json(data);
         console.log(data);
         return;
     }).catch((err) => res.json({status: "error", msg: "internal"}));
 });
 
-router.get('/players', passport.authenticate('jwt', {session: false}), (req, res) => {
-    Campaign.findById(req.query.campaign).then((campaign) => {
+router.get('/players', (req, res) => {
+    Campaign.findById(req.query.campaign).lean().then((campaign) => {
         CampaignUser.find({campaign}).populate('user').then((data) => {
             console.log("djskajdk")
             console.log(data);

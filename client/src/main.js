@@ -12,7 +12,6 @@ import VueMarkdownEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
-import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
 import esEs from '@kangc/v-md-editor/lib/lang/es-ES' 
 
 
@@ -29,7 +28,6 @@ import 'prismjs/components/prism-bash';
 
 VueMarkdownEditor.lang.use('es-Es', esEs);
 VueMarkdownEditor.use(vuepressTheme, { Prism }); 
-VueMarkdownEditor.use(createKatexPlugin());
 
 const app = createApp(App).use(VueMarkdownEditor);
 app.config.globalProperties.emitter = emitter

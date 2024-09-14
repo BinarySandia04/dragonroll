@@ -243,7 +243,6 @@ function SetupHandle(id, handle){
 
 function SetResizable(id, resizable){
     let win = GetWindowWithId(id);
-    console.log(win);
     win.resizable = resizable;
 }
 

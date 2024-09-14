@@ -88,6 +88,7 @@
   --chat-background: var(--c-white);
 
   --color-border: var(--c-white-border);
+  --color-border-soft: #a5a5a511;
 
   --section-gap: 160px;
   --separator-color: #2e2e2e;

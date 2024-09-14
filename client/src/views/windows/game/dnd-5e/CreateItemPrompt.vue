@@ -27,6 +27,7 @@ function ConfirmSelection(){
         id: 'item_sheet',
         title: 'Edit Item',
         item_type: value,
+        item_create: true,
         close: () => ClearWindow('item_sheet')
     });
 

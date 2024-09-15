@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, defineComponent } from 'vue'
+import { ref, reactive, defineComponent, TransitionGroup } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { defineAsyncComponent } from 'vue'
 
@@ -79,12 +79,23 @@ InjectSystemWindows('dnd-5e')
 
 <template>
   <div class="window-container" :key="reload">
-    <component v-for="win in windows" :is="WindowMap[win.type]" :key="win.id" :data="win"></component>
+    <TransitionGroup name="window">
+      <component v-for="win in windows" :is="WindowMap[win.type]" :key="win.id" :data="win"></component>
+    </TransitionGroup>
   </div>
 </template>
 
 
 <style>
+.window-enter-active,
+.window-leave-active {
+  transition: all 0.15s ease;
+}
+.window-enter-from,
+.window-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
 
 .window-wrapper {
     background-color: var(--window-background);
@@ -95,7 +106,6 @@ InjectSystemWindows('dnd-5e')
 
     display: flex;
     flex-direction: column;
-    text-align: center;
 }
 
 </style>

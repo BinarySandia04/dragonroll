@@ -32,6 +32,12 @@ function PopulateContext(val){
         spanInfo.innerHTML = element.name;
         contextMenuElement.appendChild(spanInfo);
 
+        if(element.icon){
+            let iconContextElement = document.createElement('img');
+            iconContextElement.src = element.icon;
+            contextMenuElement.appendChild(iconContextElement);
+        }
+
         if(element.context){
             let iconContextElement = document.createElement('img');
             iconContextElement.src = arrowIcon;

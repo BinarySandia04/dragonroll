@@ -4,10 +4,14 @@ import Api from '@/services/Api'
 
 import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { CreateWindow } from '../../../../services/Windows';
+import { CreateWindow, SetMinSize, SetResizable } from '../../../../services/Windows';
 import IconSelector from '../../../partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '../../../../services/ContextMenu';
 import { GetCampaign } from '../../../../services/Dragonroll';
+import { GetConcept } from '../../../../services/Data';
+import Tabs from '../../../partials/Tabs.vue';
+import MarkdownEditor from '../../../partials/MarkdownEditor.vue';
+import Tags from '../../../partials/Tags.vue';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -17,6 +21,7 @@ const rarity = ref(null);
 const weaponType = ref(null);
 const item_name = ref(null);
 const icon_selector = ref(null);
+const description = ref(null);
 
 function GenRarities(){
     let rarities = [];
@@ -76,6 +81,17 @@ function IconSelected(val){
     Upload();
 }
 
+function DescriptionChanged(text){
+    SetParam('description', text);
+    Upload();
+}
+
+function PropertiesChanged(properties){
+    console.log(properties);
+    SetParam('properties', properties);
+    Upload();
+}
+
 function InitValues(){
     let rarities = GenRarities();
     let weapon_types = GenTypes(["", "Melee", "Ranged", "Martial Melee", "Martial Ranged", "Natural", "Improvised", "Siege Weapon"]);
@@ -86,6 +102,7 @@ function InitValues(){
     if(concept.value.info.icon) icon_selector.value.icon = concept.value.info.icon;
     if(concept.value.info.rarity) rarity.value.innerHTML = `<span class='important ${concept.value.info.rarity.replace(/\s+/g, '-').toLowerCase()}'>${concept.value.info.rarity}</span>`;
     if(concept.value.info.weapon_type) weaponType.value.innerHTML = `<span class='important'>${concept.value.info.weapon_type}</span>`;
+    if(concept.value.info.description) description.value.text = concept.value.info.description;
 
     rarity.value.addEventListener("click", () => {
         ShowContextMenu(rarities)
@@ -106,7 +123,9 @@ function InitValues(){
 onMounted(() => {
 
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 400});
+    SetSize(id, {width: 600, height: 700});
+    SetResizable(id, true);
+    SetMinSize(id, {width: 400, height: 300});
     ResetPosition(id, "center");
     item_type.value = data.item_type;
 
@@ -123,7 +142,7 @@ onMounted(() => {
         }).catch(err => console.log(err));
     } else {
         // Get concept
-        Api().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + data.item_id).then(response => {
+        GetConcept(data.item_id).then(response => {
             concept.value = response.data.concept;
             InitValues();
         }).catch(err => console.log(err));
@@ -148,6 +167,23 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
+            <Tabs :rows="['Description', 'Details']">
+                <template #description>
+                    <div class="description-container">
+                        <div class="description-sidebar">
+                            <p>Hola</p>
+                        </div>
+                        <div class="description">
+                            <MarkdownEditor ref="description" :done="DescriptionChanged"></MarkdownEditor>
+                        </div>
+                    </div>
+                </template>
+                <template #details>
+                    <h2 class="section">Properties</h2>
+                    <Tags :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
+                    <h2 class="section">Damage</h2>
+                </template>
+            </Tabs>
         </div>
     </div>
 </template>
@@ -165,6 +201,28 @@ onMounted(() => {
     border: 1px solid var(--color-border);
 }
 
+h2.section {
+    margin-left: 12px;
+    font-family: NodestoCapsCondensed;
+    font-size: 32px;
+    line-height: 48px;
+    text-align: left;
+}
+
+.description-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    
+    .description-sidebar {
+        min-width: 200px;
+    }
+
+    .description {
+        flex-grow: 1;
+        height: 100%;
+    }
+}
 
 .item-header {
     display: flex;

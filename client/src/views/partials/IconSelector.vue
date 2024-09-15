@@ -1,6 +1,6 @@
 <script setup>
 
-import { onMounted, ref, getCurrentInstance, defineExpose } from 'vue';
+import { onMounted, ref, getCurrentInstance } from 'vue';
 import { ClearWindow, CreateChildWindow } from '../../services/Windows';
 
 const image = ref(null);

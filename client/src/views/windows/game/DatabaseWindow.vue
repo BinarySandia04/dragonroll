@@ -1,12 +1,12 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import Api from '@/services/Api'
 
-import { onMounted, ref, shallowRef } from 'vue';
+import { onMounted, ref, shallowRef, watch } from 'vue';
 import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '../../../services/Windows';
 import IconButton from '@/views/partials/game/IconButton.vue'
 import ConceptList from '../../partials/ConceptList.vue';
-import { GetCampaign, socket } from '../../../services/Dragonroll';
+import { FetchConcepts, GetConcepts } from '../../../services/Data';
+import Tabs from '../../partials/Tabs.vue';
 
 const handle = ref(null);
 
@@ -26,23 +26,14 @@ onMounted(() => {
     SetResizable(id, true);
     SetMinSize(id, {width: 350, height: 300});
 
-    FetchConcepts();
-
-    socket.on('update-concepts', () => {
-        console.log("!!!");
-        FetchConcepts();
-    });
-});
-
-function FetchConcepts(){
-    Api().get('/concept/list?campaign=' + GetCampaign()._id).then(response => {
-        // console.log(response.data);
-        elements.value = response.data.data;
-        console.log(elements);
+    watch(GetConcepts, () => {
         console.log("Updated???")
-    }).catch((err) => console.log(err));
-}
-
+        elements.value = GetConcepts();
+        console.log(elements);
+    });
+    
+    FetchConcepts();
+});
 function OpenCreateItemPrompt(){
     CreateWindow('create_item_prompt', {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
 }
@@ -54,12 +45,11 @@ function OpenCreateItemPrompt(){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="main-container">
-            <div class="row">
-                <div class="toggler">Items</div>
-                <div class="toggler">Spells</div>
-                <div class="toggler">Features</div>
-            </div>
-            <ConceptList :elements="elements"></ConceptList>
+            <Tabs :rows="['Items', 'Spells', 'Features']">
+                <template #items>
+                    <ConceptList :elements="elements"></ConceptList>
+                </template>
+            </Tabs>
         </div>
 
 
@@ -73,27 +63,6 @@ function OpenCreateItemPrompt(){
 <style scoped>
 .main-container {
     height: calc(100% - 24px);
-}
-
-.toggler {
-    flex-grow: 1;
-    font-weight: bold;
-    padding: 10px;
-    font-size: 16px;
-
-    color: #9c9c9c;
-    border-left: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    border-top: 1px solid var(--color-border);
-    transition: color 1s;
-    
-    &:first-child {
-        border-left: none;
-    }
-
-    &.active {
-        color: var(--color-text);
-    }
 }
 
 .fixed-bottom-buttons {

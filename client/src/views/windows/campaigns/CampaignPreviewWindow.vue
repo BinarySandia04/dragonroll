@@ -4,7 +4,7 @@ import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Win
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import PlayerList from '../../partials/PlayerList.vue';
-import { Disconnect, DisplayToast, GetCampaign, GetClient } from '../../../services/Dragonroll';
+import { DisplayToast, GetClient } from '../../../services/Dragonroll';
 import CampaignBookList from '../../partials/books/CampaignBookList.vue';
 import { ClearAll, ClearWindow, CreateWindow, SetMinSize, SetResizable } from '../../../services/Windows';
 import { LaunchGame } from '../../../services/Game';
@@ -13,6 +13,7 @@ import ChatComponent from '../../partials/ChatComponent.vue';
 import GameSystem from '@/views/partials/GameSystem.vue'
 import { GetModule } from '../../../services/Modules';
 import { AddTooltip } from '../../../services/Tooltip';
+import { Disconnect } from '../../../services/Campaign';
 
 const handle = ref(null);
 
@@ -75,7 +76,7 @@ function Exit(){
 
          <div class="campaign-preview-container" :class="hide_chat ? 'campaign-preview-compact' : ''" ref="container">
             <div class="campaign-preview-column left">
-                <h2>Players</h2>
+                <h2 class="centered">Players</h2>
                 <PlayerList :campaign="data.campaign"></PlayerList>
                 <div class="buttons-row">
                     <button class="btn-primary button-row sound-click" v-on:click.prevent="CopyCode" ref="copy_code_button">Copy invite code</button>

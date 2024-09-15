@@ -4,7 +4,7 @@ import { InGameRef } from '../../services/Game';
 import IconButton from '../partials/game/IconButton.vue';
 import { AddSound } from '../../services/Sound';
 import TileMap from './TileMap.vue';
-import { DisplayCampaign, GetCampaign, GetClient } from '../../services/Dragonroll';
+import { GetCampaign, GetClient } from '../../services/Dragonroll';
 import { ClearAll, ClearWindow, CreateWindow } from '../../services/Windows';
 
 const game = ref(null);

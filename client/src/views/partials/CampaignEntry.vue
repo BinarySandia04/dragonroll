@@ -3,9 +3,8 @@
 import { onMounted, ref } from 'vue';
 
 import Api from '@/services/Api'
-import { DisplayCampaign } from '@/services/Dragonroll'
 import { AddSound } from '../../services/Sound';
-import { ConnectToCampaign } from '../../services/Dragonroll';
+import { ConnectToCampaign, DisplayCampaign } from '../../services/Campaign';
 
 const props = defineProps(['data']);
 const data = props.data;

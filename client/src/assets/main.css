@@ -118,9 +118,21 @@ input[type=text], input[type=password], input[type=email] {
   border: solid 1px var(--color-border);
 }
 
+
+textarea {
+  background-color: var(--color-background-softer);
+  padding: 12px;
+  color: var(--color-text);
+  border: none;
+}
+
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   outline: none;
   background-color: var(--color-background-softest);
+}
+
+textarea:focus {
+  outline: none;
 }
 
 button {
@@ -178,11 +190,16 @@ button:active {
   margin-left: auto;
 }
 
+.centered {
+  text-align: center;
+}
 
 .window-wrapper {
   display: flex;
   align-items: center;
   border: solid 1px var(--color-border);
+  
+  /* opacity: 0; */
 
   user-select: none;
   -webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
@@ -197,6 +214,10 @@ button:active {
 .document h1 {
   font-weight: normal;
   font-size: 32px;
+}
+
+.document b {
+  font-weight: bold;
 }
 
 .text-icon {

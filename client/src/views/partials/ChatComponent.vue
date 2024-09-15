@@ -41,7 +41,6 @@ watch(chat, () => {
     if(chat.value.length > 0) if(chat.value[chat.value.length - 1].author == GetClient()._id){
         setTimeout(() => {
             messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
-            console.log(messageContainer.value.scrollHeight)
         }, 0);
     }
 }, {deep: true})

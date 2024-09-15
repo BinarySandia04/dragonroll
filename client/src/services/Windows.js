@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue'
-import { Disconnect } from './Dragonroll';
+import { Disconnect } from './Campaign';
 
 const windows = ref([])
 

@@ -3,6 +3,7 @@ import { initCustomFormatter, ref, toRaw } from 'vue';
 import Api from '@/services/Api'
 import { _SendMap, GetCampaign } from './Dragonroll';
 import { backendUrl } from './BackendURL';
+import { socket } from './Socket';
 
 function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(","),
@@ -291,6 +292,13 @@ function ChangeBackgroundColor(color){
     currentMap.backgroundColor = color;
     SaveMap(currentMapId.value);
 }
+
+
+socket.on('change_map', data => {
+    UpdateMapList().then(() => {
+        LoadMap(GetMap(data.id));
+    });
+})
 
 export {
     toMapX,

@@ -59,7 +59,7 @@ function RefreshCampaigns(){
             <!-- Body -->
             <div class="campaign-list-container">
                 <div class="window-second-header">
-                    <h2>Your campaigns</h2>
+                    <h2 class="centered">Your campaigns</h2>
 
                     <div class="campaign-list">
                         <CampaignEntry v-for="camp in myCampaigns" :key="camp._id" :data="camp"></CampaignEntry>
@@ -67,7 +67,7 @@ function RefreshCampaigns(){
                 </div>
 
                 <div class="window-second-header">
-                    <h2>Other campaigns</h2>
+                    <h2 class="centered">Other campaigns</h2>
                     <div class="campaign-list">
                         <CampaignEntry v-for="camp in otherCampaigns" :key="camp._id" :data="camp"></CampaignEntry>
                     </div>

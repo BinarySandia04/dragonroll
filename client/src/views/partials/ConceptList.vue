@@ -27,11 +27,12 @@ function OpenConcept(element){
 
 <template>
     <div class="list-container" ref="listContainer">
-        
-        <div class="list-element" v-for="element in elements" :key="element._id" v-on:click.prevent="OpenConcept(element)">
-            <img :src="element.info ? element.info.icon : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'" class="concept-icon">
-            <span class="title">{{ element.name }}</span>
-        </div>
+        <TransitionGroup name="list-element">
+            <div class="list-element" v-for="element in elements" :key="element._id" v-on:click.prevent="OpenConcept(element)">
+                <img :src="element.info ? element.info.icon : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'" class="concept-icon">
+                <span class="title">{{ element.name }}</span>
+            </div>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -57,10 +58,29 @@ function OpenConcept(element){
     }
 }
 
+.list-element-move, /* apply transition to moving elements */
+.list-element-enter-active,
+.list-element-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-element-enter-from,
+.list-element-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-element-leave-active {
+  position: absolute;
+}
+
 .list-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 </style>

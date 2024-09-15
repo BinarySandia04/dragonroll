@@ -18,7 +18,7 @@
     "jquery": "^3.7.1",
     "jquery-ui": "^1.13.3",
     "jquery-ui-dist": "^1.13.3",
-    "marked": "^9.1.0",
+    "marked": "^9.1.6",
     "marked-katex-extension": "^4.0.1",
     "mitt": "^3.0.1",
     "prismjs": "^1.29.0",
@@ -26,8 +26,7 @@
     "three": "^0.164.1",
     "vue": "^3.3.4",
     "vue-draggable": "^2.0.6",
-    "vue-router": "^4.2.4",
-    "vue-simplemde": "^2.1.1"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",

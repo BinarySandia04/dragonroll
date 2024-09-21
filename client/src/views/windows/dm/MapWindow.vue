@@ -56,8 +56,8 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
         
         <div class="horizontal-button">
-            <IconButton icon="icons/iconoir/regular/upload.svg" :action="UploadButton"></IconButton>
-            <IconButton icon="icons/iconoir/regular/empty-page.svg" :action="NewMapButton"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/upload.svg" :action="UploadButton"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/empty-page.svg" :action="NewMapButton"></IconButton>
         </div>
 
         <MapList></MapList>

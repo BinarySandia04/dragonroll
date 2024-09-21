@@ -54,7 +54,7 @@ function OpenCreateItemPrompt(){
 
 
         <div class="fixed-bottom-buttons">
-            <IconButton icon="icons/iconoir/regular/plus.svg" :action="OpenCreateItemPrompt"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/plus.svg" :action="OpenCreateItemPrompt"></IconButton>
         </div>
     </div>
 </template>

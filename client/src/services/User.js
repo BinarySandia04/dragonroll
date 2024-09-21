@@ -1,4 +1,6 @@
 import { ref } from 'vue';
+import Api from '@/services/Api'
+
 
 const UserStatus = ref(0);
 
@@ -15,6 +17,11 @@ function parseJwt (token) {
 function SetUser(token){
     localStorage.setItem('token', token);
     UserStatus.value = 1;
+}
+
+async function HasAdmin(){
+    let response = await Api().get('/user/has-admin');
+    return response.data.status != "init";
 }
 
 function GetUser(){
@@ -58,5 +65,6 @@ export {
     SetUser,
     LoadUser,
     IsAdmin,
-    LogoutUser
+    LogoutUser,
+    HasAdmin
 }

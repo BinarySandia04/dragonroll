@@ -3,7 +3,7 @@
 import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
-import { GetUser, UserStatus, LoadUser } from '@/services/User.js'
+import { GetUser, HasAdmin, UserStatus, LoadUser } from '@/services/User.js'
 import { IsAdmin } from './services/User'
 
 import useEmitter from '@/services/Emitter';
@@ -20,11 +20,17 @@ LoadUser();
 
 SetEmitter(emitter);
 
-async function preloadModules(){
+async function start(){
   if(GetUser()){
     CreateWindow('main_menu');
     // DisplayToast('green', 'Logged in successfully as ' + GetUser().username + '!', 3000)
-  } else CreateWindow('login');
+  } else {
+    if(await HasAdmin()){
+      CreateWindow('login');
+    } else {
+      CreateWindow('register');
+    }
+  }
 
   const modules = GetModulesToLoad();
   let moduleLoads = [];
@@ -43,9 +49,7 @@ async function preloadModules(){
 }
 
 onMounted(() => {
-  
-
-  preloadModules();
+  start();
 })
 
 

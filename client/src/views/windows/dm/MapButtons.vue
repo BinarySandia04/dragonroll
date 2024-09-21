@@ -39,9 +39,9 @@ function EditEnvironment(){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
         
         <div class="vertical-button">
-            <IconButton icon="icons/iconoir/regular/square-3d-three-points.svg" :action="EditEnvironment"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/square-3d-three-points.svg" :action="EditEnvironment"></IconButton>
             <hr>
-            <IconButton icon="icons/iconoir/regular/sun-light.svg" :action="EditEnvironment"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/sun-light.svg" :action="EditEnvironment"></IconButton>
         </div>
     </div>
 </template>

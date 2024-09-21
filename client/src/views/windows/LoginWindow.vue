@@ -60,11 +60,6 @@ function login(){
   });
 }
 
-function ShowRegister(){
-  ClearWindows({type: "login"});
-  CreateWindow('register');
-}
-
 function ShowMainMenu(){
   ClearWindows({type: "login"});
   CreateWindow('main_menu');
@@ -78,7 +73,7 @@ function ShowMainMenu(){
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
-        <img src="img/logo-splash.png" class="splash-image" draggable="false">
+        <img src="/img/logo-splash.png" class="splash-image" draggable="false">
 
         <form v-on:submit.prevent="login">
             <div class="form-field">
@@ -94,7 +89,6 @@ function ShowMainMenu(){
             </div>
         </form>
 
-        <p>Don't have an account? <a v-on:click.prevent="ShowRegister">Register here</a></p>
         <ErrorMessage v-if="errorMessage">{{ errorMessage }}</ErrorMessage>
         <SuccessMessage v-if="successMessage">{{ successMessage }}</SuccessMessage>
         <!-- <VersionRender></VersionRender> -->
@@ -123,15 +117,6 @@ form {
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
-}
-
-.form-field {
-  width: 100%;
-  display: flex;
-  align-items: left;
-  flex-direction: column;
-  justify-content: left;
-  padding-top: 10px;
 }
 
 label {

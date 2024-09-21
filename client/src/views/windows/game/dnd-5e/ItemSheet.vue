@@ -1,17 +1,16 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import Api from '@/services/Api'
+import Api from '@/services/Api';
 
 import { onMounted, ref, shallowRef } from 'vue';
-import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { CreateWindow, SetMinSize, SetResizable } from '../../../../services/Windows';
-import IconSelector from '../../../partials/IconSelector.vue';
-import { AddContextMenu, HideContextMenu, ShowContextMenu } from '../../../../services/ContextMenu';
-import { GetCampaign } from '../../../../services/Dragonroll';
-import { GetConcept } from '../../../../services/Data';
-import Tabs from '../../../partials/Tabs.vue';
-import MarkdownEditor from '../../../partials/MarkdownEditor.vue';
-import Tags from '../../../partials/Tags.vue';
+import { SetupHandle, SetSize, ResetPosition, CreateWindow, SetMinSize, SetResizable } from '@/services/Windows';
+import IconSelector from '@/views/partials/IconSelector.vue';
+import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/ContextMenu';
+import { GetCampaign } from '@/services/Dragonroll';
+import { GetConcept } from '@/services/Data';
+import Tabs from '@/views/partials/Tabs.vue';
+import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
+import Tags from '@/views/partials/Tags.vue';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -22,6 +21,7 @@ const weaponType = ref(null);
 const item_name = ref(null);
 const icon_selector = ref(null);
 const description = ref(null);
+const properties = ref(null);
 
 function GenRarities(){
     let rarities = [];
@@ -103,6 +103,7 @@ function InitValues(){
     if(concept.value.info.rarity) rarity.value.innerHTML = `<span class='important ${concept.value.info.rarity.replace(/\s+/g, '-').toLowerCase()}'>${concept.value.info.rarity}</span>`;
     if(concept.value.info.weapon_type) weaponType.value.innerHTML = `<span class='important'>${concept.value.info.weapon_type}</span>`;
     if(concept.value.info.description) description.value.text = concept.value.info.description;
+    if(concept.value.info.properties) properties.value.selected = concept.value.info.properties;
 
     rarity.value.addEventListener("click", () => {
         ShowContextMenu(rarities)
@@ -180,7 +181,7 @@ onMounted(() => {
                 </template>
                 <template #details>
                     <h2 class="section">Properties</h2>
-                    <Tags :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
+                    <Tags ref="properties" :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
                     <h2 class="section">Damage</h2>
                 </template>
             </Tabs>

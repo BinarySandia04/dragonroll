@@ -48,14 +48,14 @@ defineExpose({
             </div>
 
             <div class="fixed-bottom-buttons">
-                <IconButton icon="icons/iconoir/regular/edit-pencil.svg" :action="EditContent"></IconButton>
+                <IconButton icon="/icons/iconoir/regular/edit-pencil.svg" :action="EditContent"></IconButton>
             </div>
         </div>
         <div v-show="editing" class="editor">
             <textarea class="editing" ref="editor"></textarea>
             
             <div class="fixed-bottom-buttons">
-                <IconButton icon="icons/iconoir/solid/eye.svg" :action="PreviewContent"></IconButton>
+                <IconButton icon="/icons/iconoir/solid/eye.svg" :action="PreviewContent"></IconButton>
             </div>
         </div>
     </div>

@@ -50,7 +50,7 @@ onUpdated(() => {
 <template>
     <div class="main-player-container" ref="container">
         <div class="main-player-container-inner">
-            <img class="user-icon" src="img/def-avatar.jpg" ref="avatar" draggable="false">
+            <img class="user-icon" src="/img/def-avatar.jpg" ref="avatar" draggable="false">
             <div class="main-user-info">
                 <b>{{ playerName }}</b><span class="dm" v-if="isDm"> DM</span>
                 <br>

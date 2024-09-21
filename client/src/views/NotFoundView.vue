@@ -13,7 +13,6 @@ import { RouterLink, RouterView } from 'vue-router';
     <p>Jo, personalment, tiraria per la primera opció ja que la segona és bastant avorrida</p>
     <RouterLink to="/">
       <div class="sidebar-link">
-          <img class="icon" src="/icons/default.png">
           <span class="link-text">Tornar a inici</span>
       </div>
     </RouterLink>

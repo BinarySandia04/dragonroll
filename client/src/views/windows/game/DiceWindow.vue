@@ -83,17 +83,17 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="horizontal-dice">
-            <IconButton icon="icons/game-icons/000000/skoll/d4.svg" :action="ThrowD4" tooltip="Throw d4" size="big"></IconButton>
-            <IconButton icon="icons/game-icons/000000/delapouite/perspective-dice-six-svg.svg" :action="ThrowD6" tooltip="Throw d6" size="big"></IconButton>
-            <IconButton icon="icons/game-icons/000000/delapouite/dice-eight-faces-eight.svg" :action="ThrowD8" tooltip="Throw d8" size="big"></IconButton>
-            <IconButton icon="icons/game-icons/000000/skoll/d10.svg" :action="ThrowD10" tooltip="Throw d10" size="big"></IconButton>
-            <IconButton icon="icons/game-icons/000000/skoll/d12.svg" :action="ThrowD12" tooltip="Throw d12" size="big"></IconButton>
-            <IconButton icon="icons/game-icons/000000/delapouite/dice-twenty-faces-twenty.svg" :action="ThrowD20" tooltip="Throw d20" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/skoll/d4.svg" :action="ThrowD4" tooltip="Throw d4" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/delapouite/perspective-dice-six-svg.svg" :action="ThrowD6" tooltip="Throw d6" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/delapouite/dice-eight-faces-eight.svg" :action="ThrowD8" tooltip="Throw d8" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/skoll/d10.svg" :action="ThrowD10" tooltip="Throw d10" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/skoll/d12.svg" :action="ThrowD12" tooltip="Throw d12" size="big"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/delapouite/dice-twenty-faces-twenty.svg" :action="ThrowD20" tooltip="Throw d20" size="big"></IconButton>
         </div>
 
         <div class="custom-dice">
             <input type="text" ref="diceField">
-            <IconButton icon="icons/game-icons/000000/delapouite/rolling-dices.svg" size="big" :action="ThrowCustomDice" tooltip="Throw"></IconButton>
+            <IconButton icon="/icons/game-icons/000000/delapouite/rolling-dices.svg" size="big" :action="ThrowCustomDice" tooltip="Throw"></IconButton>
         </div>
 
         <div class="roll-result">{{ diceResult }}</div>

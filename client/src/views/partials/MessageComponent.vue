@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
     <div class="msg-parent-container rcv">
-        <img class="user-icon" src="img/def-avatar.jpg" ref="avatar" draggable="false">
+        <img class="user-icon" src="/img/def-avatar.jpg" ref="avatar" draggable="false">
         <div class="content-container">
             <div class="msg-title">
                 {{ title }}

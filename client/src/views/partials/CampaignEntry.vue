@@ -31,7 +31,7 @@ function ViewCampaign(){
 <template>
     <div class="campaign-entry-container" ref="container">
         <div class="main-campaign-entry-container-inner">
-            <img class="campaign-icon" src="img/def-avatar.jpg" draggable="false">
+            <img class="campaign-icon" src="/img/def-avatar.jpg" draggable="false">
             <div class="campaign-info">
                 <b>{{ title }}</b><br>Last session: <span>{{ last_session }}</span>
             </div>

@@ -44,37 +44,37 @@ function ConfirmSelection(){
         <div class="main-container">
             <div class="radio-container" ref="radioContainer">
                 <div class="radio-item">
-                    <img class="icon" src="icons/game-icons/000000/lorc/crossed-swords.svg">
+                    <img class="icon" src="/icons/game-icons/000000/lorc/crossed-swords.svg">
                     <span>Weapon</span>
                     <input type="radio" name="selector" value="Weapon"> 
                 </div>
                 <div class="radio-item">
-                    <img class="icon" src="icons/game-icons/000000/delapouite/shoulder-armor.svg">
+                    <img class="icon" src="/icons/game-icons/000000/delapouite/shoulder-armor.svg">
                     <span>Equipment</span>
                     <input type="radio" name="selector" value="Equipment">
                 </div>
                 
                 <div class="radio-item">
-                    <img class="icon" src="icons/game-icons/000000/lorc/potion-ball.svg">
+                    <img class="icon" src="/icons/game-icons/000000/lorc/potion-ball.svg">
                     <span>Consumable</span>
                     <input type="radio" name="selector" value="Consumable">
                 </div>
                 
                 <div class="radio-item">
-                    <img class="icon" src="icons/game-icons/000000/delapouite/backpack.svg">
+                    <img class="icon" src="/icons/game-icons/000000/delapouite/backpack.svg">
                     <span>Container</span>
                     <input type="radio" name="selector" value="Container">
                 </div>
                 
                 <div class="radio-item">
-                    <img class="icon" src="icons/game-icons/000000/lorc/claw-hammer.svg">
+                    <img class="icon" src="/icons/game-icons/000000/lorc/claw-hammer.svg">
                     <span>Tool</span>
                     <input type="radio" name="selector" value="Tool">
                 </div>
             </div>
 
             <button class="btn-primary sound-click submit" v-on:click.prevent="ConfirmSelection">
-                <img class="text-icon invert" src="icons/iconoir/regular/check.svg">
+                <img class="text-icon invert" src="/icons/iconoir/regular/check.svg">
                 Create new item
             </button>
         </div>

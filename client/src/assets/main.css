@@ -81,6 +81,14 @@ a {
   background-color: var(--c-button-red-hover);
 }
 
+.form-field {
+  padding-bottom: 10px;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  justify-content: left;
+}
+
 hr {
   border: 0;
   height: 1px;
@@ -104,14 +112,11 @@ hr:before {
   margin: -1px 0 0 -1px;
 }
 
-label {
-  margin-bottom: 10px;
-}
 
 input[type=text], input[type=password], input[type=email] {
   background-color: var(--color-background-softer);
   border: none;
-  padding: 12px;
+  padding: 8px;
   border-radius: 6px;
   color: var(--color-text);
   transition: 300ms background-color;
@@ -169,6 +174,10 @@ button:active {
   display: block;
 }
 
+.confirm-form-button {
+  margin-top: 15px;
+}
+
 .parameters {
   display: flex;
   flex-direction: column;
@@ -209,6 +218,7 @@ button:active {
 
 .document {
   text-align: left;
+  width: 100%;
 }
 
 .document h1 {

@@ -11,8 +11,9 @@ onMounted(() => {
 
 <template>
 <div id="context-menu" class="context-menu">
+    <!--
     <div class="context-menu-element">
-        <span>Hola</span> <img src="icons/iconoir/regular/nav-arrow-right.svg">
+        <span>Hola</span> <img src="/icons/iconoir/regular/nav-arrow-right.svg">
     </div>
     <div class="context-menu-element">
         <span>Holaa</span>
@@ -23,6 +24,7 @@ onMounted(() => {
     <div class="context-menu-element">
         <span>Holaaaaaaa</span>
     </div>
+    -->
 </div>
 </template>
 

@@ -56,22 +56,22 @@ function ConfigureBookmarks(){
 
         <div class="bookmarks" ref="bookmarks">
             <div class="bookmark active">
-                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/cog.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/cog.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/locked-chest.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/locked-chest.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon white" draggable="false" src="icons/iconoir/regular/list.svg">
+                <img class="icon bookmark-icon white" draggable="false" src="/icons/iconoir/regular/list.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/book-cover.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/book-cover.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/power-lightning.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/power-lightning.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon" draggable="false" src="icons/game-icons/ffffff/lorc/feather.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/feather.svg">
             </div>
         </div>
 
@@ -111,8 +111,8 @@ function ConfigureBookmarks(){
             </div>
             <div class="two-column-layout">
                 <div class="flex-container border">
-                    <img class="player-sheet-splash" src="img/monke.jpg">
-                    <!--<img class="player-sheet-splash" src="img/dracblau.png">-->
+                    <img class="player-sheet-splash" src="/img/monke.jpg">
+                    <!--<img class="player-sheet-splash" src="/img/dracblau.png">-->
                     <div class="player-info-div">
 
                         <div class="ac-container">
@@ -394,7 +394,7 @@ function ConfigureBookmarks(){
                     <div class="weight-container">
                         <div class="weight-bar">
                             <div class="weight-bar-value-content" style="width: 130px;"></div>
-                            <div class="weight-bar-content"><img class="text-icon" src="icons/game-icons/ffffff/delapouite/weight.svg"> 30 / 150</div>
+                            <div class="weight-bar-content"><img class="text-icon" src="/icons/game-icons/ffffff/delapouite/weight.svg"> 30 / 150</div>
                         </div>
                         <div class="three-columns">
                             <div class="grid-element-col">

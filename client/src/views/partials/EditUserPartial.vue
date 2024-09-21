@@ -72,7 +72,7 @@ onMounted(() => {
 
     <div class="main-user-container">
         <div class="main-user-container-inner">
-            <img class="user-icon" src="img/def-avatar.jpg" id="upload-image" draggable="false">
+            <img class="user-icon" src="/img/def-avatar.jpg" id="upload-image" draggable="false">
             <div class="main-user-info">
                 <b>{{ username }}</b><br>Hola
             </div>

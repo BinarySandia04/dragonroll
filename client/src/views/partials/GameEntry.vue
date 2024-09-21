@@ -32,10 +32,10 @@ function Click(){
         <p v-if="!editable" class="name">{{ data.name }}</p>
     </div>
     <div class="horizontal-button">
-        <IconButton icon="icons/iconoir/solid/play.svg" :action="Play" size="small"></IconButton>
-        <IconButton icon="icons/iconoir/regular/eye.svg" :action="View" size="small"></IconButton>
-        <IconButton icon="icons/iconoir/regular/trash.svg" :action="Delete" size="small"></IconButton>
-        <IconButton icon="icons/iconoir/regular/edit.svg" :action="Edit" size="small"></IconButton>
+        <IconButton icon="/icons/iconoir/solid/play.svg" :action="Play" size="small"></IconButton>
+        <IconButton icon="/icons/iconoir/regular/eye.svg" :action="View" size="small"></IconButton>
+        <IconButton icon="/icons/iconoir/regular/trash.svg" :action="Delete" size="small"></IconButton>
+        <IconButton icon="/icons/iconoir/regular/edit.svg" :action="Edit" size="small"></IconButton>
     </div>
 </div>
 </template>

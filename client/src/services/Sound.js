@@ -5,7 +5,7 @@ function AddSound(element){
        soundClicks[i].addEventListener("click", async (event) => {
             const audio = new Audio('/sounds/snap.wav');
             audio.type = "audio/wav"
-            audio.play();
+            audio.play().catch((e)=>{});
        })
     }
 }

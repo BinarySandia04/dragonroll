@@ -73,13 +73,13 @@ defineExpose({
     <div class="window-handle" :id="'window-handle-' + id">
 
         <div class="left" v-if="def">
-            <img class="icon icon-add-margin" src="icons/iconoir/regular/arrow-left.svg" draggable="false" ref="backButton" v-if="hasBack" v-on:click="backFunction">
+            <img class="icon icon-add-margin" src="/icons/iconoir/regular/arrow-left.svg" draggable="false" ref="backButton" v-if="hasBack" v-on:click="backFunction">
         </div>
         <div class="center" v-if="def">
             <span>{{ title }}</span>
         </div>
         <div class="right">
-            <img class="icon" src="icons/iconoir/regular/xmark.svg" draggable="false" ref="closeButton" v-if="close" v-on:click="CloseButton">
+            <img class="icon" src="/icons/iconoir/regular/xmark.svg" draggable="false" ref="closeButton" v-if="close" v-on:click="CloseButton">
         </div>
         <!-- span>{{ title }}</span>
             
@@ -88,7 +88,7 @@ defineExpose({
 
 
     <div v-show="resizable" class="window-resize-handle" :id="'window-resize-handle-' + id">
-        <img src="icons/ui/resize-handle.svg" draggable="false">
+        <img src="/icons/ui/resize-handle.svg" draggable="false">
     </div>
 </template>
 

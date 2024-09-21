@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref, toRaw, watch } from 'vue';
 import IconButton from './game/IconButton.vue';
 import { HideContextMenu, ShowContextMenu } from '../../services/ContextMenu';
 const props = defineProps(['items', 'done']);
 const items = ref(props.items);
 const done = props.done;
+const selected = ref([]);
+let selectedTags = ref([]);
 
 const itemDict = {}
 
@@ -13,16 +15,19 @@ function lower(text) {
 }
 
 for(let i = 0; i < props.items.length; i++) itemDict[lower(items.value[i])] = i;
-let selectedTags = ref([]);
+
+function CallDone(){
+    done(toRaw(selectedTags.value));
+}
 
 function SelectTab(tag){
     if(!selectedTags.value.includes(tag)) selectedTags.value.push(tag);
-    done(selectedTags.value);
+    CallDone();
 }
 
 function RemoveTag(tag){
     selectedTags.value = selectedTags.value.filter((item) => item !== tag);
-    done(selectedTags.value);
+    CallDone();
 }
 
 function OpenDropdown(){
@@ -41,15 +46,25 @@ function OpenDropdown(){
     });
     ShowContextMenu(context);
 }
+
+onMounted(() => {
+    watch(selected, () => {
+        selectedTags.value = selected.value;
+    });
+})
+
+defineExpose({
+    selected,
+});
 </script>
 
 <template>
     <div class="tags-container">
         <div class="tag" v-for="tag in selectedTags" :key="tag">
             <span>{{ tag }}</span>
-            <img class="close-tag" src="icons/iconoir/regular/xmark.svg" v-on:click.prevent="RemoveTag(tag)">
+            <img class="close-tag" src="/icons/iconoir/regular/xmark.svg" v-on:click.prevent="RemoveTag(tag)">
         </div>
-        <IconButton class="small-icon" icon="icons/iconoir/regular/plus.svg" :action="OpenDropdown"></IconButton>
+        <IconButton class="small-icon" icon="/icons/iconoir/regular/plus.svg" :action="OpenDropdown"></IconButton>
     </div>
 </template>
 

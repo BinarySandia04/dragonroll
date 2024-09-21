@@ -31,7 +31,7 @@ onMounted(() => {
         <div class="book-anvil-container">
             <div class="book-anvil-header">
                 <IconSelector :window="id" ref="bookIcon"></IconSelector>
-                <img class="img-selector"> <!-- TODO: Canviar això per un component ben fet -->
+                <img class="/img-selector"> <!-- TODO: Canviar això per un component ben fet -->
                 <div class="book-info">
                     <h1>New book</h1>
                 </div>

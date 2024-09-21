@@ -9,7 +9,7 @@ import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Win
 
 import Api from '@/services/Api.js'
 
-import { ClearWindows, CreateWindow } from '../../services/Windows';
+import { ClearWindow, ClearWindows, CreateWindow } from '../../services/Windows';
 import { DisplayToast } from '../../services/Dragonroll';
 
 const email = ref("");
@@ -30,7 +30,7 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 800});
+    SetSize(id, {width: 500, height: 660});
     ResetPosition(id, "center");
 });
 
@@ -42,31 +42,28 @@ function register(){
   }
 
   Api().post('/user/register', 
-      {
-          name: name.value,
-          username: username.value,
-          email: email.value,
-          password: password.value,
-      }).then((response) => {
+    {
+        name: name.value,
+        username: username.value,
+        email: email.value,
+        password: password.value,
+    }).then((response) => {
 
-      const data = response.data;
+    const data = response.data;
 
-      if(data.error){
-          console.log(data);
-          errorMessage.value = data.msg;
-      } else {
-          errorMessage.value = "";
-          console.log("Logged successfully");
-          DisplayToast('green', 'Account created successfully, now log in!', 3000);
-      }
+    if(data.error){
+        console.log(data);
+        errorMessage.value = data.msg;
+    } else {
+        errorMessage.value = "";
+        console.log("Logged successfully");
+        DisplayToast('green', 'Account created successfully, now log in!', 3000);
+        ClearWindow(id);
+        CreateWindow('login');
+    }
   }).catch((error) => {
       console.log(error);
   });
-}
-
-function ShowLogin(msg){
-    ClearWindows({type: "register"});
-    CreateWindow('login', {success: msg});
 }
 
 </script>
@@ -77,8 +74,13 @@ function ShowLogin(msg){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="window-content">
-        <img src="img/logo-splash.png" class="splash-image" draggable="false">
-
+            <div class="document">
+                <h1>Welcome!</h1>
+                <b>You have successfull setup Dragonroll!</b>
+                <p>Please create the admin account</p>
+                <p>Once the admin account has been created, you will be able to create user accounts that will be able to access Dragonroll</p>
+                <hr>
+            </div>
         <form v-on:submit.prevent="register">
             <div class="form-field">
                 <label for="name">Name</label>
@@ -102,11 +104,10 @@ function ShowLogin(msg){
                 <input id="confirm-password-field" type="password" placeholder="Enter again your password..." name="confirm-password" v-model="confirmPassword" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary sound-click">Register</button>
+                <button class="btn-primary sound-click confirm-form-button">Register</button>
             </div>
         </form>
 
-        <p>Already have an account? <a v-on:click.prevent="ShowLogin">Log in</a></p>
         <ErrorMessage v-if="errorMessage">{{ errorMessage }}</ErrorMessage>
 
       </div>
@@ -131,6 +132,8 @@ p {
     display: flex;
     align-items: center;
     padding-bottom: 50px;
+    width: 100%;
+    padding: 20px;
 }
 
 .splash-image {
@@ -138,13 +141,7 @@ p {
     user-select: none;
 }
 
-.form-field {
-    padding: 10px;
-    display: flex;
-    align-items: left;
-    flex-direction: column;
-    justify-content: left;
-}
+
 
 form {
     width: 100%;

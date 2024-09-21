@@ -56,9 +56,9 @@ onMounted(() => {
 <div class="map-entry-container">
     <input type="text" ref="title" v-on:change.prevent="Rename">
     <div class="horizontal-button">
-        <div class="toggler" :class="toggleGlobal"><IconButton icon="icons/iconoir/solid/play.svg" :action="ShowMap" size="small"></IconButton></div>
-        <div class="toggler" :class="toggled"><IconButton icon="icons/iconoir/regular/eye.svg" :action="ViewMap" size="small"></IconButton></div>
-        <IconButton icon="icons/iconoir/regular/trash.svg" :action="DeleteMap" size="small"></IconButton>
+        <div class="toggler" :class="toggleGlobal"><IconButton icon="/icons/iconoir/solid/play.svg" :action="ShowMap" size="small"></IconButton></div>
+        <div class="toggler" :class="toggled"><IconButton icon="/icons/iconoir/regular/eye.svg" :action="ViewMap" size="small"></IconButton></div>
+        <IconButton icon="/icons/iconoir/regular/trash.svg" :action="DeleteMap" size="small"></IconButton>
     </div>
 </div>
 </template>

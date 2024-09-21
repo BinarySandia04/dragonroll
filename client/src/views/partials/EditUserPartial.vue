@@ -35,7 +35,7 @@ function EditProfile(){
 }
 
 function EditSettings(){
-    CreateChildWindow('main_menu', 'account_settings');
+    CreateChildWindow('main_menu', 'settings');
 }
 
 onMounted(() => {

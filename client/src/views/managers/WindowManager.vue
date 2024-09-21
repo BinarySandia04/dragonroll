@@ -8,7 +8,7 @@ import RegisterWindow from '@/views/windows/RegisterWindow.vue'
 import ExampleWindow from '@/views/windows/ExampleWindow.vue'
 import MainMenuWindow from '@/views/windows/MainMenuWindow.vue'
 import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
-import AccountSettingsWindow from '../windows/AccountSettingsWindow.vue'
+import SettingsWindow from '../windows/SettingsWindow.vue'
 
 import { Windows, ReloadRef } from '@/services/Windows';
 import CampaignListWindow from '../windows/campaigns/CampaignListWindow.vue'
@@ -43,7 +43,7 @@ let WindowMap = {
   welcome: WelcomeWindow,
   register: RegisterWindow,
   edit_profile: EditProfileWindow,
-  account_settings: AccountSettingsWindow,
+  settings: SettingsWindow,
   campaign_list: CampaignListWindow,
   new_campaign: NewCampaignWindow,
   join_campaign: JoinCampaignWindow,

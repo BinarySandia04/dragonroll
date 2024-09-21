@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
 
 import VersionRender from '@/views/others/VersionRender.vue'
 import WindowHandle from '@/views/partials/WindowHandle.vue';
@@ -80,7 +82,7 @@ function OpenBookAnvil(){
 
         <EditUserPartial></EditUserPartial>
 
-        <h1>Main Menu</h1>
+        <h1>{{ $t("main-menu")}}</h1>
 
         <div class="button-container">
             <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns" ref="campaignButton">Campaigns</button>

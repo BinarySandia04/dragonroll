@@ -9,7 +9,6 @@ let selectedTab = ref(props.rows[0].replace(/\s+/g, '-').toLowerCase());
 
 function SelectTab(row){
     selectedTab.value = row;
-    console.log(selectedTab.value);
 }
 </script>
 
@@ -45,6 +44,7 @@ function SelectTab(row){
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 .tab-container-outer {

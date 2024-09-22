@@ -36,7 +36,7 @@ const defValues = {
         close: () => ClearWindow('edit_profile')
     },
     'settings': {
-        id: 'ettings',
+        id: 'settings',
         title: "Dragonroll settings",
         close: () => ClearWindow('settings')
     },

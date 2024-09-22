@@ -14,8 +14,6 @@ import { ImportModule, GetModulesToLoad } from './services/Modules'
 import { CreateWindow } from './services/Windows';
 import { FetchVanillaResources } from './services/Resources';
 
-console.clear();
-console.log("%cLoaded!!!", "color: #22ff22; font-size: 24px");
 LoadUser();
 
 SetEmitter(emitter);

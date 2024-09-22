@@ -8,8 +8,10 @@ import router from './router'
 
 import EN from './locale/en.json'
 import ES from './locale/es.json'
+import CA from './locale/ca.json'
 
 import mitt from 'mitt';
+import { GetUser, GetUserSetting } from './services/User'
 const emitter = mitt();
 
 const app = createApp(App);
@@ -22,12 +24,23 @@ app.config.globalProperties.rollWindows = {
     edit_profile: reactive([]),
 };
 
+
+console.clear();
+console.log("%cLoaded!!!", "color: #22ff22; font-size: 24px");
+
+// Determinem el locale
+let locale = 'en';
+if(GetUser()) locale = await GetUserSetting('lang');
+console.log(locale);
+
 const i18n = createI18n({
     legacy: false,
-    locale: 'en',
+    locale,
+    fallbackLocale: 'en',
     messages: {
         en: EN,
         es: ES,
+        ca: CA
     }
 });
 

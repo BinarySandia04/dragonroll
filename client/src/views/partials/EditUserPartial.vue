@@ -78,9 +78,9 @@ onMounted(() => {
             </div>
 
             <div class="main-user-actions">
-                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditProfile">Edit profile</button>
-                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditSettings">Settings</button>
-                <button class="btn-primary button-small sound-click" v-on:click.prevent="LogOut">Log out</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditProfile">{{ $t("main-menu.edit-profile") }}</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="EditSettings">{{ $t("main-menu.settings") }}</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="LogOut">{{ $t("main-menu.log-out") }}</button>
             </div>
         </div>
     </div>

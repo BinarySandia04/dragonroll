@@ -277,3 +277,19 @@ span.legendary {
 span.artifact {
   color: var(--color-artifact);
 }
+
+.form-container {
+  width: 100%;
+}
+
+.form-element {
+  padding: 10px 0 10px 0;
+  margin: 0 10px 0 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.form-element label {
+  flex-grow: 1;
+}

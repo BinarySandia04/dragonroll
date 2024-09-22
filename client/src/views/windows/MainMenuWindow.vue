@@ -82,13 +82,13 @@ function OpenBookAnvil(){
 
         <EditUserPartial></EditUserPartial>
 
-        <h1>{{ $t("main-menu")}}</h1>
+        <h1>{{ $t("main-menu.main-menu")}}</h1>
 
         <div class="button-container">
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns" ref="campaignButton">Campaigns</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCampaigns" ref="campaignButton">{{ $t("main-menu.campaigns") }}</button>
             <hr>
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenCompendium">The Cosmic Compendium</button>
-            <button class="btn-primary button-expand sound-click" v-on:click="OpenBookAnvil">Book Anvil</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenCompendium">{{ $t("main-menu.cosmic-compendium") }}</button>
+            <button class="btn-primary button-expand sound-click" v-on:click="OpenBookAnvil">{{ $t("main-menu.book-anvil") }}</button>
         </div>
         <VersionRender></VersionRender>
     </div>

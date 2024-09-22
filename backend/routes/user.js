@@ -8,6 +8,8 @@ const secret = require('../config/keys').secret;
 const rateLimitMiddleware = require("../config/rate-limiter");
 const { default: jwtDecode } = require('jwt-decode');
 
+const { hasUser } = require('../config/middleware');
+
 const User = require("../models/User");
 
 const upload = require("../config/storage");
@@ -96,6 +98,7 @@ router.post('/login', rateLimitMiddleware, (req, res) => {
                     name: user.name,
                     email: user.email,
                     admin: user.admin,
+                    settings: user.settings
                 }
                 jwt.sign(payload, secret, {
                     expiresIn: 172800
@@ -150,5 +153,25 @@ router.get("/has-admin", (req, res) => {
         res.json({ status: "error" });
     });
 });
+
+router.post("/update-settings", passport.authenticate('jwt', {session: false}), (req, res) => {
+    User.updateOne(req.user, {settings: req.body.settings}).then(() => {
+        res.json({
+            status: "ok",
+            settings: req.body.settings
+        })
+    }).catch((err) => {
+        res.json({status: "error", msg: "internal"})
+    });
+});
+
+router.get('/get-settings', passport.authenticate('jwt', {session: false}), (req, res) => {
+    User.findOne(req.user).then((data) => {
+        res.json({
+            status: "ok",
+            settings: data.settings
+        });
+    }).catch((err) => res.json({status: "error", msg: "internal"}));
+})
 
 module.exports = router;

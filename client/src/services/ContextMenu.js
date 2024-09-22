@@ -77,13 +77,24 @@ function PopulateContextMenu(val){
     children.forEach((el) => contextMenu.appendChild(el));
 }
 
-function AddContextMenu(element, val){
+function AddContextMenu(element, val, options = {}){
     element._dr_context = val;
-    element.addEventListener('contextmenu', (e) => {
+
+    function show(e){
         e.preventDefault();
         PopulateContextMenu(val);
         Show();
-    });
+        if(options.dropdown){
+            let rect = element.getBoundingClientRect();
+            let contextMenu = document.getElementById('context-menu');
+            contextMenu.style.top = rect.bottom + "px";
+            contextMenu.style.left = rect.left + "px";
+            console.log(rect.top);
+        }
+    }
+
+    element.addEventListener('contextmenu', show);
+    if(options.dropdown) element.addEventListener('click', show);
 }
 
 

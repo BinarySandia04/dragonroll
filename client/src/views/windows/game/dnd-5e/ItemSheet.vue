@@ -108,12 +108,12 @@ function InitValues(){
     rarity.value.addEventListener("click", () => {
         ShowContextMenu(rarities)
     });
-    AddContextMenu(rarity.value, rarities)
+    AddContextMenu(rarity.value, rarities, {dropdown: true})
 
     weaponType.value.addEventListener("click", () => {
         ShowContextMenu(weapon_types)
     });
-    AddContextMenu(weaponType.value, weapon_types);
+    AddContextMenu(weaponType.value, weapon_types, {dropdown: true});
 
     item_name.value.addEventListener('blur', () => {
         concept.value.name = item_name.value.textContent;

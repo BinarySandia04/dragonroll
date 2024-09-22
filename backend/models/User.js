@@ -8,7 +8,8 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     date: { type: Date, default: Date.now},
     admin: {type: Boolean, default: false},
-    image: { type: String }
+    image: { type: String },
+    settings: { type: Object }
 });
 
 module.exports = mongoose.model('User', UserSchema);

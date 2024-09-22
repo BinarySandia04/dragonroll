@@ -24,6 +24,25 @@ async function HasAdmin(){
     return response.data.status != "init";
 }
 
+function SetUserSetting(key, value){
+    return new Promise((resolve, reject) => {
+        let user = GetUser()
+        if(!user.settings) user.settings = {};
+        user.settings[key] = value;
+        Api().post('/user/update-settings', {settings: user.settings}).then(response => {
+            resolve(response.data.settings);
+        });
+    });
+}
+
+function GetUserSetting(key){
+    return new Promise((resolve, reject) => {
+        Api().get('/user/get-settings').then(response => {
+            resolve(response.data.settings[key]);
+        });
+    });
+}
+
 function GetUser(){
     const token = localStorage.getItem('token');
 
@@ -66,5 +85,7 @@ export {
     LoadUser,
     IsAdmin,
     LogoutUser,
-    HasAdmin
+    HasAdmin,
+    GetUserSetting,
+    SetUserSetting
 }

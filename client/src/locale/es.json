@@ -1,3 +1,11 @@
 {
-    "main-menu": "Menú Principal"
+    "main-menu": {
+        "main-menu": "Menú Principal",
+        "campaigns": "Campañas",
+        "cosmic-compendium": "La Libreria Cósmica",
+        "book-anvil": "Forjador de Libros",
+        "edit-profile": "Editar Perfil",
+        "settings": "Ajustes",
+        "log-out": "Cerrar sesión"
+    }
 }

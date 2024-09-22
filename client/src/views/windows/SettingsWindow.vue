@@ -5,8 +5,8 @@ import { GetUser } from '@/services/User'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import Tabs from '../partials/Tabs.vue';
-import { I18nD, I18nN } from 'vue-i18n';
 import Dropdown from '../partials/Dropdown.vue';
+import { GetUserSetting, SetUserSetting } from '../../services/User';
 
 const handle = ref(null);
 
@@ -17,20 +17,36 @@ let id = data.id;
 
 let rows = ref(["Account settings"]);
 
+const languageOptions = ref(["English", "Spanish", "Catalan"])
 const langSelector = ref(null);
+const currentLanguage = ref("");
 
 onBeforeMount(() => {
+    let codes = {
+        "en": "English",
+        "es": "Spanish",
+        "ca": "Catalan"
+    }
+    GetUserSetting('lang').then(value => {
+        currentLanguage.value = codes[value ?? 'en']
+        console.log(currentLanguage.value)
+    });
     if(GetUser().admin) rows.value.push("Site Administration");
 });
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 380});
+    SetSize(id, {width: 400, height: 480});
     ResetPosition(id, "center");
 });
 
-function OnLanguageChange(){
-    I18n.locale = langSelector.value.value;
+async function OnLanguageChange(value){
+    let codes = {
+        "English": "en",
+        "Spanish": "es",
+        "Catalan": "ca"
+    }
+    await SetUserSetting("lang", codes[value]);
 }
 </script>
 
@@ -42,8 +58,13 @@ function OnLanguageChange(){
         <!-- Body -->
         <Tabs :rows="rows">
             <template #account-settings>
-                Language: <Dropdown :options="languageOptions" :select="OnLanguageChange"></Dropdown>
-            </template>
+                <div class="form-container">
+                    <div class="form-element">
+                        <label>Language: </label>
+                        <Dropdown :options="languageOptions" :onselect="OnLanguageChange" :selected="currentLanguage"></Dropdown>
+                    </div>
+                </div>
+            </template>Hola
             <template #site-administration>
 
             </template>
@@ -54,9 +75,6 @@ function OnLanguageChange(){
 
 <style scoped>
 .window-wrapper {
-    min-width: 700px;
-    min-height: 630px;
-
     width: 100%;
     display: flex;
     align-items: center;

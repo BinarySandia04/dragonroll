@@ -1,35 +1,39 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { AddContextMenu } from '../../services/ContextMenu';
-const props = defineProps(['options', 'selected']);
+import { onMounted, ref, watch } from 'vue';
+import { AddContextMenu, HideContextMenu } from '../../services/ContextMenu';
+const props = defineProps(['options', 'onselect', 'selected']);
 const options = props.options;
-const selected = props.selected;
+const selectCallback = props.onselect;
+const initialSelect = props.selected;
 const dropdown = ref(null);
+
+const selected = ref(initialSelect);
 
 onMounted(() => {
     let context = [];
-    items.value.forEach(name => {
+    watch(() => props.selected, () => {
+        selected.value = props.selected;
+    });
+    options.forEach(name => {
         context.push({
-            icon: selectedTags.value.includes(name) ? 'icons/iconoir/regular/check.svg' : false,
+            icon: selected.value == name ? 'icons/iconoir/regular/check.svg' : false,
             name,
             action: () => {
                 HideContextMenu();
-                if(!selectedTags.value.includes(name)){
-                    SelectTab(name);
-                } else { RemoveTag(name) }
+                selected.value = name;
+                selectCallback(name);
             }
         });
     });
-    ShowContextMenu(context);
 
-    AddContextMenu(dropdown.value);
+    AddContextMenu(dropdown.value, context, {dropdown: true});
 });
 </script>
 
 
 <template>
     <div class="dropdown" ref="dropdown">
-        <span>Hola</span>
+        <span>{{ selected }}</span>
     </div>
 </template>
 

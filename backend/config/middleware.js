@@ -16,6 +16,11 @@ function hasCampaign(req, res, next){
     }).catch((err) => res.json({status: "error", err}));
 }
 
+function hasUser(req, res, next){
+    
+}
+
 module.exports = {
-    hasCampaign
+    hasCampaign,
+    hasUser
 }

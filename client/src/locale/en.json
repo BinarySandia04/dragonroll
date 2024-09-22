@@ -1,3 +1,11 @@
 {
-    "main-menu": "Main Menu"
+    "main-menu": {
+        "main-menu": "Main Menu",
+        "campaigns": "Campaigns",
+        "cosmic-compendium": "The Cosmic Compendium",
+        "book-anvil": "Book Anvil",
+        "edit-profile": "Edit Profile",
+        "settings": "Settings",
+        "log-out": "Log Out"
+    }
 }

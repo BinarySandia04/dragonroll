@@ -38,7 +38,9 @@ function SetUserSetting(key, value){
 function GetUserSetting(key){
     return new Promise((resolve, reject) => {
         Api().get('/user/get-settings').then(response => {
-            resolve(response.data.settings[key]);
+            if(response.data.settings)
+                resolve(response.data.settings[key]);
+            else resolve(undefined);
         });
     });
 }

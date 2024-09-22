@@ -24,7 +24,7 @@ let system = "";
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 300, height: 240});
+    SetSize(id, {width: 350, height: 240});
     ResetPosition(id, "center");
     GetEmitter().on('select', (system_id) => Select(system_id))
 
@@ -62,13 +62,13 @@ function NewCampaign(){
         <!-- Body -->
         <form v-on:submit.prevent="NewCampaign">
             <div class="form-field">
-                <input id="username-field" type="text" placeholder="Enter campaign name..." name="campaignName" v-model="campaignName" autocomplete="off" >
+                <input id="username-field" type="text" :placeholder="$t('campaigns.create.enter')" name="campaignName" v-model="campaignName" autocomplete="off" >
             </div>
             <div class="form-field">
                 <SystemSelector :windowId="id" ref="systemSelector"></SystemSelector>
             </div>
             <div class="form-field">
-                <button class="btn-primary sound-click">Create</button>
+                <button class="btn-primary sound-click">{{ $t("general.create")}}</button>
             </div>
         </form>
     

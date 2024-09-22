@@ -33,7 +33,7 @@ watch(selectedSystem, () => {
 
 <template>
     <div class="system-selector" v-on:click="DisplaySystemSelector">
-        <span v-show="selectedSystem == ''" class="none">No game system selected</span>
+        <span v-show="selectedSystem == ''" class="none">{{ $t('systems.not-selected') }}</span>
         <div v-show="selectedSystem != ''" class="yes">
             <img ref="selectedImage" class="system-icon">
             {{ systemTitle }}

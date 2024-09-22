@@ -37,7 +37,7 @@ function ViewCampaign(){
             </div>
 
             <div class="campaign-user-actions">
-                <button class="btn-primary button-small sound-click" v-on:click.prevent="ViewCampaign">View</button>
+                <button class="btn-primary button-small sound-click" v-on:click.prevent="ViewCampaign">{{ $t('general.view')}}</button>
             </div>
         </div>
     </div>

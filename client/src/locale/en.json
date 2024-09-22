@@ -1,5 +1,12 @@
 {
+    "general": {
+        "create": "Create",
+        "join": "Join",
+        "view": "View",
+        "players": "Jugadores"
+    },
     "main-menu": {
+        "title": "Dragonroll",
         "main-menu": "Main Menu",
         "campaigns": "Campaigns",
         "cosmic-compendium": "The Cosmic Compendium",
@@ -7,5 +14,44 @@
         "edit-profile": "Edit Profile",
         "settings": "Settings",
         "log-out": "Log Out"
+    },
+    "settings": {
+        "title": "Dragonroll settings",
+        "account": {
+            "account-settings": "Account Settings",
+            "language": "Language:"
+        },
+        "site-administration": {
+
+        }
+    },
+    "campaigns": {
+        "title": "Campaigns",
+        "your-campaigns": "Your Campaigns",
+        "other-campaigns": "Other Campaigns",
+        "create": {
+            "title": "Create Campaign",
+            "enter": "Enter campaign name..."
+        },
+        "join": {
+            "title": "Join Campaign",
+            "enter": "Enter campaign code...",
+            "success": "Successfully joined the campaign!",
+            "already": "You are already in that campaign!",
+            "error": "Error joining this campaign, check if the code is correct"
+        },
+        "preview": {
+            "title": "Campaign preview",
+            "copy-code": "Copy invite code",
+            "copy-explain": "Click this button to copy the invite code of your campaign to the clipboard",
+            "copy-success": "Copied invite code successfully!",
+            "launch-game": "Launch game",
+            "exit-game": "Exit game"
+        }
+    },
+    "systems": {
+        "title": "Select a game system",
+        "not-selected": "No game system selected"
     }
+
 }

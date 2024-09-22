@@ -60,7 +60,7 @@ async function OnLanguageChange(value){
             <template #account-settings>
                 <div class="form-container">
                     <div class="form-element">
-                        <label>Language: </label>
+                        <label>{{ $t('settings.account.language') }}</label>
                         <Dropdown :options="languageOptions" :onselect="OnLanguageChange" :selected="currentLanguage"></Dropdown>
                     </div>
                 </div>

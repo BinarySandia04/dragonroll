@@ -27,15 +27,15 @@ function JoinCampaign(){
         invite_code
     }).then(response => {
         if(response.data.status == "ok"){
-            DisplayToast('green', "Successfully joined the campaign!", 2000);
+            DisplayToast('green', $t("campaigns.join.success"), 2000);
             let campaign = response.data.campaign;
 
             ConnectToCampaign(campaign);
             DisplayCampaign(campaign);
         } else if(response.data.msg == "already"){
-            DisplayToast('red', "You are already in that campaign!", 2000);
+            DisplayToast('red', $t("campaigns.join.already"), 2000);
         } else {
-            DisplayToast('red', "Error joining this campaign (maybe the code is not valid?)", 2000);
+            DisplayToast('red', $t("campaigns.join.error"), 2000);
         }
     }).catch((err) => console.log(err)); 
 }
@@ -50,10 +50,10 @@ function JoinCampaign(){
         <!-- Body -->
         <form v-on:submit.prevent="JoinCampaign">
             <div class="form-field">
-                <input id="username-field" type="text" placeholder="Enter campaign code..." name="code" v-model="code" autocomplete="off" >
+                <input id="username-field" type="text" :placeholder='$t("campaigns.join.enter")' name="code" v-model="code" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary sound-click" v-on:click.prevent="JoinCampaign">Join</button>
+                <button class="btn-primary sound-click" v-on:click.prevent="JoinCampaign">{{ $t("general.join")}}</button>
             </div>
         </form>
     </div>

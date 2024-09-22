@@ -76,7 +76,7 @@ defineExpose({
             <img class="icon icon-add-margin" src="/icons/iconoir/regular/arrow-left.svg" draggable="false" ref="backButton" v-if="hasBack" v-on:click="backFunction">
         </div>
         <div class="center" v-if="def">
-            <span>{{ title }}</span>
+            <span>{{ $t(title) }}</span>
         </div>
         <div class="right">
             <img class="icon" src="/icons/iconoir/regular/xmark.svg" draggable="false" ref="closeButton" v-if="close" v-on:click="CloseButton">

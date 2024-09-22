@@ -20,7 +20,7 @@ const defValues = {
     },
     'main_menu': {
         id: 'main_menu',
-        title: "DragonRoll",
+        title: 'main-menu.title',
         create: () => {
             // CreateChildWindow('main_menu', 'welcome');
         }
@@ -37,12 +37,12 @@ const defValues = {
     },
     'settings': {
         id: 'settings',
-        title: "Dragonroll settings",
+        title: 'settings.title',
         close: () => ClearWindow('settings')
     },
     'campaign_list': {
         id: 'campaign_list',
-        title: 'Campaigns',
+        title: 'campaigns.title',
         back: () => {
             ClearWindow('campaign_list');
             CreateWindow('main_menu');
@@ -50,19 +50,19 @@ const defValues = {
     },
     'new_campaign': {
         id: 'new_campaign',
-        title: 'Create campaign',
+        title: 'campaigns.create.title',
         parent: 'campaign_list',
         close: () => ClearWindow('new_campaign')
     },
     'join_campaign': {
         id: 'join_campaign',
-        title: 'Join campaign',
+        title: 'campaigns.join.title',
         parent: 'campaign_list',
         close: () => ClearWindow('join_campaign')
     },
     'campaign_preview': {
         id: 'campaign_preview',
-        title: "Campaign Preview",
+        title: "campaigns.preview.title",
         back: () => {
             Disconnect();
             ClearWindow('campaign_preview');
@@ -91,7 +91,7 @@ const defValues = {
     },
     'system_selector': {
         id: 'system-selector',
-        title: "Select a game system",
+        title: 'systems.title',
         close: () => ClearWindow('system-selector')
     },
     'map_window': {

@@ -1,11 +1,54 @@
 {
-    "main-menu": {
-        "main-menu": "Menú Principal",
-        "campaigns": "Campañas",
-        "cosmic-compendium": "La Libreria Cósmica",
-        "book-anvil": "Forjador de Libros",
-        "edit-profile": "Editar Perfil",
-        "settings": "Ajustes",
-        "log-out": "Cerrar sesión"
+  "general": {
+    "create": "Crear",
+    "join": "Entrar",
+    "view": "Abrir",
+    "players": "Jugadores"
+  },
+  "main-menu": {
+    "title": "Dragonroll",
+    "main-menu": "Menú Principal",
+    "campaigns": "Campañas",
+    "cosmic-compendium": "La librería cósmica",
+    "book-anvil": "Forjador de libros",
+    "edit-profile": "Editar perfil",
+    "settings": "Ajustes",
+    "log-out": "Cerrar sesión"
+  },
+  "settings": {
+    "title": "Ajustes de Dragonroll",
+    "account": {
+      "account-settings": "Ajustes de la cuenta",
+      "language": "Idioma:"
+    },
+    "site-administration": {}
+  },
+  "campaigns": {
+    "title": "Campañas",
+    "your-campaigns": "Tus campañas",
+    "other-campaigns": "Otras campañas",
+    "create": {
+      "title": "Crear campaña",
+      "enter": "Introduce el nombre de la campaña..."
+    },
+    "join": {
+      "title": "Entrar en la campaña",
+      "enter": "Introduce el código de la campaña...",
+      "success": "Has entrado en la campaña correctamente!",
+      "already": "Ya estás dentro de esta campaña!",
+      "error": "Ha habido un error al entrar en esta campaña, acaso el código existe?"
+    },
+    "preview": {
+      "title": "Previsualización de la campaña",
+      "copy-code": "Copiar codigo",
+      "copy-explain": "Haz clic en este botón para copiar el código de invitación a tu cortapapeles",
+      "copy-success": "Se ha copiado el código correctamente!",
+      "launch-game": "Abrir juego",
+      "exit-game": "Cerrar juego"
     }
+  },
+  "systems": {
+    "title": "Selecciona un sistema de juego",
+    "not-selected": "Ningún sistema de juego seleccionado"
+  }
 }

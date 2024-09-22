@@ -15,6 +15,9 @@ import { GetModule } from '../../../services/Modules';
 import { AddTooltip } from '../../../services/Tooltip';
 import { Disconnect } from '../../../services/Campaign';
 
+import { useI18n } from 'vue-i18n';
+const {t} = useI18n();
+
 const handle = ref(null);
 
 const props = defineProps(['data']);
@@ -45,12 +48,12 @@ onMounted(() => {
 
     campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
 
-    AddTooltip(copy_code_button.value, "<p>Click this button to copy the invite code of your campaign to the clipboard</p>", {max_width: 300})
+    AddTooltip(copy_code_button.value, `<p>${t('campaigns.preview.copy-explain')}</p>`, {max_width: 300})
 });
 
 function CopyCode(){
     navigator.clipboard.writeText(GetCampaign().invite_code);
-    DisplayToast('aqua', "Copied invite code successfully!", 1000);
+    DisplayToast('aqua', $t('campaigns.preview.copy-success'), 1000);
 }
 
 function Launch(){
@@ -76,10 +79,10 @@ function Exit(){
 
          <div class="campaign-preview-container" :class="hide_chat ? 'campaign-preview-compact' : ''" ref="container">
             <div class="campaign-preview-column left">
-                <h2 class="centered">Players</h2>
+                <h2 class="centered">{{$t('general.players')}}</h2>
                 <PlayerList :campaign="data.campaign"></PlayerList>
                 <div class="buttons-row">
-                    <button class="btn-primary button-row sound-click" v-on:click.prevent="CopyCode" ref="copy_code_button">Copy invite code</button>
+                    <button class="btn-primary button-row sound-click" v-on:click.prevent="CopyCode" ref="copy_code_button">{{$t('campaigns.preview.copy-code')}}</button>
                 </div>
             </div>
             <div class="campaign-preview-column center">
@@ -92,8 +95,8 @@ function Exit(){
                     </div>
                 </div>
                 <div class="buttons-row">
-                    <button class="btn-primary button-row sound-click btn-green" v-if="!hide_start" v-on:click.prevent="Launch">Launch game</button>
-                    <button class="btn-primary button-row sound-click btn-red" v-if="hide_start" v-on:click.prevent="Exit">Exit game</button>
+                    <button class="btn-primary button-row sound-click btn-green" v-if="!hide_start" v-on:click.prevent="Launch">{{$t('campaigns.preview.launch-game')}}</button>
+                    <button class="btn-primary button-row sound-click btn-red" v-if="hide_start" v-on:click.prevent="Exit">{{$t('campaigns.preview.exit-game')}}</button>
                 </div>
             </div>
             <div v-if="!hide_chat" class="campaign-preview-column right">

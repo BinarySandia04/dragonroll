@@ -59,7 +59,7 @@ function RefreshCampaigns(){
             <!-- Body -->
             <div class="campaign-list-container">
                 <div class="window-second-header">
-                    <h2 class="centered">Your campaigns</h2>
+                    <h2 class="centered">{{ $t("campaigns.your-campaigns")}}</h2>
 
                     <div class="campaign-list">
                         <CampaignEntry v-for="camp in myCampaigns" :key="camp._id" :data="camp"></CampaignEntry>
@@ -67,7 +67,7 @@ function RefreshCampaigns(){
                 </div>
 
                 <div class="window-second-header">
-                    <h2 class="centered">Other campaigns</h2>
+                    <h2 class="centered">{{ $t("campaigns.other-campaigns")}}</h2>
                     <div class="campaign-list">
                         <CampaignEntry v-for="camp in otherCampaigns" :key="camp._id" :data="camp"></CampaignEntry>
                     </div>
@@ -76,8 +76,8 @@ function RefreshCampaigns(){
             </div>
 
             <div class="buttons-row">
-                <button class="btn-primary button-row sound-click" v-on:click.prevent="CreateCampaign">Create campaign</button>
-                <button class="btn-primary button-row sound-click" v-on:click.prevent="JoinCampaign">Join campaign</button>
+                <button class="btn-primary button-row sound-click" v-on:click.prevent="CreateCampaign">{{ $t("campaigns.create.title")}}</button>
+                <button class="btn-primary button-row sound-click" v-on:click.prevent="JoinCampaign">{{ $t("campaigns.join.title")}}</button>
             </div>
         </div>
 

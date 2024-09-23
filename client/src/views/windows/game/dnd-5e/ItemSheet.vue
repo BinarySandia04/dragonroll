@@ -11,6 +11,7 @@ import { GetConcept } from '@/services/Data';
 import Tabs from '@/views/partials/Tabs.vue';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 import Tags from '@/views/partials/Tags.vue';
+import NumberInput from '@/views/partials/NumberInput.vue';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -22,6 +23,9 @@ const item_name = ref(null);
 const icon_selector = ref(null);
 const description = ref(null);
 const properties = ref(null);
+const quantity = ref(null);
+const weight = ref(null);
+const price = ref(null);
 
 function GenRarities(){
     let rarities = [];
@@ -78,18 +82,14 @@ function SetParam(param, value){
 
 function IconSelected(val){
     SetParam('icon', val.selected.path);
-    Upload();
 }
 
 function DescriptionChanged(text){
     SetParam('description', text);
-    Upload();
 }
 
 function PropertiesChanged(properties){
-    console.log(properties);
     SetParam('properties', properties);
-    Upload();
 }
 
 function InitValues(){
@@ -104,6 +104,14 @@ function InitValues(){
     if(concept.value.info.weapon_type) weaponType.value.innerHTML = `<span class='important'>${concept.value.info.weapon_type}</span>`;
     if(concept.value.info.description) description.value.text = concept.value.info.description;
     if(concept.value.info.properties) properties.value.selected = concept.value.info.properties;
+
+    if(concept.value.info.quantity) quantity.value.Set(concept.value.info.quantity);
+    if(concept.value.info.weight) weight.value.Set(concept.value.info.weight);
+    if(concept.value.info.price) price.value.Set(concept.value.info.price);
+
+    quantity.value.OnUpdate((val) => SetParam('quantity', val));
+    weight.value.OnUpdate((val) => SetParam('weight', val));
+    price.value.OnUpdate((val) => SetParam('price', val));
 
     rarity.value.addEventListener("click", () => {
         ShowContextMenu(rarities)
@@ -175,7 +183,20 @@ onMounted(() => {
                 <template #description>
                     <div class="description-container">
                         <div class="description-sidebar">
-                            <p>Hola</p>
+                            <div class="form-container">
+                                <div class="form-element">
+                                    <label>{{$t('general.quantity')}}</label>
+                                    <NumberInput ref="quantity"></NumberInput>
+                                </div>
+                                <div class="form-element">
+                                    <label>{{$t('general.weight')}}</label>
+                                    <NumberInput ref="weight"></NumberInput>
+                                </div>
+                                <div class="form-element">
+                                    <label>{{$t('general.price')}}</label>
+                                    <NumberInput ref="price"></NumberInput>
+                                </div>
+                            </div>
                         </div>
                         <div class="description">
                             <MarkdownEditor ref="description" :done="DescriptionChanged"></MarkdownEditor>

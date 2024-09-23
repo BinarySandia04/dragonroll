@@ -3,7 +3,26 @@
         "create": "Create",
         "join": "Join",
         "view": "View",
-        "players": "Jugadores"
+        "players": "Players",
+        "description": "Description",
+        "details": "Details",
+        "name": "Name",
+        "email": "Email",
+        "username": "Username",
+        "password": "Password",
+        "password-confirm": "Confirm your password",
+        "register": "Register"
+    },
+    "placeholders": {
+        "name": "John Doe",
+        "email": "john@doe.com",
+        "username": "Enter your username...",
+        "password": "Enter your password...",
+        "password-confirm": "Enter again your password..."
+    },
+    "register-admin": {
+        "title": "Register Admin Account",
+        "welcome-message": "<h1>Welcome!</h1><b>You have successfull setup Dragonroll!</b><p>Please create the admin account</p><p>Once the admin account has been created, you will be able to create user accounts that will be able to access Dragonroll</p><hr>"
     },
     "main-menu": {
         "title": "Dragonroll",
@@ -17,6 +36,10 @@
     },
     "settings": {
         "title": "Dragonroll settings",
+        "tabs": {
+            "account-settings": "Account Settings",
+            "site-administration": "Site Administration"
+        },
         "account": {
             "account-settings": "Account Settings",
             "language": "Language:"
@@ -52,6 +75,14 @@
     "systems": {
         "title": "Select a game system",
         "not-selected": "No game system selected"
+    },
+    "database": {
+        "title": "Database",
+        "tabs": {
+            "items": "Items",
+            "spells": "Spells",
+            "features": "Features"
+        }
     }
 
 }

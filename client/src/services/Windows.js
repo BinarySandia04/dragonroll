@@ -16,7 +16,7 @@ const defValues = {
     },
     'register': {
         id: 'register',
-        title: 'Register admin account',
+        title: 'register-admin.title',
     },
     'main_menu': {
         id: 'main_menu',
@@ -138,7 +138,7 @@ const defValues = {
     },
     'database': {
         id: 'database',
-        title: "Database",
+        title: "database.title",
         close: () => ClearWindow('database')
     }
 }

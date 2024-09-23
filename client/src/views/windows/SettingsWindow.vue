@@ -15,7 +15,7 @@ const data = props.data;
 
 let id = data.id;
 
-let rows = ref(["Account settings"]);
+let rows = ref([{id: "account-settings", value: "settings.tabs.account-settings"}]);
 
 const languageOptions = ref(["English", "Spanish", "Catalan"])
 const langSelector = ref(null);
@@ -23,15 +23,18 @@ const currentLanguage = ref("");
 
 onBeforeMount(() => {
     let codes = {
-        "en": "English",
-        "es": "Spanish",
+        "en-US": "English",
+        "es-ES": "Spanish",
         "ca": "Catalan"
     }
     GetUserSetting('lang').then(value => {
         currentLanguage.value = codes[value ?? 'en']
         console.log(currentLanguage.value)
     });
-    if(GetUser().admin) rows.value.push("Site Administration");
+    if(GetUser().admin) rows.value.push({
+        id: "site-administration",
+        value: "settings.tabs.site-administration"
+    });
 });
 
 onMounted(() => {
@@ -42,8 +45,8 @@ onMounted(() => {
 
 async function OnLanguageChange(value){
     let codes = {
-        "English": "en",
-        "Spanish": "es",
+        "English": "en-US",
+        "Spanish": "es-ES",
         "Catalan": "ca"
     }
     await SetUserSetting("lang", codes[value]);
@@ -64,7 +67,7 @@ async function OnLanguageChange(value){
                         <Dropdown :options="languageOptions" :onselect="OnLanguageChange" :selected="currentLanguage"></Dropdown>
                     </div>
                 </div>
-            </template>Hola
+            </template>
             <template #site-administration>
 
             </template>

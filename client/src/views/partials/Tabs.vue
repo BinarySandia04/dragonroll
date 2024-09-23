@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 const props = defineProps(['rows']);
-const rows = ref(props.rows);
 
 const rowDict = {}
-for(let i = 0; i < props.rows.length; i++) rowDict[props.rows[i].replace(/\s+/g, '-').toLowerCase()] = i;
-let selectedTab = ref(props.rows[0].replace(/\s+/g, '-').toLowerCase());
+for(let i = 0; i < props.rows.length; i++) rowDict[props.rows[i].id] = i;
+let selectedTab = ref(props.rows[0].id);
 
 function SelectTab(row){
     selectedTab.value = row;
@@ -16,15 +15,15 @@ function SelectTab(row){
 <template>
     <div class="tab-container">
         <div class="row">
-            <div class="toggler" :class="{ selected: row.replace(/\s+/g, '-').toLowerCase() == selectedTab }" v-for="row in rows" v-on:click.prevent="SelectTab(row.replace(/\s+/g, '-').toLowerCase())">
-                {{ row }}
+            <div class="toggler" :class="{ selected: row.id == selectedTab }" v-for="row in rows" v-on:click.prevent="SelectTab(row.id)">
+                {{ $t(row.value) }}
             </div>
         </div>
         <div class="tab-container-outer">
             <div v-for="row in rows" class="tab-content">
                 <TransitionGroup name="tab">
-                    <div class="tab-content-inner" v-show="row.replace(/\s+/g, '-').toLowerCase() == selectedTab" :key="row">
-                        <slot :name="row.replace(/\s+/g, '-').toLowerCase()" />
+                    <div class="tab-content-inner" v-show="row.id == selectedTab" :key="row.id">
+                        <slot :name="row.id" />
                     </div>
                 </TransitionGroup>
             </div>

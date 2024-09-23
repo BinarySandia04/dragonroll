@@ -41,7 +41,7 @@ function GetUserSetting(key){
             if(response.data.settings)
                 resolve(response.data.settings[key]);
             else resolve(undefined);
-        });
+        }).catch((ex) => reject(ex));
     });
 }
 

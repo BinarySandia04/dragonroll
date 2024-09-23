@@ -41,8 +41,8 @@ console.log("Generated " + iconCount + " icons");
 
 // Locale generation
 const locales = [
-    './client/src/locale/en.json',
-    './client/src/locale/es.json',
+    './client/src/locale/en-US.json',
+    './client/src/locale/es-ES.json',
     './client/src/locale/ca.json',
 ];
 

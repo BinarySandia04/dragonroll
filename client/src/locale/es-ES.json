@@ -3,7 +3,26 @@
     "create": "Crear",
     "join": "Entrar",
     "view": "Abrir",
-    "players": "Jugadores"
+    "players": "Jugadores",
+    "description": "Descripción",
+    "details": "Detalles",
+    "name": "Nombre",
+    "email": "Correo",
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "password-confirm": "Confirma tu contraseña",
+    "register": "Registrar-se"
+  },
+  "placeholders": {
+    "name": "John Doe",
+    "email": "john@doe.com",
+    "username": "Introduce tu nombre de usuario...",
+    "password": "Introduce tu contraseña...",
+    "password-confirm": "Vuelve a introducir tu contraseña..."
+  },
+  "register-admin": {
+    "title": "Registrar cuenta de administrador",
+    "welcome-message": "<h1>Bienvenido!</h1><b>Has configurado correctamente Dragonroll!</b><p>Porfavor, crea la cuenta de administrador</p><p>Una vez creada, esta cuenta te permitirá configurar el servidor y crear cuentas que puedan acceder a este</p><hr>"
   },
   "main-menu": {
     "title": "Dragonroll",
@@ -17,6 +36,10 @@
   },
   "settings": {
     "title": "Ajustes de Dragonroll",
+    "tabs": {
+      "account-settings": "Ajustes de cuenta",
+      "site-administration": "Administración"
+    },
     "account": {
       "account-settings": "Ajustes de la cuenta",
       "language": "Idioma:"
@@ -50,5 +73,13 @@
   "systems": {
     "title": "Selecciona un sistema de juego",
     "not-selected": "Ningún sistema de juego seleccionado"
+  },
+  "database": {
+    "title": "Base de datos",
+    "tabs": {
+      "items": "Items",
+      "spells": "Hechizos",
+      "features": "Características"
+    }
   }
 }

@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
 
 import VersionRender from '@/views/others/VersionRender.vue'
 import ErrorMessage from '@/views/others/ErrorMessage.vue'
@@ -74,37 +76,32 @@ function register(){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="window-content">
-            <div class="document">
-                <h1>Welcome!</h1>
-                <b>You have successfull setup Dragonroll!</b>
-                <p>Please create the admin account</p>
-                <p>Once the admin account has been created, you will be able to create user accounts that will be able to access Dragonroll</p>
-                <hr>
+            <div class="document" v-html="t('register-admin.welcome-message')">
             </div>
         <form v-on:submit.prevent="register">
             <div class="form-field">
-                <label for="name">Name</label>
-                <input id="name-field" type="text" placeholder="Aran Roig" name="name" v-model="name" autocomplete="off" >
+                <label for="name">{{$t('general.name')}}</label>
+                <input id="name-field" type="text" :placeholder="t('placeholders.name')" name="name" v-model="name" autocomplete="off" >
             </div>
             <div class="form-field">
-                <label for="email">Email</label>
-                <input id="email-field" type="email" placeholder="aran@aranroig.com" name="email" v-model="email" autocomplete="off" >
+                <label for="email">{{$t('general.email')}}</label>
+                <input id="email-field" type="email" :placeholder="t('placeholders.email')" name="email" v-model="email" autocomplete="off" >
             </div>
             
             <div class="form-field">
-                <label for="username">Username</label>
-                <input id="username-field" type="text" placeholder="Enter your username..." name="username" v-model="username" autocomplete="off" >
+                <label for="username">{{$t('general.username')}}</label>
+                <input id="username-field" type="text" :placeholder="t('placeholders.username')" name="username" v-model="username" autocomplete="off" >
             </div>
             <div class="form-field">
-                <label for="password">Password</label>
-                <input id="password-field" type="password" placeholder="Enter your password..." name="password" v-model="password" autocomplete="off" >
+                <label for="password">{{$t('general.password')}}</label>
+                <input id="password-field" type="password" :placeholder="t('placeholders.password')" name="password" v-model="password" autocomplete="off" >
             </div>
             <div class="form-field">
-                <label for="confirm-password">Confirm your password</label>
-                <input id="confirm-password-field" type="password" placeholder="Enter again your password..." name="confirm-password" v-model="confirmPassword" autocomplete="off" >
+                <label for="confirm-password">{{$t('general.password-confirm')}}</label>
+                <input id="confirm-password-field" type="password" :placeholder="t('placeholders.password-confirm')" name="confirm-password" v-model="confirmPassword" autocomplete="off" >
             </div>
             <div class="form-field">
-                <button class="btn-primary sound-click confirm-form-button">Register</button>
+                <button class="btn-primary sound-click confirm-form-button">{{$t('general.register')}}</button>
             </div>
         </form>
 

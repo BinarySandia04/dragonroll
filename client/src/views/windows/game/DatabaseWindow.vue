@@ -45,7 +45,11 @@ function OpenCreateItemPrompt(){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="main-container">
-            <Tabs :rows="['Items', 'Spells', 'Features']">
+            <Tabs :rows="[
+                    {id: 'items', value: 'database.tabs.items'}, 
+                    {id: 'spells', value: 'database.tabs.spells'},
+                    {id: 'features', value: 'database.tabs.features'}
+                ]">
                 <template #items>
                     <ConceptList :elements="elements"></ConceptList>
                 </template>

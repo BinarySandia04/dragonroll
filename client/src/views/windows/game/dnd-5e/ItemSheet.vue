@@ -168,7 +168,10 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            <Tabs :rows="['Description', 'Details']">
+            <Tabs :rows="[
+                {id: 'description', value: 'general.description'},
+                {id: 'details', value: 'general.details'}
+            ]">
                 <template #description>
                     <div class="description-container">
                         <div class="description-sidebar">

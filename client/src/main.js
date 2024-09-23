@@ -6,12 +6,8 @@ import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 
-import EN from './locale/en.json'
-import ES from './locale/es.json'
-import CA from './locale/ca.json'
-
 import mitt from 'mitt';
-import { GetUser, GetUserSetting } from './services/User'
+import { GetUser, GetUserSetting, LogoutUser } from './services/User'
 const emitter = mitt();
 
 const app = createApp(App);
@@ -29,18 +25,29 @@ console.clear();
 console.log("%cLoaded!!!", "color: #22ff22; font-size: 24px");
 
 // Determinem el locale
-let locale = 'en';
-if(GetUser()) locale = await GetUserSetting('lang');
+let locale = 'en-US';
+
+let supportedLocales = ['en-US', 'es-ES', 'ca'];
+let navLocale = window.navigator.language;
+console.log(navLocale);
+
+if(supportedLocales.includes(navLocale)) locale = navLocale;
+
+try {
+    if(GetUser()) locale = await GetUserSetting('lang');
+} catch(ex) {
+    LogoutUser();
+}
 console.log(locale);
 
 const i18n = createI18n({
     legacy: false,
     locale,
-    fallbackLocale: 'en',
+    fallbackLocale: 'en-US',
     messages: {
-        en: EN,
-        es: ES,
-        ca: CA
+        'en-US': (await import(`./locale/en-US.json`)).default,
+        'es-ES': (await import(`./locale/es-ES.json`)).default,
+        'ca': (await import(`./locale/ca.json`)).default,
     }
 });
 

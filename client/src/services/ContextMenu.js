@@ -8,7 +8,10 @@ let cursorY = 0;
 
 let arrowIcon = "icons/iconoir/regular/nav-arrow-right.svg";
 
+import { animate } from 'motion'
+
 function Show(){
+    console.log("SHOW")
     let contextMenu = document.getElementById('context-menu');
     contextMenu.style.display = "flex";
     contextMenu.style.top = (cursorY + margin) + "px";
@@ -22,6 +25,8 @@ function HideContextMenu(){
 
 function PopulateContext(val){
     let children = [];
+
+    let elementNum = 0;
     val.forEach(element => {
         let contextMenuElement = document.createElement('div');
         contextMenuElement.classList.add("context-menu-element");
@@ -64,6 +69,14 @@ function PopulateContext(val){
         }
 
         children.push(contextMenuElement);
+
+        animate(contextMenuElement, {
+            opacity: [0, 1],
+            translateY: [20, -2]
+        }, {delay: (elementNum / 2) * 0.1, duration: 0.25}).finished.then(() => {
+
+        });
+        elementNum++;
     });
 
     return children;

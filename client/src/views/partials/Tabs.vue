@@ -68,6 +68,7 @@ function SelectTab(row){
     width: 100%;
     height: 100%;
     position: absolute;
+    overflow-y: auto;
 }
 
 .tab-content-inner {

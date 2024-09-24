@@ -35,18 +35,18 @@ onMounted(() => {
 
     flex-direction: column;
 
-    background-color: var(--tooltip-background);
-
-    -webkit-box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.75);
-
-    border: solid 1px var(--color-border);
-
+    
     .context-menu-element {
+
+        &:last-child {
+            border-width: 1px 1px 1px 1px;
+        }
+        border: solid 1px var(--color-border);
+        border-width: 1px 1px 0px 1px;
         padding: 3px 5px 3px 5px;
         cursor: default;
         user-select: none;
+        background-color: var(--tooltip-background);
         transition: background-color 100ms;
         display: flex;
         align-items: center;

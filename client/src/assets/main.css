@@ -221,6 +221,17 @@ button:active {
   width: 100%;
 }
 
+.document.item {
+  text-align: center;
+  width: 220px;
+}
+
+.document.item img {
+  width: 64px;
+  height: 64px;
+}
+
+
 .document h1 {
   font-weight: normal;
   font-size: 32px;

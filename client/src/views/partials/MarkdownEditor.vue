@@ -2,11 +2,13 @@
 import { onMounted, ref, watch } from 'vue';
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-const props = defineProps(['done']);
+const props = defineProps(['done', 'editable']);
 
 import IconButton from '../partials/game/IconButton.vue';
 
 const editing = ref(false);
+const isEditable = ref(true);
+
 const editor = ref(null);
 const preview = ref(null);
 const text = ref("");
@@ -21,11 +23,25 @@ function PreviewContent(){
     preview.value.innerHTML = marked.parse(editor.value.value);
 }
 
+function UpdateEditable(val){
+    if(val) {
+        isEditable.value = true;
+    } else {
+        isEditable.value = false;
+        editing.value = false;
+    }
+}
+
 onMounted(() => {
     watch(text, () => {
         editor.value.value = text.value;
         preview.value.innerHTML = marked.parse(editor.value.value);
     });
+
+    UpdateEditable(props.editable);
+    watch(() => props.editable, () => {
+        UpdateEditable(props.editable);
+    })
 
     editor.value.addEventListener("change", () => {
         props.done(editor.value.value);
@@ -44,18 +60,18 @@ defineExpose({
 <div class="markdown-editor">
     <div class="editor-content">
         <div v-show="!editing" class="preview">
-            <div class="document preview" ref="preview">
+            <div class="document" ref="preview">
             </div>
 
             <div class="fixed-bottom-buttons">
-                <IconButton icon="/icons/iconoir/regular/edit-pencil.svg" :action="EditContent"></IconButton>
+                <IconButton v-show="isEditable" icon="/icons/iconoir/regular/edit-pencil.svg" :action="EditContent"></IconButton>
             </div>
         </div>
         <div v-show="editing" class="editor">
             <textarea class="editing" ref="editor"></textarea>
             
             <div class="fixed-bottom-buttons">
-                <IconButton icon="/icons/iconoir/solid/eye.svg" :action="PreviewContent"></IconButton>
+                <IconButton v-show="isEditable" icon="/icons/iconoir/solid/eye.svg" :action="PreviewContent"></IconButton>
             </div>
         </div>
     </div>
@@ -68,7 +84,28 @@ defineExpose({
     height: 100%;
 }
 
+.document, .preview {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.document {
+    padding: 10px;
+    max-width: fit-content;
+    position: absolute;
+}
+
+.editor-content {
+    display: flex;
+    width: 100%;
+}
+
 .editing {
+    resize: none;
     background-color: var(--color-background);
 }
 
@@ -85,10 +122,5 @@ defineExpose({
     right: 10px;
     z-index: 2;
     display: flex;
-}
-.preview {
-    padding: 8px 0 8px 8px;
-    overflow-y: auto;
-    height: 100%;
 }
 </style>

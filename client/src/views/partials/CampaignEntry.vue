@@ -23,7 +23,7 @@ onMounted(() => {
 
 function ViewCampaign(){
     ConnectToCampaign(data);
-    DisplayCampaign(data);
+    // DisplayCampaign(data);
 }
 </script>
 

@@ -11,7 +11,10 @@
     "username": "Username",
     "password": "Password",
     "password-confirm": "Confirm your password",
-    "register": "Register"
+    "register": "Register",
+    "quantity": "Quantity",
+    "weight": "Weight",
+    "price": "Price"
   },
   "placeholders": {
     "name": "John Doe",

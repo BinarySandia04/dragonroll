@@ -28,18 +28,27 @@ function Disconnect(){
 }
 
 
-function DisplayCampaign(data = currentCampaign){
+function DisplayCampaign(data = _currentCampaign){
     ClearAll();
     CreateWindow('campaign_preview', {campaign: data});
 }
 
 socket.on('update-players', data => {
+    _UpdatePlayers(data)
+})
+
+socket.on('init-info', data => {
+    _UpdatePlayers(data.players);
+    DisplayCampaign();
+})
+
+function _UpdatePlayers(data){
     _players.value = [];
     Object.keys(data).forEach((key) => {
         _players.value.push(data[key]);
         if(GetUser()._id == data[key].user._id) _currentPlayer = data[key];
     });
-})
+}
 
 export {
     _currentCampaign,

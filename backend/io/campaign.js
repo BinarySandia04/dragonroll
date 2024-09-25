@@ -50,7 +50,8 @@ module.exports = io => {
                             
                             console.log(socket.user.username + " ha entrado!");
                             SetPlayerProperty(campaignId, socket.user._id, "online", true);
-                            io.to(socket.campaign).emit('update-players', sessions[campaignId].players)
+                            // io.to(socket.campaign).emit('update-players', sessions[campaignId].players)
+                            socket.emit('init-info', {players: sessions[campaignId].players})
 
                             // console.log(JSON.stringify(sessions[campaignId], null, 4));
                         }

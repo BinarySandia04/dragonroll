@@ -199,7 +199,7 @@ onMounted(() => {
                             </div>
                         </div>
                         <div class="description">
-                            <MarkdownEditor ref="description" :done="DescriptionChanged"></MarkdownEditor>
+                            <MarkdownEditor ref="description" :done="DescriptionChanged" :editable="true"></MarkdownEditor>
                         </div>
                     </div>
                 </template>

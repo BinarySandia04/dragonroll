@@ -99,4 +99,27 @@ router.get('/players', (req, res) => {
     }).catch((err) => res.json({status: "error", msg: "not-found"}));
 });
 
+router.put('/update', (req, res) => {
+    CampaignUser.find({campaign: req.query.campaign}).then((data) => {
+        if(data.is_dm){
+            let {
+                name,
+                description
+            } = req.body.campaign;
+            Campaign.findOneAndUpdate({_id: req.query.campaign}, {
+                name,
+                description
+            }).then((campaign) => {
+                res.json({stauts: "ok", campaign})
+            });
+            return;
+        }
+        res.json({
+            status: "error",
+            msg: "forbidden"
+        })
+    });
+    
+});
+
 module.exports = router;

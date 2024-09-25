@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUpdated, ref, toRaw, watch } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import PlayerList from '../../partials/PlayerList.vue';
-import { DisplayToast, GetClient } from '../../../services/Dragonroll';
+import { DisplayToast, GetPlayerList } from '@/services/Dragonroll';
 import CampaignBookList from '../../partials/books/CampaignBookList.vue';
 import { ClearAll, ClearWindow, CreateWindow, SetMinSize, SetResizable } from '../../../services/Windows';
 import { LaunchGame } from '../../../services/Game';
@@ -14,8 +14,10 @@ import GameSystem from '@/views/partials/GameSystem.vue'
 import { GetModule } from '../../../services/Modules';
 import { AddTooltip } from '../../../services/Tooltip';
 import { Disconnect } from '../../../services/Campaign';
+import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 
 import { useI18n } from 'vue-i18n';
+import { GetClient } from '../../../services/Dragonroll';
 const {t} = useI18n();
 
 const handle = ref(null);
@@ -31,25 +33,6 @@ const copy_code_button = ref(null);
 const container = ref(null);
 
 let id = data.id;
-onMounted(() => {
-    SetupHandle(id, handle);
-
-    SetSize(id, {width: 800, height: 750});
-    SetResizable(id, true);
-    SetMinSize(id, {width: 600, height: 500});
-
-    hide_chat.value = true;
-    
-    ResetPosition(id, "center");
-
-    hide_start.value = data.hide_start;
-
-    AddSound(container.value)
-
-    campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
-
-    AddTooltip(copy_code_button.value, `<p>${t('campaigns.preview.copy-explain')}</p>`, {max_width: 300})
-});
 
 function CopyCode(){
     navigator.clipboard.writeText(GetCampaign().invite_code);
@@ -66,6 +49,30 @@ function Exit(){
     ClearAll();
     CreateWindow('campaign_list');
 }
+
+const description_editable = ref(false);
+
+onMounted(() => {
+    if(GetClient().is_dm) description_editable.value = true;
+    SetupHandle(id, handle);
+
+    SetSize(id, {width: 800, height: 750});
+    SetResizable(id, true);
+    SetMinSize(id, {width: 800, height: 650});
+
+    hide_chat.value = true;
+    
+    ResetPosition(id, "center");
+
+    hide_start.value = data.hide_start;
+
+    AddSound(container.value)
+
+    campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
+
+    AddTooltip(copy_code_button.value, `<p>${t('campaigns.preview.copy-explain')}</p>`, {max_width: 300})
+
+});
 
 </script>
 
@@ -90,8 +97,10 @@ function Exit(){
                 <div class="campaign-main-container">
                     <div class="campaign-main-container-scroll">
                         <GameSystem :data="GetModule(data.campaign.system)"></GameSystem>
-                        <h2>Books</h2>
-                        <CampaignBookList class="small-book-list"></CampaignBookList>
+                        <div class="description">
+                            <MarkdownEditor ref="description" :done="DescriptionChanged" :editable="description_editable"></MarkdownEditor>
+                        </div>
+                        <!-- <CampaignBookList class="small-book-list"></CampaignBookList> -->
                     </div>
                 </div>
                 <div class="buttons-row">
@@ -109,6 +118,13 @@ function Exit(){
 
 
 <style scoped lang="scss">
+.description {
+    position: relative;
+    height: calc(100% - 55px);
+    width: 100%;
+    flex-grow: 0;
+}
+
 .small-book-list {
     margin: 20px;
     overflow: auto;
@@ -116,13 +132,13 @@ function Exit(){
 
 .campaign-main-container-scroll {
     overflow-y: scroll;
-    height: 100%;
-    max-height: 520px;
+    height: calc(100% - 10px);
 }
 
 
 .campaign-main-container {
     height: 100%;
+    flex-grow: 1;
      h2 {
         text-align: left;
         margin-left: 20px;
@@ -136,7 +152,6 @@ function Exit(){
     font-weight: normal;
     text-align: left;
     padding: 20px;
-    margin-bottom: 30px;
 }
 
 .button-row {
@@ -145,7 +160,7 @@ function Exit(){
 
 .campaign-preview-container {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 24px);
     display: flex;
     flex-direction: row;
 }
@@ -158,7 +173,7 @@ function Exit(){
         background-color: var(--color-background-soft);
         border-right: 1px solid var(--color-border);
         flex-grow: 1;
-        min-width: 100px;
+        min-width: 250px;
         max-width: 300px;
     }
 
@@ -166,7 +181,9 @@ function Exit(){
         background-color: var(--color-background-semisoft);
 
         display: flex;
+        flex-direction: column;
         flex-grow: 3;
+        max-width: 100%;
     }
 
     &.right {

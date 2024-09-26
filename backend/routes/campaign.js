@@ -100,7 +100,7 @@ router.get('/players', (req, res) => {
 });
 
 router.put('/update', (req, res) => {
-    CampaignUser.find({campaign: req.query.campaign}).then((data) => {
+    CampaignUser.findOne({campaign: req.query.campaign, user: req.user}).then((data) => {
         if(data.is_dm){
             let {
                 name,

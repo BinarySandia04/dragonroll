@@ -6,6 +6,8 @@ import { GetUser } from "./User";
 import { chat } from './Chat';
 import { ClearAll, CreateWindow } from './Windows';
 
+import Api from '@/services/Api';
+import { GetCampaign } from './Dragonroll';
 
 let _currentCampaign = null;
 let _currentPlayer = null;
@@ -27,10 +29,15 @@ function Disconnect(){
     chat.value = [];
 }
 
-
 function DisplayCampaign(data = _currentCampaign){
     ClearAll();
     CreateWindow('campaign_preview', {campaign: data});
+}
+
+function UpdateCampaignData(data){
+    Api().put('/campaign/update?campaign=' + GetCampaign()._id, {campaign: data}).then(response => {
+        console.log(response);
+    });
 }
 
 socket.on('update-players', data => {
@@ -57,5 +64,6 @@ export {
 
     ConnectToCampaign,
     DisplayCampaign,
+    UpdateCampaignData,
     Disconnect
 }

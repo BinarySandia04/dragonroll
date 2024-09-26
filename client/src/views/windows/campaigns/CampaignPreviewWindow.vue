@@ -13,7 +13,7 @@ import ChatComponent from '../../partials/ChatComponent.vue';
 import GameSystem from '@/views/partials/GameSystem.vue'
 import { GetModule } from '../../../services/Modules';
 import { AddTooltip } from '../../../services/Tooltip';
-import { Disconnect } from '../../../services/Campaign';
+import { Disconnect, UpdateCampaignData } from '../../../services/Campaign';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 
 import { useI18n } from 'vue-i18n';
@@ -31,6 +31,7 @@ const campaign_title = ref(null);
 const copy_code_button = ref(null);
 
 const container = ref(null);
+const description = ref(null);
 
 let id = data.id;
 
@@ -50,10 +51,16 @@ function Exit(){
     CreateWindow('campaign_list');
 }
 
+function DescriptionChanged(description){
+    UpdateCampaignData({description})
+}
+
 const description_editable = ref(false);
 
 onMounted(() => {
     if(GetClient().is_dm) description_editable.value = true;
+
+    description.value.text = data.campaign.description;
     SetupHandle(id, handle);
 
     SetSize(id, {width: 800, height: 750});
@@ -71,7 +78,6 @@ onMounted(() => {
     campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
 
     AddTooltip(copy_code_button.value, `<p>${t('campaigns.preview.copy-explain')}</p>`, {max_width: 300})
-
 });
 
 </script>

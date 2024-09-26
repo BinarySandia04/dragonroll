@@ -45,11 +45,12 @@ const i18n = createI18n({
     locale,
     fallbackLocale: 'en-US',
     messages: {
-        'en-US': (await import(`./locale/en-US.json`)).default,
-        'es-ES': (await import(`./locale/es-ES.json`)).default,
-        'ca': (await import(`./locale/ca.json`)).default,
+        'en-US': (await import(`./locales/en-US.json`)).default,
+        'es-ES': (await import(`./locales/es-ES.json`)).default,
+        'ca': (await import(`./locales/ca.json`)).default,
     }
 });
+
 
 app.use(router)
 app.use(i18n);

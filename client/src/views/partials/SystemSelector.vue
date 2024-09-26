@@ -2,7 +2,6 @@
 import { onMounted, onUpdated, provide, ref, watch } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 import { CreateChildWindow } from '../../services/Windows';
-import { GetModules } from '../../services/Modules';
 
 const selectedSystem = ref("");
 const selectedImage = ref(null);

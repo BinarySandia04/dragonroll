@@ -1,6 +1,13 @@
+/*
+DRAGONROLL PREBUILD SCRIPT
+*/
+
 const fs = require('fs');
 const path = require('path');
 
+const plugins = fs.readdirSync('./plugins')
+
+// #region icons
 const folderPaths = [
     './client/public/icons/weapons',
     './client/public/icons/equipment',
@@ -16,7 +23,9 @@ const folderPaths = [
 ];
 
 
-const outputPath = 'client/public/data/icons.json' 
+const outputPath = 'client/public/data/data.json'
+fs.mkdirSync('client/public/data', { recursive: true });
+
 let result = [];
 
 let iconCount = 0;
@@ -34,17 +43,16 @@ for(let i = 0; i < folderPaths.length; i++){
     }
 };
 
-fs.writeFileSync(outputPath, JSON.stringify({files: result}, null, "\t"));
+let icons = {files: result};
 
 console.log('File list generated successfully!');
 console.log("Generated " + iconCount + " icons");
 
-// Locale generation
-const locales = [
-    './client/src/locale/en-US.json',
-    './client/src/locale/es-ES.json',
-    './client/src/locale/ca.json',
-];
+// #endregion
+// #region locales
+
+const locales = fs.readdirSync("./locales");
+console.log(locales);
 
 function deepMerge(obj1, obj2) {
     for (let key in obj2) {
@@ -59,10 +67,38 @@ function deepMerge(obj1, obj2) {
     return obj1;
 }
 
-let originalJson = JSON.parse(fs.readFileSync(locales[0]));
-
-for(let i = 1; i < locales.length; i++){
-    let data = JSON.parse(fs.readFileSync(locales[i]));
-    fs.writeFileSync(locales[i], JSON.stringify(deepMerge(structuredClone(originalJson), data), null, 2));
+let originalJson = JSON.parse(fs.readFileSync("./locales/en-US.json"));
+for(let i = 0; i < locales.length; i++){
+    let data = JSON.parse(fs.readFileSync("./locales/" + locales[i]));
+    fs.writeFileSync("./locales/" + locales[i], JSON.stringify(deepMerge(structuredClone(originalJson), data), null, 2));
 };
+
+for(let i = 0; i < locales.length; i++){
+  let originalLocale = JSON.parse(fs.readFileSync('./locales/' + locales[i]));
+  for(let j = 0; j < plugins.length; j++){
+    if(fs.existsSync(`./plugins/${plugins[j]}/locales/${locales[i]}`)){
+      let pluginLocale = JSON.parse(fs.readFileSync(`./plugins/${plugins[j]}/locales/${locales[i]}`));
+      let mergeJson = {plugins: {}};
+      mergeJson.plugins[plugins[j]] = pluginLocale;
+      originalLocale = deepMerge(originalLocale, mergeJson);
+    }
+  }
+  fs.writeFileSync("./client/src/locales/" + locales[i], JSON.stringify(originalLocale, null, 2));
+}
+
+
 console.log("Updated Locales")
+// #endregion
+// #region plugins
+
+for(let j = 0; j < plugins.length; j++){
+  if(fs.existsSync(`./plugins/${plugins[j]}/client/`)){
+    fs.cpSync(`./plugins/${plugins[j]}/client/`, `./client/plugins/${plugins[j]}`, {recursive: true});
+  }
+}
+
+fs.writeFileSync(outputPath, JSON.stringify({
+  icons,
+  plugins
+}, null, "\t"));
+// #endregion

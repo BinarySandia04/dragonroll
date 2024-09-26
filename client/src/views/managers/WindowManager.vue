@@ -24,7 +24,6 @@ import MapWindow from '../windows/dm/MapWindow.vue'
 import CombatWindow from '../windows/game/CombatWindow.vue'
 import EntityWindow from '../windows/dm/EntityWindow.vue'
 import CharactersWindow from '../windows/game/CharactersWindow.vue'
-import CharacterSheet from '../windows/game/dnd-5e/CharacterSheet.vue'
 import WelcomeWindow from '../windows/WelcomeWindow.vue'
 import CompendiumWindow from '../windows/CompendiumWindow.vue'
 import BookAnvilWindow from '../windows/BookAnvilWindow.vue'
@@ -66,9 +65,9 @@ let WindowMap = {
 async function InjectSystemWindows(system){
   // Hack
   let systemWidows = {
-    character_sheet: (await import(`../windows/game/${system}/CharacterSheet.vue`)).default,
-    item_sheet: (await import(`../windows/game/${system}/ItemSheet.vue`)).default,
-    create_item_prompt: (await import(`../windows/game/${system}/CreateItemPrompt.vue`)).default,
+    character_sheet: (await import(`../../../plugins/${system}/views/CharacterSheet.vue`)).default,
+    item_sheet: (await import(`../../../plugins/${system}/views/ItemSheet.vue`)).default,
+    create_item_prompt: (await import(`../../../plugins/${system}/views/CreateItemPrompt.vue`)).default,
   };
 
   WindowMap = {...WindowMap, ...systemWidows};

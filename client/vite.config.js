@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import path from 'node:path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -11,7 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'vue': 'vue/dist/vue.esm-bundler.js'
+      '@plugins': fileURLToPath(new URL('./plguins', import.meta.url)),
     }
   },
   proxy: {
@@ -21,5 +22,8 @@ export default defineConfig({
         secure: false,      
         ws: true,
     }
+  },
+  build: {
+    target: 'esnext'
   }
 })

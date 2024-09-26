@@ -3,7 +3,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { ClearWindow, CreateWindow } from '../../../../services/Windows';
+import { ClearWindow, CreateWindow } from '@/services/Windows';
 const props = defineProps(['data']);
 const data = props.data;
 

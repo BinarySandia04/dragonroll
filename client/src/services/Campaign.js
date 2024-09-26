@@ -31,6 +31,7 @@ function Disconnect(){
 
 function DisplayCampaign(data = _currentCampaign){
     ClearAll();
+    console.log(data)
     CreateWindow('campaign_preview', {campaign: data});
 }
 

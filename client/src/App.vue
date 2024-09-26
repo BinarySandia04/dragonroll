@@ -10,9 +10,10 @@ import useEmitter from '@/services/Emitter';
 const emitter = useEmitter();
 
 import { DisplayToast, SetEmitter } from './services/Dragonroll'
-import { ImportModule, GetModulesToLoad } from './services/Modules'
 import { CreateWindow } from './services/Windows';
-import { FetchVanillaResources } from './services/Resources';
+import { FetchResources } from './services/Resources';
+import { ImportModule } from './services/Modules';
+import { FetchPlugins } from './services/Plugins';
 
 LoadUser();
 
@@ -30,18 +31,12 @@ async function start(){
     }
   }
 
-  const modules = GetModulesToLoad();
-  let moduleLoads = [];
+  await FetchResources();
+  await FetchPlugins();
 
-  modules.forEach(moduleName => {
-      moduleLoads.push(ImportModule(moduleName));
-  });
+  await ImportModule('dnd-5e')
 
-  await Promise.all(moduleLoads);
-
-  await FetchVanillaResources();
-
-  DisplayToast('aqua', 'All modules loaded successfully');
+  DisplayToast('aqua', 'All plugins loaded successfully');
 
 
 }

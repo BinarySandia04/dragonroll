@@ -1,9 +1,10 @@
 {
+  "plugins": {},
   "general": {
     "create": "Create",
     "join": "Join",
     "view": "View",
-    "players": "Jugadores",
+    "players": "Players",
     "description": "Description",
     "details": "Details",
     "name": "Name",

@@ -25,6 +25,7 @@ const folderPaths = [
 
 const outputPath = 'client/public/data/data.json'
 fs.mkdirSync('client/public/data', { recursive: true });
+fs.mkdirSync('client/src/locales', { recursive: true });
 
 let result = [];
 

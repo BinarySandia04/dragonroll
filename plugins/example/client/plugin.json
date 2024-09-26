@@ -1,0 +1,4 @@
+{
+    "name": "Dragonroll example plugin",
+    "entrypoint": "main.js"
+}

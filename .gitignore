@@ -8,6 +8,7 @@ backend/plugins/
 
 client/public/data/
 server/uploads/
+client/src/locales/
 
 # local env files
 .env.local

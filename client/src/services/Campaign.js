@@ -60,6 +60,10 @@ function _UpdatePlayers(data){
     });
 }
 
+function GetCampaignModuleName(){
+    return GetCampaign().system;
+}
+
 export {
     _currentCampaign,
     _currentPlayer,
@@ -68,5 +72,6 @@ export {
     ConnectToCampaign,
     DisplayCampaign,
     UpdateCampaignData,
+    GetCampaignModuleName,
     Disconnect
 }

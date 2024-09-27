@@ -4,7 +4,8 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import GameEntry from '../../partials/GameEntry.vue';
-import { CreateWindow, SetMinSize, SetMaxSize, SetResizable } from '../../../services/Windows';
+import { CreateWindow, SetMinSize, SetMaxSize, SetResizable, ClearWindow } from '../../../services/Windows';
+import { GetCampaignModuleName } from '../../../services/Campaign';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -24,7 +25,11 @@ onMounted(() => {
 
 // temp
 function openCharacterSheet(){
-    CreateWindow('character_sheet');
+    CreateWindow(`${GetCampaignModuleName()}/character_sheet`, {
+        id: 'character_sheet',
+        title: 'Character Sheet',
+        close: () => ClearWindow(`character_sheet`)
+    });
 }
 
 </script>

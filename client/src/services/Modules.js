@@ -24,8 +24,13 @@ function GetModule(id){
     return module;
 }
 
+function CreateModule(moduleInfo, registeredWindows){
+
+}
+
 export {
     ImportModule,
+    CreateModule,
     GetModules,
     GetModule,
     GetModulesToLoad,

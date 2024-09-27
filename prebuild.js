@@ -53,7 +53,6 @@ console.log("Generated " + iconCount + " icons");
 // #region locales
 
 const locales = fs.readdirSync("./locales");
-console.log(locales);
 
 function deepMerge(obj1, obj2) {
     for (let key in obj2) {
@@ -106,4 +105,5 @@ fs.writeFileSync(outputPath, JSON.stringify({
   icons,
   plugins
 }, null, "\t"));
+console.log("Installed plugins")
 // #endregion

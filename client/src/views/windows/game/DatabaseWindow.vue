@@ -7,6 +7,7 @@ import IconButton from '@/views/partials/game/IconButton.vue'
 import ConceptList from '../../partials/ConceptList.vue';
 import { FetchConcepts, GetConcepts } from '../../../services/Data';
 import Tabs from '../../partials/Tabs.vue';
+import { GetCampaignModuleName } from '../../../services/Campaign';
 
 const handle = ref(null);
 
@@ -33,12 +34,13 @@ onMounted(() => {
     FetchConcepts();
 });
 function OpenCreateItemPrompt(){
-    CreateWindow('create_item_prompt', {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
+    CreateWindow(`${GetCampaignModuleName()}/create_item_prompt`, {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
 }
 
 
 function OpenConcept(element){
-    CreateWindow('item_sheet', {
+    console.log(`${GetCampaignModuleName()}/item_sheet`);
+    CreateWindow(`${GetCampaignModuleName()}/item_sheet`, {
         id: 'item_sheet_' + element._id,
         title: 'Edit Item',
         item_id: element._id,

@@ -1,7 +1,71 @@
 import { reactive, ref } from 'vue'
 import { Disconnect } from './Campaign';
 
-const windows = ref([])
+const windows = ref([]);
+
+import LoginWindow from '@/views/windows/LoginWindow.vue'
+import RegisterWindow from '@/views/windows/RegisterWindow.vue'
+import ExampleWindow from '@/views/windows/ExampleWindow.vue'
+import MainMenuWindow from '@/views/windows/MainMenuWindow.vue'
+import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
+import SettingsWindow from '@/views/windows/SettingsWindow.vue'
+import CampaignListWindow from '@/views/windows/campaigns/CampaignListWindow.vue'
+import NewCampaignWindow from '@/views/windows/campaigns/NewCampaignWindow.vue'
+import JoinCampaignWindow from '@/views/windows/campaigns/JoinCampaignWindow.vue'
+import CampaignPreviewWindow from '@/views/windows/campaigns/CampaignPreviewWindow.vue'
+import ChatWindow from '@/views/windows/game/ChatWindow.vue'
+import DiceWindow from '@/views/windows/game/DiceWindow.vue'
+import MapButtons from '@/views/windows/dm/MapButtons.vue'
+import EnvironmentWindow from '@/views/windows/dm/EnvironmentWindow.vue'
+import SystemSelectorWindow from '@/views/windows/campaigns/SystemSelectorWindow.vue'
+import MapWindow from '@/views/windows/dm/MapWindow.vue'
+import CombatWindow from '@/views/windows/game/CombatWindow.vue'
+import EntityWindow from '@/views/windows/dm/EntityWindow.vue'
+import CharactersWindow from '@/views/windows/game/CharactersWindow.vue'
+import WelcomeWindow from '@/views/windows/WelcomeWindow.vue'
+import CompendiumWindow from '@/views/windows/CompendiumWindow.vue'
+import BookAnvilWindow from '@/views/windows/BookAnvilWindow.vue'
+import IconSelectorWindow from '@/views/windows/selectors/IconSelectorWindow.vue'
+import DatabaseWindow from '@/views/windows/game/DatabaseWindow.vue'
+import AccountManagementWindow from '@/views/windows/settings/AccountManagementWindow.vue'
+import PluginManagementWindow from '@/views/windows/settings/PluginManagementWindow.vue'
+
+let windowMap = {
+    test: ExampleWindow,
+    login: LoginWindow,
+    main_menu: MainMenuWindow,
+    welcome: WelcomeWindow,
+    register: RegisterWindow,
+    edit_profile: EditProfileWindow,
+    settings: SettingsWindow,
+    campaign_list: CampaignListWindow,
+    new_campaign: NewCampaignWindow,
+    join_campaign: JoinCampaignWindow,
+    campaign_preview: CampaignPreviewWindow,
+    chat: ChatWindow,
+    dice_menu: DiceWindow,
+    map_buttons: MapButtons,
+    environment: EnvironmentWindow,
+    system_selector: SystemSelectorWindow,
+    map_window: MapWindow,
+    combat_window: CombatWindow,
+    entity_window: EntityWindow,
+    characters_window: CharactersWindow,
+    compendium_window: CompendiumWindow,
+    book_anvil_window: BookAnvilWindow,
+    icon_selector: IconSelectorWindow,
+    database: DatabaseWindow,
+    plugin_management: PluginManagementWindow,
+    account_management: AccountManagementWindow
+};
+
+async function InjectWindow(plugin, window_type, window_component){
+    let systemWidows = {};
+    systemWidows[plugin + "/" + window_type] = (await import(`../../plugins/${plugin}/views/${window_component}.vue`)).default;
+    windowMap = {...windowMap, ...systemWidows};
+
+    console.log("Window injected");
+}
 
 // Presets
 const defValues = {
@@ -119,11 +183,6 @@ const defValues = {
         title: "Compendium",
         close: () => ClearWindow('compendium_window')
     },
-    'character_sheet': {
-        id: 'character_sheet',
-        title: 'Character Sheet',
-        close: () => ClearWindow('character_sheet')
-    },
     'book_anvil_window': {
         id: 'book_anvil_window',
         title: "Book Anvil",
@@ -147,6 +206,7 @@ const reload = ref(0);
 
 let ReloadRef = () => { return reload };
 let Windows = () => { return windows };
+let WindowMap = () => { return windowMap };
 
 let currentIndex = 10;
 
@@ -403,6 +463,8 @@ export {
     SetPosition,
     ResetPosition,
     Windows,
+    WindowMap,
+    InjectWindow,
     ReloadRef,
     ClearWindows,
     CreateWindow,

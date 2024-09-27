@@ -1,5 +1,6 @@
 const Campaign = require("../models/Campaign");
 const CampaignUser = require("../models/CampaignUser");
+const User = require("../models/User");
 
 function hasCampaign(req, res, next){
     Campaign.findById(req.query.campaign).lean().then((campaign) => {
@@ -16,11 +17,17 @@ function hasCampaign(req, res, next){
     }).catch((err) => res.json({status: "error", err}));
 }
 
-function hasUser(req, res, next){
-    
+function isAdmin(req, res, next){
+    User.findOne(req.user).lean().then((user) => {
+        if(user.admin){
+            next();
+            return;
+        }
+        res.json({status: "error", msg: "unauthorized"});
+    }).catch((err) => res.json({status: "error", err}));
 }
 
 module.exports = {
     hasCampaign,
-    hasUser
+    isAdmin
 }

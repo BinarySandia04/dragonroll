@@ -29,6 +29,7 @@ import IconSelectorWindow from '@/views/windows/selectors/IconSelectorWindow.vue
 import DatabaseWindow from '@/views/windows/game/DatabaseWindow.vue'
 import AccountManagementWindow from '@/views/windows/settings/AccountManagementWindow.vue'
 import PluginManagementWindow from '@/views/windows/settings/PluginManagementWindow.vue'
+import PluginWindow from '../views/windows/settings/PluginWindow.vue';
 
 let windowMap = {
     test: ExampleWindow,
@@ -56,7 +57,8 @@ let windowMap = {
     icon_selector: IconSelectorWindow,
     database: DatabaseWindow,
     plugin_management: PluginManagementWindow,
-    account_management: AccountManagementWindow
+    account_management: AccountManagementWindow,
+    plugin_window: PluginWindow
 };
 
 async function InjectWindow(plugin, window_type, window_component){

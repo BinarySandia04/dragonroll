@@ -1,0 +1,13 @@
+{
+    "name": "Dnd 5e System",
+    "description": "This plugin provides the Dnd 5e module",
+    "authors": [
+        {
+            "name": "Aran Roig"
+        }
+    ],
+    "version": "0.1",
+    "client": {
+        "entrypoint": "main.js"
+    }
+}

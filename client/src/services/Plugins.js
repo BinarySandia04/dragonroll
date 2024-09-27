@@ -23,11 +23,14 @@ async function FetchPlugins(){
             name: pluginData.name,
             _id: pluginName,
             info: {
-                
+                name: pluginData.name,
+                description: pluginData.description,
+                authors: pluginData.authors,
+                version: pluginData.version,
             }
         });
 
-        import(/* @vite-ignore */ `../../plugins/${pluginName}/${pluginData.entrypoint}`).then(module => {
+        import(/* @vite-ignore */ `../../plugins/${pluginName}/${pluginData.client.entrypoint}`).then(module => {
             module.Main({
                 Dragonroll,
                 Chat,

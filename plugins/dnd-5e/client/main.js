@@ -14,7 +14,7 @@ function Main(Api){
                 "name": "Aran Roig"
             }
         ],
-        "version": "1.0.0",
+        "version": "0.1",
         "color": "#e92026"
     });
 

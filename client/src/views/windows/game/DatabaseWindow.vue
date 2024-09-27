@@ -39,7 +39,6 @@ function OpenCreateItemPrompt(){
 
 
 function OpenConcept(element){
-    console.log(`${GetCampaignModuleName()}/item_sheet`);
     CreateWindow(`${GetCampaignModuleName()}/item_sheet`, {
         id: 'item_sheet_' + element._id,
         title: 'Edit Item',
@@ -49,7 +48,6 @@ function OpenConcept(element){
 }
 
 function ElementContext(element){
-    console.log(element);
     return [
         {name: "Open"},
         {name: "Delete"}

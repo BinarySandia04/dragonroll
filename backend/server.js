@@ -73,6 +73,7 @@ app.use(checkAuth);
 app.use('/campaign', require('./routes/campaign'));
 app.use('/maps', require('./routes/map'))
 app.use('/concept', require('./routes/concept'))
+app.use('/admin', require('./routes/admin'))
 // GET localhost:8081/concept/list
 
 // SETUP IO

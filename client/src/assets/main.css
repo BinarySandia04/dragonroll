@@ -221,6 +221,11 @@ button:active {
   width: 100%;
 }
 
+.document.centered {
+  text-align: center;
+  justify-content: center;
+}
+
 .document.item {
   text-align: center;
   width: 220px;

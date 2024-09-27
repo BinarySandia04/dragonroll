@@ -5,7 +5,7 @@ import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import ConceptList from '../../partials/ConceptList.vue';
 import { _GetPlugins } from '../../../services/Plugins';
-import { SetMinSize, SetResizable } from '../../../services/Windows';
+import { ClearWindow, CreateChildWindow, SetMinSize, SetResizable } from '../../../services/Windows';
 
 const handle = ref(null);
 
@@ -32,6 +32,16 @@ onMounted(() => {
 function GetPluginIcon(plugin){
     return `/plugins/${plugin._id}/icon.png`;
 }
+
+function OpenPlugin(plugin){
+    CreateChildWindow(id, '', {
+        type: 'plugin_window',
+        id: 'plugin-window-' + plugin._id,
+        title: plugin.name,
+        plugin,
+        close: () => ClearWindow('plugin-window-' + plugin._id)
+    })
+}
 </script>
 
 
@@ -43,6 +53,7 @@ function GetPluginIcon(plugin){
         <ConceptList 
             :elements="elements"
             :icon="GetPluginIcon"
+            :open="OpenPlugin"
         ></ConceptList>
     </div>
 </template>

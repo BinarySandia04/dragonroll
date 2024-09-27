@@ -11,15 +11,15 @@ const elementDiv = ref(null);
 const tooltipContainer = ref(null);
 const icon = ref("icons/game-icons/ffffff/lorc/crossed-swords.svg")
 
-function updateElement(){
+async function updateElement(){
     element.value = props.element;
     // Do whatever
     let desc = element.value.info.description;
     desc = desc ? marked.parse(desc) : '';
     
-    if(props.icon) icon.value = props.icon(element.value);
+    if(props.icon) icon.value = await props.icon(element.value);
 
-    let tooltip = props.tooltip(element.value);
+    let tooltip = await props.tooltip(element.value);
     if(tooltip) AddTooltip(tooltipContainer.value, tooltip);
 }
 

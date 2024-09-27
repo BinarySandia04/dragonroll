@@ -94,6 +94,7 @@ console.log("Updated Locales")
 for(let j = 0; j < plugins.length; j++){
   if(fs.existsSync(`./plugins/${plugins[j]}/client/`)){
     fs.cpSync(`./plugins/${plugins[j]}/client/`, `./client/plugins/${plugins[j]}`, {recursive: true});
+    fs.copyFileSync(`./plugins/${plugins[j]}/plugin.json`, `./client/plugins/${plugins[j]}/plugin.json`);
   }
 
   if(fs.existsSync(`./plugins/${plugins[j]}/public/`)){

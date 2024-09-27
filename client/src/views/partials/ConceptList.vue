@@ -52,9 +52,9 @@ function onLeave(el, done) {
             <ConceptEntry class="list-element" v-for="(element, index) in elements"
                 :key="element._id"
                 :element="element"
-                :context="() => ContextElement(element)"
-                :tooltip="(el) => TooltipElement(el)"
-                :icon="(el) => IconElement(el)"
+                :context="async () => await ContextElement(element)"
+                :tooltip="async (el) => await TooltipElement(el)"
+                :icon="async (el) => await IconElement(el)"
                 v-on:click.prevent="OpenElement(element)"
                 :data-index="index"></ConceptEntry>
         </TransitionGroup>

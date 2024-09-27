@@ -1,0 +1,13 @@
+{
+    "name": "Dragonroll example plugin",
+    "description": "This is an example plugin to help you getting started with the Dragonroll API",
+    "authors": [
+        {
+            "name": "Aran Roig"
+        }
+    ],
+    "version": "0.1",
+    "client": {
+        "entrypoint": "main.js"
+    }
+}

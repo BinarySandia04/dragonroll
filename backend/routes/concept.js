@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const passport = require('passport');
-
-const Campaign = require("../models/Campaign");
-const CampaignUser = require("../models/CampaignUser");
 const Concept = require('../models/Concept');
 const { hasCampaign } = require('../config/middleware');
 const { getIo } = require('../io/socket');

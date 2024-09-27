@@ -96,6 +96,10 @@ for(let j = 0; j < plugins.length; j++){
   if(fs.existsSync(`./plugins/${plugins[j]}/client/`)){
     fs.cpSync(`./plugins/${plugins[j]}/client/`, `./client/plugins/${plugins[j]}`, {recursive: true});
   }
+
+  if(fs.existsSync(`./plugins/${plugins[j]}/public/`)){
+    fs.cpSync(`./plugins/${plugins[j]}/public/`, `./client/public/plugins/${plugins[j]}`, {recursive: true});
+  }
 }
 
 fs.writeFileSync(outputPath, JSON.stringify({

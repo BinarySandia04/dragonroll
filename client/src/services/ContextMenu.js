@@ -11,7 +11,6 @@ let arrowIcon = "icons/iconoir/regular/nav-arrow-right.svg";
 import { animate } from 'motion'
 
 function Show(){
-    console.log("SHOW")
     let contextMenu = document.getElementById('context-menu');
     contextMenu.style.display = "flex";
     contextMenu.style.top = (cursorY + margin) + "px";
@@ -102,7 +101,6 @@ function AddContextMenu(element, val, options = {}){
             let contextMenu = document.getElementById('context-menu');
             contextMenu.style.top = rect.bottom + "px";
             contextMenu.style.left = rect.left + "px";
-            console.log(rect.top);
         }
     }
 

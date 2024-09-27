@@ -18,6 +18,8 @@ function ConnectToCampaign(campaign){
     chat.value = [];
 
     socket.emit('enter', GetUser(), _currentCampaign._id);
+    console.log("Hola")
+    console.log(_currentCampaign)
 }
 
 function Disconnect(){
@@ -31,13 +33,12 @@ function Disconnect(){
 
 function DisplayCampaign(data = _currentCampaign){
     ClearAll();
-    console.log(data)
     CreateWindow('campaign_preview', {campaign: data});
 }
 
 function UpdateCampaignData(data){
     Api().put('/campaign/update?campaign=' + GetCampaign()._id, {campaign: data}).then(response => {
-        console.log(response);
+
     });
 }
 
@@ -46,6 +47,7 @@ socket.on('update-players', data => {
 })
 
 socket.on('init-info', data => {
+    console.log("Hola2")
     _UpdatePlayers(data.players);
     DisplayCampaign();
 })

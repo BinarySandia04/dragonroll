@@ -304,3 +304,7 @@ span.artifact {
 .form-element label {
   flex-grow: 1;
 }
+
+.form-element.centered {
+  justify-content: center;
+}

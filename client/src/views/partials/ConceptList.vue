@@ -6,25 +6,26 @@ import { ClearWindow, CreateWindow } from '../../services/Windows';
 import { animate } from "motion"
 import ConceptEntry from './ConceptEntry.vue';
 
-const props = defineProps(['elements']);
+const props = defineProps(['elements', 'open', 'tooltip', 'context', 'icon']);
 
 const listContainer = ref(null);
 const elements = ref([]);
 
+let OpenElement = () => {};
+let TooltipElement = () => {};
+let ContextElement = () => {};
+let IconElement = () => {};
+
 onMounted(() => {
+    if(props.open) OpenElement = props.open;
+    if(props.tooltip) TooltipElement = props.tooltip;
+    if(props.context) ContextElement = props.context;
+    if(props.icon) IconElement = props.icon;
+
     watch(() => props.elements, () => {
         elements.value = props.elements;
     });
 });
-
-function OpenConcept(element){
-    CreateWindow('item_sheet', {
-        id: 'item_sheet_' + element._id,
-        title: 'Edit Item',
-        item_id: element._id,
-        close: () => ClearWindow('item_sheet_' + element._id)
-    });
-}
 
 function onBeforeEnter(el) {
   el.style.opacity = 0
@@ -48,7 +49,14 @@ function onLeave(el, done) {
 <template>
     <div class="list-container" ref="listContainer">
         <TransitionGroup name="list-element" :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
-            <ConceptEntry class="list-element" v-for="(element, index) in elements" :key="element._id" :element="element" v-on:click.prevent="OpenConcept(element)" :data-index="index"></ConceptEntry>
+            <ConceptEntry class="list-element" v-for="(element, index) in elements"
+                :key="element._id"
+                :element="element"
+                :context="() => ContextElement(element)"
+                :tooltip="(el) => TooltipElement(el)"
+                :icon="(el) => IconElement(el)"
+                v-on:click.prevent="OpenElement(element)"
+                :data-index="index"></ConceptEntry>
         </TransitionGroup>
     </div>
 </template>

@@ -1,7 +1,8 @@
 <script setup>
 import { onMounted, onUpdated, provide, ref, watch } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
-import { CreateChildWindow } from '../../services/Windows';
+import { ClearWindow, CreateChildWindow } from '../../services/Windows';
+import { GetModule, GetModules } from '../../services/Modules';
 
 const selectedSystem = ref("");
 const selectedImage = ref(null);
@@ -11,22 +12,17 @@ const props = defineProps(['windowId']);
 let windowId = props.windowId;
 
 function DisplaySystemSelector(){
-    CreateChildWindow(windowId, 'system_selector');
+    CreateChildWindow(windowId, 'system_selector', {'done': (data) => {
+        console.log("Hola")
+        let module = GetModule(data.selected);
+        selectedSystem.value = data.selected;
+        selectedImage.value.src = `modules/${module.id}/icon.png`;
+        systemTitle.value = module.title;
+        ClearWindow('system-selector');
+    }});
 }
 
 defineExpose({ selectedSystem });
-
-watch(selectedSystem, () => {
-    let modules = GetModules();
-    let module = null;
-    modules.forEach(mod => {
-        if(mod.id == selectedSystem.value) module = mod;
-    });
-    if(module){
-        selectedImage.value.src = "modules/" + module.id + "/icon.png"
-        systemTitle.value = module.title;
-    }
-});
 </script>
 
 

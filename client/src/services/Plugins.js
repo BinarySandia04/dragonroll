@@ -9,6 +9,8 @@ import * as Sound from "@/services/Sound"
 import * as Tooltip from "@/services/Tooltip"
 import * as Windows from "@/services/Windows"
 
+let pluginInfo = []
+
 async function FetchPlugins(){
     let pluginNames = GetPluginPaths();
 
@@ -16,6 +18,14 @@ async function FetchPlugins(){
         let pluginName = pluginNames[i];
         let pluginData = (await import(/* @vite-ignore */ `../../plugins/${pluginName}/plugin.json`)).default
         console.log(`Loading plugin %c${pluginData.name}`, "color: #00ffff");
+
+        pluginInfo.push({
+            name: pluginData.name,
+            _id: pluginName,
+            info: {
+                
+            }
+        });
 
         import(/* @vite-ignore */ `../../plugins/${pluginName}/${pluginData.entrypoint}`).then(module => {
             module.Main({
@@ -32,6 +42,12 @@ async function FetchPlugins(){
     }
 }
 
+function _GetPlugins(){
+    return pluginInfo
+}
+
 export {
-    FetchPlugins
+    FetchPlugins,
+
+    _GetPlugins
 }

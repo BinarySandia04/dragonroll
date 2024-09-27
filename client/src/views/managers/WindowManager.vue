@@ -29,7 +29,8 @@ import CompendiumWindow from '../windows/CompendiumWindow.vue'
 import BookAnvilWindow from '../windows/BookAnvilWindow.vue'
 import IconSelectorWindow from '../windows/selectors/IconSelectorWindow.vue'
 import DatabaseWindow from '../windows/game/DatabaseWindow.vue'
-
+import AccountManagementWindow from '../windows/settings/AccountManagementWindow.vue'
+import PluginManagementWindow from '../windows/settings/PluginManagementWindow.vue'
 
 // Gestionem ventanas
 const reload = ReloadRef();
@@ -59,7 +60,9 @@ let WindowMap = {
   compendium_window: CompendiumWindow,
   book_anvil_window: BookAnvilWindow,
   icon_selector: IconSelectorWindow,
-  database: DatabaseWindow
+  database: DatabaseWindow,
+  plugin_management: PluginManagementWindow,
+  account_management: AccountManagementWindow
 };
 
 async function InjectSystemWindows(system){

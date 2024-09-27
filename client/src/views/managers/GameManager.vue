@@ -70,7 +70,7 @@ watch(game, () => {
 
 
 <template>
-    <div class="game-root" ref="game" v-if="in_game">
+    <div class="game-root" ref="game" v-show="in_game">
         <!-- Aquests dos son absolute -->
         
         <div class="vertical-button">

@@ -8,30 +8,20 @@ import Api from '@/services/Api.js'
 import SystemSelector from '../../partials/SystemSelector.vue';
 import { GetModules } from '../../../services/Modules';
 import GameSystem from '../../partials/GameSystem.vue';
-import { ClearWindow } from '../../../services/Windows';
+import { CallWindow, ClearWindow } from '../../../services/Windows';
 
 const handle = ref(null);
 
 const props = defineProps(['data']);
 const data = props.data;
 
-const campaignName = ref("");
-
 let id = data.id;
 let systems = ref(GetModules());
-
-function Clear(){
-    ClearWindow(id);
-}
-
-provide('clearParent', Clear);
 
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 300, height: 600});
     ResetPosition(id, "center");
-
-    console.log(systems.value)
 });
 </script>
 
@@ -42,7 +32,7 @@ onMounted(() => {
 
         <!-- Body -->
         <div class="system-list">
-            <GameSystem v-for="system in systems" :id="system.id" :data="system"></GameSystem>
+            <GameSystem v-for="system in systems" :id="system.id" :data="system" :click="(moduleId) => CallWindow(id, 'done', {selected: moduleId})"></GameSystem>
         </div>
     </div>
 </template>

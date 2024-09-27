@@ -2,19 +2,14 @@
 import { inject, onMounted, ref } from 'vue';
 import { GetEmitter } from '../../services/Dragonroll';
 
-const props = defineProps(['data']);
+const props = defineProps(['data', 'click']);
 const data = props.data;
 
 const title = ref("");
 const image = ref(null);
 
-const clearParent = inject('clearParent');
-
 function Select(){
-    if(data.id){
-        GetEmitter().emit("select", data.id);
-        clearParent();
-    }
+    if(props.click) props.click(data.id);
 }
 
 onMounted(() => {

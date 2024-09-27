@@ -45,10 +45,15 @@
       "site-administration": "Administración"
     },
     "account": {
-      "account-settings": "Ajustes de la cuenta",
-      "language": "Idioma:"
+      "language": "Idioma:",
+      "account-settings": "Ajustes de la cuenta"
     },
-    "site-administration": {}
+    "site-administration": {
+      "manage-accounts-button": "Manage site accounts",
+      "manage-plugins-button": "Manage plugins",
+      "manage-accounts": "Manage site accounts",
+      "manage-plugins": "Manage plugins"
+    }
   },
   "campaigns": {
     "title": "Campañas",

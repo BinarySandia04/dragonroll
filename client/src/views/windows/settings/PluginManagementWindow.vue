@@ -1,8 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
+import ConceptList from '../../partials/ConceptList.vue';
+import { _GetPlugins } from '../../../services/Plugins';
+import { SetMinSize, SetResizable } from '../../../services/Windows';
 
 const handle = ref(null);
 
@@ -13,11 +16,22 @@ let id = data.id;
 
 const test = ref(null)
 
+const elements = shallowRef([]);
+
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 500, height: 380});
     ResetPosition(id, "center");
+
+    SetResizable(id, true);
+    SetMinSize(id, {width: 350, height: 280});
+
+    elements.value = _GetPlugins();
 });
+
+function GetPluginIcon(plugin){
+    return `/plugins/${plugin._id}/icon.png`;
+}
 </script>
 
 
@@ -26,8 +40,10 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <!-- Body -->
-        <div ref="test"></div>
-
+        <ConceptList 
+            :elements="elements"
+            :icon="GetPluginIcon"
+        ></ConceptList>
     </div>
 </template>
 

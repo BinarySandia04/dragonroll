@@ -27,15 +27,43 @@ onMounted(() => {
     SetMinSize(id, {width: 350, height: 300});
 
     watch(GetConcepts, () => {
-        console.log("Updated???")
         elements.value = GetConcepts();
-        console.log(elements);
     });
     
     FetchConcepts();
 });
 function OpenCreateItemPrompt(){
     CreateWindow('create_item_prompt', {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
+}
+
+
+function OpenConcept(element){
+    CreateWindow('item_sheet', {
+        id: 'item_sheet_' + element._id,
+        title: 'Edit Item',
+        item_id: element._id,
+        close: () => ClearWindow('item_sheet_' + element._id)
+    });
+}
+
+function ElementContext(element){
+    console.log(element);
+    return [
+        {name: "Open"},
+        {name: "Delete"}
+    ];
+}
+
+function ElementTooltip(element){
+    return `<div class='document item'>
+        <h2>${element.name}</h2>
+        <img src='${element.info.icon}'></img>
+        <div class='document'>${element.info.description ?? ''}</div>
+    </div>`;
+}
+
+function ElementIcon(element){
+    return element.info ? element.info.icon : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
 }
 </script>
 
@@ -51,7 +79,13 @@ function OpenCreateItemPrompt(){
                     {id: 'features', value: 'database.tabs.features'}
                 ]">
                 <template #items>
-                    <ConceptList :elements="elements"></ConceptList>
+                    <ConceptList 
+                        :elements="elements"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
                 </template>
             </Tabs>
         </div>

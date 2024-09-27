@@ -4,23 +4,23 @@ import { AddContextMenu } from '@/services/ContextMenu';
 import { AddTooltip } from '@/services/Tooltip';
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-const props = defineProps(['element']);
+const props = defineProps(['element', 'context', 'tooltip', 'icon']);
 
 const element = ref({});
 const elementDiv = ref(null);
 const tooltipContainer = ref(null);
+const icon = ref("icons/game-icons/ffffff/lorc/crossed-swords.svg")
 
 function updateElement(){
     element.value = props.element;
     // Do whatever
     let desc = element.value.info.description;
     desc = desc ? marked.parse(desc) : '';
-    console.log(desc);
-    AddTooltip(tooltipContainer.value, `<div class='document item'>
-        <h2>${element.value.name}</h2>
-        <img src='${element.value.info.icon}'></img>
-        <div class='document'>${desc}</div>
-    </div>`)
+    
+    if(props.icon) icon.value = props.icon(element.value);
+
+    let tooltip = props.tooltip(element.value);
+    if(tooltip) AddTooltip(tooltipContainer.value, tooltip);
 }
 
 onMounted(() => {
@@ -29,17 +29,14 @@ onMounted(() => {
         updateElement();
     });
 
-    AddContextMenu(elementDiv.value, [
-        {name: "Open"},
-        {name: "Delete"}
-    ]);
-
+    let context = props.context();
+    if(context) AddContextMenu(elementDiv.value, context);
 })
 </script>
 <template>
     <div class="concept-element" ref="elementDiv">
         <div class="concept-tooltip-container" ref="tooltipContainer">
-            <img :src="element.info ? element.info.icon : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'" class="concept-icon">
+            <img :src="icon" class="concept-icon">
             <span class="title">{{ element.name }}</span>
         </div>
     </div>

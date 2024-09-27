@@ -7,6 +7,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import Tabs from '../partials/Tabs.vue';
 import Dropdown from '../partials/Dropdown.vue';
 import { GetUserSetting, SetUserSetting } from '../../services/User';
+import { ClearWindow, CreateChildWindow, SetMaxSize, SetMinSize, SetResizable } from '../../services/Windows';
 
 const handle = ref(null);
 
@@ -41,7 +42,32 @@ onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 400, height: 480});
     ResetPosition(id, "center");
+
+    SetResizable(id, true);
+    SetMinSize(id, {width: 350, height: 280});
 });
+
+function OpenManageAccounts(){
+    CreateChildWindow(id, '', {
+        type: 'account_management',
+        title: 'settings.site-administration.manage-accounts.title',
+        id: 'account-management',
+        close: () => {
+            ClearWindow('account-management')
+        }
+    })
+}
+
+function OpenManagePlugins(){
+    CreateChildWindow(id, '', {
+        type: 'plugin_management',
+        title: 'settings.site-administration.manage-plugins.title',
+        id: 'plugin-management',
+        close: () => {
+            ClearWindow('plugin-management')
+        }
+    })
+}
 
 async function OnLanguageChange(value){
     let codes = {
@@ -69,7 +95,12 @@ async function OnLanguageChange(value){
                 </div>
             </template>
             <template #site-administration>
-
+                <div class="form-element centered">
+                    <button v-on:click.prevent="OpenManageAccounts">{{ $t('settings.site-administration.manage-accounts-button') }}</button>
+                </div>
+                <div class="form-element centered">
+                    <button v-on:click.prevent="OpenManagePlugins">{{ $t('settings.site-administration.manage-plugins-button') }}</button>
+                </div>
             </template>
         </Tabs>
     </div>

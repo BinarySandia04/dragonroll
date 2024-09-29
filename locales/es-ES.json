@@ -37,7 +37,8 @@
   },
   "register-account": {
     "title": "Create new user account",
-    "welcome-message": "<h1>Hola</h1>"
+    "welcome-message": "<h1>Hola</h1>",
+    "pending-account": "Pending account"
   },
   "main-menu": {
     "title": "Dragonroll",

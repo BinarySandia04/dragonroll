@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const crypto = require("crypto");
+
 const CampaignSchema = new Schema({
     name: {type: String, required: true},
     description: {type: String},
@@ -12,14 +14,7 @@ const CampaignSchema = new Schema({
 });
 
 CampaignSchema.statics.generateInvite = function() {
-    let possible = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ0123456789";
-    let cod = '';
-  
-    for (let i = 0; i < 32; i++) {
-      cod += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-  
-    return cod;
+    return crypto.randomBytes(8).toString('base64url');
 }
 
 module.exports = mongoose.model('Campaign', CampaignSchema);

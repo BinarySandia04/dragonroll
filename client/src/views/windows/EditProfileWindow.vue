@@ -8,12 +8,14 @@ import Api from '@/services/Api'
 import BigIconTemplate from '../partials/BigIconTemplate.vue';
 import { SetMinSize, SetResizable } from '../../services/Windows';
 import { backendUrl } from '../../services/BackendURL';
+import { GetUser } from '../../services/User';
 
 const props = defineProps(['data']);
 const data = props.data;
 const userIcon = ref("");
 
 const handle = ref(null);
+const isAdmin = ref(false);
 
 let id = data.id;
 console.log(data);
@@ -25,6 +27,8 @@ onMounted(() => {
 
     SetResizable(id, true);
     SetMinSize(id, {width: 350, height: 280});
+
+    isAdmin.value = GetUser().admin;
 
     Api().get('/user/retrieve-avatar?username=' + data.user.username).then((response) => {
         if(response.data.image) userIcon.value = backendUrl + "public/" + response.data.image;
@@ -39,7 +43,9 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <BigIconTemplate :title="data.user.username" :img="userIcon">
-            
+            <div v-show="isAdmin">
+                Admin
+            </div>
         </BigIconTemplate>
     </div>
 </template>

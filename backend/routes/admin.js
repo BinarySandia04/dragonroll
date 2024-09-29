@@ -11,21 +11,6 @@ const User = require("../models/User");
 router.post('/register', rateLimitMiddleware, (req, res) => {
     User.findOne({admin: true}).then((data) => {
         if(!data) {
-            let {
-                name,
-                username,
-                email,
-                password
-            } = req.body;
-        
-            if(!(name && username && email && password)){
-                res.json({
-                    error: true,
-                    msg: "params"
-                });
-                return;
-            }
-        
             User.findOne({username: username}).then((user) => {
                 if(user){
                     res.json({

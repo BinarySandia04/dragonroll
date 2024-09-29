@@ -31,6 +31,7 @@ import PluginManagementWindow from '@/views/windows/settings/PluginManagementWin
 import PluginWindow from '../views/windows/settings/PluginWindow.vue';
 import FirstRegisterWindow from '../views/windows/FirstRegisterWindow.vue';
 import RegisterUserWindow from '../views/windows/settings/RegisterUserWindow.vue';
+import CopyPendingUserWindow from '../views/windows/settings/CopyPendingUserWindow.vue';
 
 let windowMap = {
     test: ExampleWindow,
@@ -39,6 +40,7 @@ let windowMap = {
     welcome: WelcomeWindow,
     first_register: FirstRegisterWindow,
     register_user: RegisterUserWindow,
+    copy_pending_user_window: CopyPendingUserWindow,
     edit_profile: EditProfileWindow,
     settings: SettingsWindow,
     campaign_list: CampaignListWindow,

@@ -7,6 +7,7 @@ const passport = require('passport');
 const secret = require('../config/keys').secret;
 const rateLimitMiddleware = require("../config/rate-limiter");
 const { default: jwtDecode } = require('jwt-decode');
+const crypto = require("crypto");
 
 const { isAdmin } = require('../config/middleware');
 
@@ -14,14 +15,47 @@ const User = require("../models/User");
 
 const upload = require("../config/storage");
 
+// Admin registers new user
 router.post('/register', isAdmin, (req, res) => {
+    let setupCode = crypto.randomBytes(64).toString('base64url');
+    
+    let user = new User({
+        admin: false,
+        name: crypto.randomBytes(16).toString('base64url'),
+        username: crypto.randomBytes(16).toString('base64url'),
+        email: crypto.randomBytes(16).toString('base64url'),
+        setupCode
+    });
+
+    user.save().then(user => {
+        res.json({
+            status: "ok",
+            code: setupCode,
+        });
+    }).catch({status: "err", msg: "internal"})
+});
+
+// User gets if setup account exists given the query code
+router.get('/setup', (req, res) => {
+    User.findOne({setupCode: req.query.code}).then(user => {
+        if(user){
+            res.json({status: "ok", code: req.query.code});
+        }
+        res.json({status: "err", msg: "not-exists"});
+    }).catch(res.json({status: "err", msg: "internal"}));
+});
+
+// User posts the parameters of his new account given by admin
+router.post('/setup', rateLimitMiddleware, (req, res) => {
     let {
         name,
         username,
-        email
+        email,
+        password
     } = req.body;
+    let setupCode = req.query.code;
 
-    if(!(name && username && email)){
+    if(!(name && username && email && password && setupCode)){
         res.json({
             error: true,
             msg: "params"
@@ -29,39 +63,36 @@ router.post('/register', isAdmin, (req, res) => {
         return;
     }
 
-    User.findOne({username: username}).then((user) => {
-        if(user){
-            res.json({
-                error: true,
-                msg: "already-exists"
-            });
-        } else {
-            User.findOne({email: email}).then((user) => {
-                if(user){
-                    res.json({
-                        error: true,
-                        msg: "already-email"
-                    });
-                } else {
-                    var user = new User({
-                        name: name,
-                        username: username,
-                        email: email,
-                        admin: true
-                    });
+    User.findOne({setupCode}).then((user) => {
+        User.findOne({email: email}).then((sameUser) => {
+            if(sameUser){
+                res.json({
+                    error: true,
+                    msg: "already-email"
+                });
+            } else {
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(user.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        user.password = hash;
+                        user.username = username;
+                        user.email = email;
+                        user.setupCode = undefined;
 
-                    user.save().then(user => {
-                        res.json({
-                            status: "ok",
-                            user
-                        });
-                    })
-                }
-            }).catch((error) => { res.json({ error: true, msg: "Hi ha hagut un error intern, prova-ho més tard" }); return; });
-        }
-    }).catch((error) => { res.json({ error: true, msg: "Hi ha hagut un error intern, prova-ho més tard" }); return; });        
+                        user.save().then(user => {
+                            res.json({
+                                success: true
+                            });
+                            return;
+                        }).catch((error) => { res.json({ error: true }); return; });
+                    });
+                })
+            }
+        }).catch((error) => { res.json({ error: true, msg: "internal" }); return; });
+    }).catch((error) => { res.json({ error: true, msg: "internal" }); return; });
 });
 
+// Login post
 router.post('/login', rateLimitMiddleware, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -111,6 +142,7 @@ router.post('/login', rateLimitMiddleware, (req, res) => {
     });
 });
 
+// Upload avatar post
 router.post("/upload-avatar", upload.single("image"), passport.authenticate('jwt', {session: false}), (req, res) => {
     const imageName = req.file.filename;
 

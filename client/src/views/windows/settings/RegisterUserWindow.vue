@@ -32,18 +32,13 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 430});
+    SetSize(id, {width: 400, height: 310});
     ResetPosition(id, "center");
 });
 
 
 function register(){
-    Api().post('/user/register', 
-    {
-        name: name.value,
-        username: username.value,
-        email: email.value,
-    }).then((response) => {
+    Api().post('/user/register').then((response) => {
         const data = response.data;
         console.log(data);
         if(data.error){
@@ -71,19 +66,6 @@ function register(){
             <div class="document" v-html="t('register-account.welcome-message')">
             </div>
         <form v-on:submit.prevent="register">
-            <div class="form-field">
-                <label for="name">{{$t('general.name')}}</label>
-                <input id="name-field" type="text" :placeholder="t('placeholders.name')" name="name" v-model="name" autocomplete="off" >
-            </div>
-            <div class="form-field">
-                <label for="email">{{$t('general.email')}}</label>
-                <input id="email-field" type="email" :placeholder="t('placeholders.email')" name="email" v-model="email" autocomplete="off" >
-            </div>
-            
-            <div class="form-field">
-                <label for="username">{{$t('general.username')}}</label>
-                <input id="username-field" type="text" :placeholder="t('placeholders.username')" name="username" v-model="username" autocomplete="off" >
-            </div>
             <div class="form-field">
                 <button class="btn-primary sound-click confirm-form-button">{{$t('general.register')}}</button>
             </div>

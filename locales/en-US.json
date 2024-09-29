@@ -37,7 +37,8 @@
   },
   "register-account": {
     "title": "Create new user account",
-    "welcome-message": "<p>Here you can create a new user account. The first time the user logs in will be prompted to set his password</p><hr>"
+    "welcome-message": "<p>Here you can create a new user account.</p><br><p>Once you have registered a new account, you will recieve a link that you must give to the owner of the new account. From there, the owner will be able to setup his new account</p><hr>",
+    "pending-account": "Pending account"
   },
   "main-menu": {
     "title": "Dragonroll",

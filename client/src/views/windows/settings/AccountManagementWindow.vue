@@ -1,4 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
+
+
 import { onMounted, ref, shallowRef, toRaw } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import Api from '@/services/Api'
@@ -32,7 +36,17 @@ function RefreshUsers(){
         let users = response.data.users;
         elements.value = [];
         users.forEach(user => {
-            elements.value.push({
+            console.log(user);
+            if(user.setupCode){
+                elements.value.push({
+                    name: t('register-account.pending-account'),
+                    _id: user._id,
+                    info: {
+                        name: t('register-account.pending-account')
+                    },
+                    user
+                })
+            } else elements.value.push({
                 name: user.username,
                 _id: user._id,
                 info: {
@@ -51,10 +65,18 @@ async function ElementIcon(element){
 }
 
 function OpenAccount(data){
-    CreateChildWindow(id, 'edit_profile', {
-        user: toRaw(data.user),
-        close: () => {ClearWindow('edit_profile');}
-    });
+    if(data.user.setupCode){
+        CreateChildWindow(id, 'copy_pending_user_window', {
+            code: data.user.setupCode,
+            id: 'copy_pending_user_window',
+            close: () => ClearWindow('copy_pending_user_window')
+        });
+    } else {
+        CreateChildWindow(id, 'edit_profile', {
+            user: toRaw(data.user),
+            close: () => ClearWindow('edit_profile')
+        });
+    }
 }
 
 function OpenCreateAccount(){

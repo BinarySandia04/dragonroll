@@ -7,7 +7,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import Tabs from '../partials/Tabs.vue';
 import Dropdown from '../partials/Dropdown.vue';
 import { GetUserSetting, SetUserSetting } from '../../services/User';
-import { ClearWindow, CreateChildWindow, SetMaxSize, SetMinSize, SetResizable } from '../../services/Windows';
+import { ClearWindow, CreateChildWindow, CreateWindow, SetMaxSize, SetMinSize, SetResizable } from '../../services/Windows';
 
 const handle = ref(null);
 
@@ -48,23 +48,37 @@ onMounted(() => {
 });
 
 function OpenManageAccounts(){
-    CreateChildWindow(id, '', {
+    ClearWindow('settings');
+    CreateWindow('account_management', {
         type: 'account_management',
         title: 'settings.site-administration.manage-accounts.title',
         id: 'account-management',
-        close: () => {
+        back: () => {
             ClearWindow('account-management')
+            CreateWindow('settings', {
+                id: 'settings',
+                type: 'settings',
+                title: 'settings.title',
+                back: () => { ClearWindow('settings'); CreateWindow('main_menu');  }
+            });
         }
     })
 }
 
 function OpenManagePlugins(){
-    CreateChildWindow(id, '', {
+    ClearWindow('settings');
+    CreateWindow('plugin_management', {
         type: 'plugin_management',
         title: 'settings.site-administration.manage-plugins.title',
         id: 'plugin-management',
-        close: () => {
+        back: () => {
             ClearWindow('plugin-management')
+            CreateWindow('settings', {
+                id: 'settings',
+                type: 'settings',
+                title: 'settings.title',
+                back: () => { ClearWindow('settings'); CreateWindow('main_menu');  }
+            });
         }
     })
 }

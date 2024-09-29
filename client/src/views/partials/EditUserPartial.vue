@@ -1,15 +1,11 @@
 <script setup>
-
-import VersionRender from '@/views/others/VersionRender.vue'
-import ErrorMessage from '@/views/others/ErrorMessage.vue'
-
 import { onMounted, ref } from 'vue';
 import { GetUser, LogoutUser } from '@/services/User'
 
 import Api from '@/services/Api'
 
 import useEmitter from '@/services/Emitter';
-import { ClearWindows, CreateWindow, CreateChildWindow } from '../../services/Windows';
+import { ClearWindows, CreateWindow, CreateChildWindow, ClearWindow } from '../../services/Windows';
 import { backendUrl } from '../../services/BackendURL';
 const emitter = useEmitter();
 
@@ -31,16 +27,24 @@ function LogOut(){
 }
 
 function EditProfile(){
-    CreateChildWindow('main_menu', 'edit_profile');
+    console.log("User:"); console.log(GetUser());
+    CreateChildWindow('main_menu', 'edit_profile', {
+        user: GetUser()
+    });
 }
 
 function EditSettings(){
-    CreateChildWindow('main_menu', 'settings');
+    ClearWindow('main_menu');
+    CreateWindow('settings', {
+        id: 'settings',
+        type: 'settings',
+        title: 'settings.title',
+        back: () => { ClearWindow('settings'); CreateWindow('main_menu');  }
+    });
 }
 
 onMounted(() => {
     let userAvatarDisplay = document.getElementById("upload-image");
-    let sendAvatarForm = document.getElementById("send-avatar-form");
     let sendAvatarFileUploader = document.getElementById("send-avatar-file-uploader");
     
     sendAvatarFileUploader.addEventListener("change", (event) => {

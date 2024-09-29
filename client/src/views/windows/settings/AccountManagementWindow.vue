@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, shallowRef } from 'vue';
+import { onMounted, ref, shallowRef, toRaw } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import Api from '@/services/Api'
 
@@ -8,6 +8,7 @@ import IconButton from '@/views/partials/game/IconButton.vue'
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import ConceptList from '../../partials/ConceptList.vue';
 import { backendUrl } from '../../../services/BackendURL';
+import { ClearWindow, CreateChildWindow, CreateWindow } from '../../../services/Windows';
 
 const handle = ref(null);
 
@@ -23,6 +24,10 @@ onMounted(() => {
     SetSize(id, {width: 500, height: 380});
     ResetPosition(id, "center");
 
+    RefreshUsers();
+});
+
+function RefreshUsers(){
     Api().get('/admin/users').then(response => {
         let users = response.data.users;
         elements.value = [];
@@ -32,15 +37,36 @@ onMounted(() => {
                 _id: user._id,
                 info: {
                     name: user.username
-                }
+                },
+                user
             })
         });
     }).catch((err) => console.log(err));
-});
+}
 
 async function ElementIcon(element){
     let response = await Api().get('/user/retrieve-avatar?username=' + element.name);
     if(response.data.image) return backendUrl + "public/" + response.data.image;
+    return "public/img/def-avatar.jpg";
+}
+
+function OpenAccount(data){
+    CreateChildWindow(id, 'edit_profile', {
+        user: toRaw(data.user),
+        close: () => {ClearWindow('edit_profile');}
+    });
+}
+
+function OpenCreateAccount(){
+    CreateChildWindow(id, 'register_user', {
+        title: 'register-account.title',
+        id: 'register_user',
+        done: () => {
+            RefreshUsers();
+            ClearWindow('register_user');
+        },
+        close: () => ClearWindow('register_user')
+    })
 }
 </script>
 
@@ -53,10 +79,11 @@ async function ElementIcon(element){
         <ConceptList 
             :elements="elements"
             :icon="ElementIcon"
+            :open="OpenAccount"
         ></ConceptList>
 
         <div class="fixed-bottom-buttons">
-            <IconButton icon="/icons/iconoir/regular/plus.svg" :action="OpenCreateItemPrompt"></IconButton>
+            <IconButton icon="/icons/iconoir/regular/plus.svg" :action="OpenCreateAccount"></IconButton>
         </div>
     </div>
 </template>

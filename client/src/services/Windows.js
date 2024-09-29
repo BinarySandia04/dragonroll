@@ -4,7 +4,6 @@ import { Disconnect } from './Campaign';
 const windows = ref([]);
 
 import LoginWindow from '@/views/windows/LoginWindow.vue'
-import RegisterWindow from '@/views/windows/RegisterWindow.vue'
 import ExampleWindow from '@/views/windows/ExampleWindow.vue'
 import MainMenuWindow from '@/views/windows/MainMenuWindow.vue'
 import EditProfileWindow from '@/views/windows/EditProfileWindow.vue'
@@ -30,13 +29,16 @@ import DatabaseWindow from '@/views/windows/game/DatabaseWindow.vue'
 import AccountManagementWindow from '@/views/windows/settings/AccountManagementWindow.vue'
 import PluginManagementWindow from '@/views/windows/settings/PluginManagementWindow.vue'
 import PluginWindow from '../views/windows/settings/PluginWindow.vue';
+import FirstRegisterWindow from '../views/windows/FirstRegisterWindow.vue';
+import RegisterUserWindow from '../views/windows/settings/RegisterUserWindow.vue';
 
 let windowMap = {
     test: ExampleWindow,
     login: LoginWindow,
     main_menu: MainMenuWindow,
     welcome: WelcomeWindow,
-    register: RegisterWindow,
+    first_register: FirstRegisterWindow,
+    register_user: RegisterUserWindow,
     edit_profile: EditProfileWindow,
     settings: SettingsWindow,
     campaign_list: CampaignListWindow,
@@ -80,8 +82,8 @@ const defValues = {
         id: 'login',
         title: 'Login',
     },
-    'register': {
-        id: 'register',
+    'first_register': {
+        id: 'first_register',
         title: 'register-admin.title',
     },
     'main_menu': {
@@ -100,11 +102,6 @@ const defValues = {
         id: 'edit_profile',
         title: "Edit Profile",
         close: () => ClearWindow('edit_profile')
-    },
-    'settings': {
-        id: 'settings',
-        title: 'settings.title',
-        close: () => ClearWindow('settings')
     },
     'campaign_list': {
         id: 'campaign_list',

@@ -32,24 +32,6 @@ onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 500, height: 460});
     ResetPosition(id, "center", emitter);
-
-    /*
-    AddTooltip(campaignButton.value, "<h2>Hey</h2>Hola test");
-    AddContextMenu(campaignButton.value, [
-        {name: "Test", action: () => {alert("Test")}},
-        {name: "A", action: () => {alert("A")}},
-        {name: "B", action: () => {alert("B")}},
-        {name: "Patata", action: () => {alert("Patata")}, context: [
-            {name: "Test 2dsadsadsdsadasdasdsad", action: () => {alert("Test context")}},
-            {name: "A 3", action: () => {alert("A context")}, context: [
-                {name: "Test", action: () => {alert("Test")}},
-                {name: "A", action: () => {alert("A")}},
-                {name: "B", action: () => {alert("B")}},
-            ]},
-            {name: "B 5", action: () => {alert("B context")}},
-        ]},
-    ])
-    */
 });
 
 function OpenCampaigns(){

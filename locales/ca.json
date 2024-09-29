@@ -17,6 +17,13 @@
     "weight": "Weight",
     "price": "Price"
   },
+  "login": {
+    "errors": {
+      "params": "You must fill all parameters!",
+      "wrong": "Wrong user or password",
+      "internal": "Internal error"
+    }
+  },
   "placeholders": {
     "name": "John Doe",
     "email": "john@doe.com",
@@ -27,6 +34,10 @@
   "register-admin": {
     "title": "Register Admin Account",
     "welcome-message": "<h1>Welcome!</h1><b>You have successfull setup Dragonroll!</b><p>Please create the admin account</p><p>Once the admin account has been created, you will be able to create user accounts that will be able to access Dragonroll</p><hr>"
+  },
+  "register-account": {
+    "title": "Create new user account",
+    "welcome-message": "<h1>Hola</h1>"
   },
   "main-menu": {
     "title": "Dragonroll",

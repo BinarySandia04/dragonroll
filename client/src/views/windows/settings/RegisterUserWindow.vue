@@ -2,17 +2,17 @@
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n() 
 
-import VersionRender from '@/views/others/VersionRender.vue'
 import ErrorMessage from '@/views/others/ErrorMessage.vue'
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
 
-import { ClearWindow, ClearWindows, CreateWindow } from '../../services/Windows';
-import { DisplayToast } from '../../services/Dragonroll';
+import { ClearWindow, CreateWindow } from '@/services/Windows';
+import { DisplayToast } from '@/services/Dragonroll';
+import { CallWindow } from '../../../services/Windows';
 
 const email = ref("");
 const name = ref("");
@@ -32,40 +32,32 @@ let title = data.title;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 500, height: 660});
+    SetSize(id, {width: 500, height: 430});
     ResetPosition(id, "center");
 });
 
 
 function register(){
-  if(password.value != confirmPassword.value){
-      errorMessage.value = "Password mismatch";
-      return;
-  }
-
-  Api().post('/user/register', 
+    Api().post('/user/register', 
     {
         name: name.value,
         username: username.value,
         email: email.value,
-        password: password.value,
     }).then((response) => {
-
-    const data = response.data;
-
-    if(data.error){
+        const data = response.data;
         console.log(data);
-        errorMessage.value = data.msg;
-    } else {
-        errorMessage.value = "";
-        console.log("Logged successfully");
-        DisplayToast('green', 'Account created successfully, now log in!', 3000);
-        ClearWindow(id);
-        CreateWindow('login');
-    }
-  }).catch((error) => {
-      console.log(error);
-  });
+        if(data.error){
+            console.log(data);
+            errorMessage.value = data.msg;
+        } else {
+            errorMessage.value = "";
+            console.log("Logged successfully");
+            DisplayToast('green', 'Account created successfully', 3000);
+            CallWindow(id, 'done');
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 }
 
 </script>
@@ -76,7 +68,7 @@ function register(){
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <div class="window-content">
-            <div class="document" v-html="t('register-admin.welcome-message')">
+            <div class="document" v-html="t('register-account.welcome-message')">
             </div>
         <form v-on:submit.prevent="register">
             <div class="form-field">
@@ -91,14 +83,6 @@ function register(){
             <div class="form-field">
                 <label for="username">{{$t('general.username')}}</label>
                 <input id="username-field" type="text" :placeholder="t('placeholders.username')" name="username" v-model="username" autocomplete="off" >
-            </div>
-            <div class="form-field">
-                <label for="password">{{$t('general.password')}}</label>
-                <input id="password-field" type="password" :placeholder="t('placeholders.password')" name="password" v-model="password" autocomplete="off" >
-            </div>
-            <div class="form-field">
-                <label for="confirm-password">{{$t('general.password-confirm')}}</label>
-                <input id="confirm-password-field" type="password" :placeholder="t('placeholders.password-confirm')" name="confirm-password" v-model="confirmPassword" autocomplete="off" >
             </div>
             <div class="form-field">
                 <button class="btn-primary sound-click confirm-form-button">{{$t('general.register')}}</button>

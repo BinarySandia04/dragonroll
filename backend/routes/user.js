@@ -8,21 +8,20 @@ const secret = require('../config/keys').secret;
 const rateLimitMiddleware = require("../config/rate-limiter");
 const { default: jwtDecode } = require('jwt-decode');
 
-const { hasUser } = require('../config/middleware');
+const { isAdmin } = require('../config/middleware');
 
 const User = require("../models/User");
 
 const upload = require("../config/storage");
 
-router.post('/register', rateLimitMiddleware, (req, res) => {
+router.post('/register', isAdmin, (req, res) => {
     let {
         name,
         username,
-        email,
-        password
+        email
     } = req.body;
 
-    if(!(name && username && email && password)){
+    if(!(name && username && email)){
         res.json({
             error: true,
             msg: "params"
@@ -47,28 +46,20 @@ router.post('/register', rateLimitMiddleware, (req, res) => {
                     var user = new User({
                         name: name,
                         username: username,
-                        password: password,
                         email: email,
                         admin: true
                     });
-                
-                    bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(user.password, salt, (err, hash) => {
-                            if(err) throw err;
-                            user.password = hash;
-                            user.save().then(user => {
-                                res.json({
-                                    success: true
-                                });
-                                return;
-                            }).catch((error) => { res.json({ error: true }); return; });
+
+                    user.save().then(user => {
+                        res.json({
+                            status: "ok",
+                            user
                         });
                     })
                 }
             }).catch((error) => { res.json({ error: true, msg: "Hi ha hagut un error intern, prova-ho més tard" }); return; });
         }
-    }).catch((error) => { res.json({ error: true, msg: "Hi ha hagut un error intern, prova-ho més tard" }); return; });
-
+    }).catch((error) => { res.json({ error: true, msg: "Hi ha hagut un error intern, prova-ho més tard" }); return; });        
 });
 
 router.post('/login', rateLimitMiddleware, (req, res) => {

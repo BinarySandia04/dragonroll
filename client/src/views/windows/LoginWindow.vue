@@ -1,8 +1,7 @@
 <script setup>
 
-import VersionRender from '@/views/others/VersionRender.vue'
-import ErrorMessage from '@/views/others/ErrorMessage.vue'
-import SuccessMessage from '@/views/others/SuccessMessage.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
 
 import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
@@ -18,33 +17,27 @@ const handle = ref(null);
 
 const username = ref("");
 const password = ref("");
-const errorMessage = ref("");
-const successMessage = ref("");
 
 const props = defineProps(['data']);
 
 const data = props.data;
 
 let id = data.id;
-let title = data.title;
-let success = data.msg;
 
 onMounted(() => {
-  successMessage.value = success;
-
   SetupHandle(id, handle);
-  SetSize(id, {width: 450, height: 500});
+  SetSize(id, {width: 450, height: 420});
   ResetPosition(id, "center");
 });
 
 function login(){
   Api().post('/user/login', { username: username.value, password: password.value }).then((response) => {
     const data = response.data;
+    console.log(data);
 
     if(data.error){
-      errorMessage.value = data.msg;
+      DisplayToast('red', t(`login.errors.${data.msg}`), 3000)
     } else {
-      errorMessage.value = "";
       SetUser(data.token);
 
       ShowMainMenu();
@@ -89,8 +82,6 @@ function ShowMainMenu(){
             </div>
         </form>
 
-        <ErrorMessage v-if="errorMessage">{{ errorMessage }}</ErrorMessage>
-        <SuccessMessage v-if="successMessage">{{ successMessage }}</SuccessMessage>
         <!-- <VersionRender></VersionRender> -->
 
     </div>

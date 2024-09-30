@@ -3,8 +3,8 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { SetMinSize, SetMaxSize, SetResizable } from '../../services/Windows';
-import IconSelector from '../partials/IconSelector.vue';
+import { SetMinSize, SetMaxSize, SetResizable } from '@/services/Windows';
+import IconSelector from '@/views/partials/IconSelector.vue';
 const props = defineProps(['data']);
 const data = props.data;
 

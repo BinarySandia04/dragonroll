@@ -1,11 +1,10 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref, watch } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
-import IconButton from '@/views/partials/game/IconButton.vue'
-import ColorValue from '../../partials/parameters/ColorValue.vue';
-import { GetBackgroundColor, ChangeBackgroundColor } from '../../../services/Map';
+import { onMounted, ref, watch } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
+import ColorValue from '@/views/partials/parameters/ColorValue.vue';
+import { ChangeBackgroundColor } from '@/services/Map';
 
 const props = defineProps(['data']);
 const data = props.data;

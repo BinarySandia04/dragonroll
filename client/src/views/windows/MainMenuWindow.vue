@@ -7,15 +7,11 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import EditUserPartial from '@/views/partials/EditUserPartial.vue'
 
-import { capitalize, onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetResizable, SetMinSize, SetMaxSize, SetPosition, ResetPosition } from '@/services/Windows';
-
-import Api from '@/services/Api.js'
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import useEmitter from '@/services/Emitter';
-import { ClearWindow, CreateWindow, Windows } from '../../services/Windows';
-import { AddTooltip } from '../../services/Tooltip';
-import { AddContextMenu } from '../../services/ContextMenu';
+import { ClearWindow, CreateWindow } from '@/services/Windows';
 const emitter = useEmitter();
 const handle = ref(null);
 

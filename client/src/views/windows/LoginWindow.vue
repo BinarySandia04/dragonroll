@@ -3,15 +3,15 @@
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n() 
 
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { SetUser, GetUser } from '@/services/User'
 
 import Api from '@/services/Api.js'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import { ClearWindows, CreateChildWindow, CreateWindow } from '../../services/Windows';
-import { DisplayToast } from '../../services/Dragonroll';
+import { ClearWindows, CreateWindow } from '@/services/Windows';
+import { DisplayToast } from '@/services/Dragonroll';
 
 const handle = ref(null);
 

@@ -2,10 +2,9 @@
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { capitalize, onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetResizable, SetMinSize, SetMaxSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
-import { AddTooltip } from '../../services/Tooltip';
 const handle = ref(null);
 
 const props = defineProps(['data']);

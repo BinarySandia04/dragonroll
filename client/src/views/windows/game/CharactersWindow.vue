@@ -3,9 +3,9 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import GameEntry from '../../partials/GameEntry.vue';
-import { CreateWindow, SetMinSize, SetMaxSize, SetResizable, ClearWindow } from '../../../services/Windows';
-import { GetCampaignModuleName } from '../../../services/Campaign';
+import GameEntry from '@/views/partials/GameEntry.vue';
+import { CreateWindow, SetMinSize, SetMaxSize, SetResizable, ClearWindow } from '@/services/Windows';
+import { GetCampaignModuleName } from '@/services/Campaign';
 const props = defineProps(['data']);
 const data = props.data;
 

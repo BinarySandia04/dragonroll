@@ -1,10 +1,13 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { useI18n } from 'vue-i18n';
+const {t} = useI18n();
+
+
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import { DisplayToast } from '../../../services/Dragonroll';
-import { ClearWindow } from '../../../services/Windows';
+import { DisplayToast } from '@/services/Dragonroll';
 import Api from '@/services/Api'
 
 const handle = ref(null);
@@ -27,15 +30,15 @@ function JoinCampaign(){
         invite_code
     }).then(response => {
         if(response.data.status == "ok"){
-            DisplayToast('green', $t("campaigns.join.success"), 2000);
+            DisplayToast('green', t("campaigns.join.success"), 2000);
             let campaign = response.data.campaign;
 
             ConnectToCampaign(campaign);
             DisplayCampaign(campaign);
         } else if(response.data.msg == "already"){
-            DisplayToast('red', $t("campaigns.join.already"), 2000);
+            DisplayToast('red', t("campaigns.join.already"), 2000);
         } else {
-            DisplayToast('red', $t("campaigns.join.error"), 2000);
+            DisplayToast('red', t("campaigns.join.error"), 2000);
         }
     }).catch((err) => console.log(err)); 
 }

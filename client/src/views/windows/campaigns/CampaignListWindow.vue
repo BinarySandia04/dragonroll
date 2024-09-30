@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import { CreateWindow, CreateChildWindow } from '../../../services/Windows';
+import { CreateChildWindow } from '@/services/Windows';
 
 import Api from '@/services/Api.js'
-import CampaignEntry from '../../partials/CampaignEntry.vue';
-import { GetEmitter } from '../../../services/Dragonroll';
+import CampaignEntry from '@/views/partials/CampaignEntry.vue';
+import { GetEmitter } from '@/services/Dragonroll';
 
 const handle = ref(null);
 

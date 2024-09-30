@@ -2,12 +2,12 @@
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref, shallowRef, watch } from 'vue';
-import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '../../../services/Windows';
+import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
 import IconButton from '@/views/partials/game/IconButton.vue'
-import ConceptList from '../../partials/ConceptList.vue';
-import { FetchConcepts, GetConcepts } from '../../../services/Data';
-import Tabs from '../../partials/Tabs.vue';
-import { GetCampaignModuleName } from '../../../services/Campaign';
+import ConceptList from '@/views/partials/ConceptList.vue';
+import { FetchConcepts, GetConcepts } from '@/services/Data';
+import Tabs from '@/views/partials/Tabs.vue';
+import { GetCampaignModuleName } from '@/services/Campaign';
 
 const handle = ref(null);
 

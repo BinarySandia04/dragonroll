@@ -4,10 +4,10 @@ import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { GetUser } from '@/services/User'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import Tabs from '../partials/Tabs.vue';
-import Dropdown from '../partials/Dropdown.vue';
-import { GetUserSetting, SetUserSetting } from '../../services/User';
-import { ClearWindow, CreateChildWindow, CreateWindow, SetMaxSize, SetMinSize, SetResizable } from '../../services/Windows';
+import Tabs from '@/views/partials/Tabs.vue';
+import Dropdown from '@/views/partials/Dropdown.vue';
+import { GetUserSetting, SetUserSetting } from '@/services/User';
+import { ClearWindow, CreateWindow, SetMinSize, SetResizable } from '@/services/Windows';
 
 const handle = ref(null);
 

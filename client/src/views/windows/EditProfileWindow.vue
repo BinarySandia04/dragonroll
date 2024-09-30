@@ -1,14 +1,14 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import Api from '@/services/Api'
-import BigIconTemplate from '../partials/BigIconTemplate.vue';
-import { SetMinSize, SetResizable } from '../../services/Windows';
-import { backendUrl } from '../../services/BackendURL';
-import { GetUser } from '../../services/User';
+import BigIconTemplate from '@/views/partials/BigIconTemplate.vue';
+import { SetMinSize, SetResizable } from '@/services/Windows';
+import { backendUrl } from '@/services/BackendURL';
+import { GetUser } from '@/services/User';
 
 const props = defineProps(['data']);
 const data = props.data;

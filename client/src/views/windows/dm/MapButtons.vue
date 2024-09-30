@@ -1,10 +1,10 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import IconButton from '@/views/partials/game/IconButton.vue'
-import { CreateChildWindow, GetPosition, SetMaxSize, SetMinSize, SetResizable } from '../../../services/Windows';
+import { CreateChildWindow, GetPosition, SetMaxSize, SetMinSize, SetResizable } from '@/services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;

@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, onUpdated, ref, provide } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition, ClearWindow } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition, ClearWindow } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import ErrorMessage from '@/components/partials/ErrorMessage.vue'
 
 import Api from '@/services/Api.js'
-import SystemSelector from '../../partials/SystemSelector.vue';
-import { GetEmitter } from '../../../services/Dragonroll';
+import SystemSelector from '@/views/partials/SystemSelector.vue';
+import { GetEmitter } from '@/services/Dragonroll';
 
 const handle = ref(null);
 

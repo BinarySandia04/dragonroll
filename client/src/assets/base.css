@@ -23,7 +23,7 @@
 
   --c-black-icon-background: #000;
   --c-white-icon-background: #fff;
-  --c-white-border: #a5a5a533;
+  --c-white-border: #a5a5a5;
   --c-black-border: #a5a5a533;
 
 
@@ -65,7 +65,8 @@
 /* semantic color variables for this project */
 :root {
   --color-golden-border: var(--c-golden-border);
-  --window-background: var(--c-white-blurred);
+  --window-background: var(--c-white-soft);
+  --shadow-color: rgba(0,0,0,0.25);
 
   --color-background: var(--c-white);
   --color-background-semisoft: var(--c-white-semisoft);
@@ -97,6 +98,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --window-background: var(--c-black-blurred);
+    --shadow-color: rgba(0,0,0,0.75);
 
     --color-handler: #181818;
     --color-background: var(--c-black);

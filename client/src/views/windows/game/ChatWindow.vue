@@ -1,10 +1,10 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref } from 'vue';
-import { SetupHandle, SetSize, SetResizable, SetMinSize, SetPosition, ResetPosition } from '@/services/Windows';
-import ChatComponent from '../../partials/ChatComponent.vue';
-import { SetMaxSize } from '../../../services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, SetResizable, SetMinSize, ResetPosition } from '@/services/Windows';
+import ChatComponent from '@/views/partials/ChatComponent.vue';
+import { SetMaxSize } from '@/services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;

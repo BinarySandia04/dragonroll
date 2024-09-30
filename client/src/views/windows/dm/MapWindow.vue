@@ -1,13 +1,13 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, onUpdated, ref, watch } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { ImportDD2VTT } from '../../../services/Map';
 
 import MapList from '../../partials/MapList.vue';
 import IconButton from '@/views/partials/game/IconButton.vue';
-import { SetMinSize, SetResizable, SetMaxSize } from '../../../services/Windows';
+import { SetMinSize, SetResizable, SetMaxSize } from '@/services/Windows';
 
 const props = defineProps(['data']);
 const data = props.data;

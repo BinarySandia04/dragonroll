@@ -1,14 +1,12 @@
 <script setup>
-import { onMounted, onUpdated, provide, ref, inject } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import Api from '@/services/Api.js'
-import SystemSelector from '../../partials/SystemSelector.vue';
-import { GetModules } from '../../../services/Modules';
-import GameSystem from '../../partials/GameSystem.vue';
-import { CallWindow, ClearWindow } from '../../../services/Windows';
+import { GetModules } from '@/services/Modules';
+import GameSystem from '@/views/partials/GameSystem.vue';
+import { CallWindow } from '@/services/Windows';
 
 const handle = ref(null);
 

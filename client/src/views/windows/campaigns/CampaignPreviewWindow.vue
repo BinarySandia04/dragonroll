@@ -1,24 +1,24 @@
 <script setup>
-import { onMounted, onUpdated, ref, toRaw, watch } from 'vue';
-import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
+import { onMounted, ref } from 'vue';
+import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import PlayerList from '../../partials/PlayerList.vue';
-import { DisplayToast, GetPlayerList } from '@/services/Dragonroll';
-import CampaignBookList from '../../partials/books/CampaignBookList.vue';
+import PlayerList from '@/views/partials/PlayerList.vue';
+import { DisplayToast } from '@/services/Dragonroll';
 import { ClearAll, ClearWindow, CreateWindow, SetMinSize, SetResizable } from '../../../services/Windows';
-import { LaunchGame } from '../../../services/Game';
-import { AddSound } from '../../../services/Sound';
-import ChatComponent from '../../partials/ChatComponent.vue';
+import { LaunchGame } from '@/services/Game';
+import { AddSound } from '@/services/Sound';
+import ChatComponent from '@/views/partials/ChatComponent.vue';
 import GameSystem from '@/views/partials/GameSystem.vue'
-import { GetModule } from '../../../services/Modules';
-import { AddTooltip } from '../../../services/Tooltip';
-import { Disconnect, UpdateCampaignData } from '../../../services/Campaign';
+import { GetModule } from '@/services/Modules';
+import { AddTooltip } from '@/services/Tooltip';
+import { Disconnect, UpdateCampaignData } from '@/services/Campaign';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 
 import { useI18n } from 'vue-i18n';
-import { GetClient } from '../../../services/Dragonroll';
 const {t} = useI18n();
+
+import { GetCampaign, GetClient } from '@/services/Dragonroll';
 
 const handle = ref(null);
 
@@ -37,7 +37,7 @@ let id = data.id;
 
 function CopyCode(){
     navigator.clipboard.writeText(GetCampaign().invite_code);
-    DisplayToast('aqua', $t('campaigns.preview.copy-success'), 1000);
+    DisplayToast('aqua', t('campaigns.preview.copy-success'), 1000);
 }
 
 function Launch(){

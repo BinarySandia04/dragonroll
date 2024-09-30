@@ -2,9 +2,9 @@
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
-import { SetMinSize, SetMaxSize, SetResizable, SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { CallWindow } from '../../../services/Windows';
-import { GetIcons } from '../../../services/Resources';
+import { SetMinSize, SetResizable, SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
+import { CallWindow } from '@/services/Windows';
+import { GetIcons } from '@/services/Resources';
 const props = defineProps(['data']);
 const data = props.data;
 

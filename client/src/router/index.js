@@ -8,10 +8,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {path: '/', name: 'home', component: HomeView},
-  
-    {path: '/:pathMatch(.*)*', name: "NotFound", component: NotFoundView },
-  
-  
+    {path: '/setup/:setupCode', redirect: to => {
+      return {path: '/', query: {setupCode: to.params.setupCode}}
+    }},
+    {path: '/:pathMatch(.*)*', redirect: {name: 'home'} },
   ]
 })
 

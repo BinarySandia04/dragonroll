@@ -36,13 +36,14 @@ router.post('/register', isAdmin, (req, res) => {
 });
 
 // User gets if setup account exists given the query code
-router.get('/setup', (req, res) => {
+router.get('/verify-setup', (req, res) => {
     User.findOne({setupCode: req.query.code}).then(user => {
         if(user){
             res.json({status: "ok", code: req.query.code});
+        } else {
+            res.json({status: "err", msg: "not-exists"})
         }
-        res.json({status: "err", msg: "not-exists"});
-    }).catch(res.json({status: "err", msg: "internal"}));
+    });
 });
 
 // User posts the parameters of his new account given by admin
@@ -72,7 +73,7 @@ router.post('/setup', rateLimitMiddleware, (req, res) => {
                 });
             } else {
                 bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(user.password, salt, (err, hash) => {
+                    bcrypt.hash(password, salt, (err, hash) => {
                         if(err) throw err;
                         user.password = hash;
                         user.username = username;

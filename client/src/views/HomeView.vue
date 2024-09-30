@@ -1,18 +1,80 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
+
 import { onMounted } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-
 import WindowManager from '@/views/managers/WindowManager.vue'
-import { GetUser } from '@/services/User'
 
+import Api from '@/services/Api'
 import { CreateWindow } from '@/services/Windows'
-import Toast from './partials/Toast.vue';
-import { DisplayToast, SetEmitter } from '../services/Dragonroll';
-import GameManager from './managers/GameManager.vue';
-import TooltipManager from './managers/TooltipManager.vue';
-import ContextMenuManager from './managers/ContextMenuManager.vue';
+import { GetUser, HasAdmin, LoadUser } from '@/services/User.js'
+import { DisplayToast, SetEmitter } from '@/services/Dragonroll';
+import { FetchResources } from '@/services/Resources';
+import { ImportModule } from '@/services/Modules';
+import { FetchPlugins } from '@/services/Plugins';
+import useEmitter from '@/services/Emitter';
+const emitter = useEmitter();
 
+import Toast from '@/views/partials/Toast.vue';
+import GameManager from '@/views/managers/GameManager.vue';
+import TooltipManager from '@/views/managers/TooltipManager.vue';
+import ContextMenuManager from '@/views/managers/ContextMenuManager.vue';
 
+import { useRoute } from 'vue-router'
+
+LoadUser();
+
+SetEmitter(emitter);
+
+async function DisplayFirstWindow(){
+  if(GetUser()){
+    CreateWindow('main_menu');
+    return;
+  }
+  
+  // Check if we have a link
+  if(route.query.setupCode){
+    // Let's try to activate it
+    Api().get('/user/verify-setup?code=' + route.query.setupCode).then(res => {
+      if(res.data.code){
+        // Yep exists
+        CreateWindow('setup_account', {
+          title: "register-account.setup.title",
+          id: 'setup_account',
+          setupCode: res.data.code,
+        })
+        return;
+      }
+      DisplayToast("red", t('register-account.setup.invalid-link'));
+      CreateWindow('login');
+    });
+  } else {
+    if(await HasAdmin()){
+      CreateWindow('login');
+    } else {
+      CreateWindow('register');
+    }
+  }
+
+}
+
+async function start(){
+
+  DisplayFirstWindow();
+
+  await FetchResources();
+  await FetchPlugins();
+
+  await ImportModule('dnd-5e')
+
+  DisplayToast('aqua', 'All plugins loaded successfully');
+}
+
+onMounted(() => {
+  start();
+})
+
+const route = useRoute()
 </script>
 
 <template>

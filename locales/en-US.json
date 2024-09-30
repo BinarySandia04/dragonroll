@@ -12,6 +12,7 @@
     "username": "Username",
     "password": "Password",
     "password-confirm": "Confirm your password",
+    "password-mismatch": "Password mismatch",
     "register": "Register",
     "quantity": "Quantity",
     "weight": "Weight",
@@ -38,7 +39,13 @@
   "register-account": {
     "title": "Create new user account",
     "welcome-message": "<p>Here you can create a new user account.</p><br><p>Once you have registered a new account, you will recieve a link that you must give to the owner of the new account. From there, the owner will be able to setup his new account</p><hr>",
-    "pending-account": "Pending account"
+    "pending-account": "Pending account",
+    "setup": {
+      "title": "Setup Account",
+      "invalid-link": "Invalid setup code link",
+      "welcome-message": "<h1>Welcome!</h1><b>You have been invited to a Dragonroll server!</b><p>Create your account by filling the following fields:</p><hr>",
+      "confirm": "Setup Account"
+    }
   },
   "main-menu": {
     "title": "Dragonroll",
@@ -68,6 +75,12 @@
       "manage-plugins": {
         "title": "Manage Plugins"
       }
+    },
+    "pending-account": {
+      "title": "Pending account",
+      "content": "This account is pending for confirmation",
+      "copy-link": "Copy link",
+      "copy-success": "Copied account setup link successfully!"
     }
   },
   "campaigns": {

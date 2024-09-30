@@ -12,6 +12,7 @@
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "password-confirm": "Confirma tu contraseña",
+    "password-mismatch": "Password mismatch",
     "register": "Registrar-se",
     "quantity": "Quantity",
     "weight": "Weight",
@@ -26,7 +27,7 @@
   },
   "placeholders": {
     "name": "John Doe",
-    "email": "john@doe.com",
+    "email": "john{'@'}doe.com",
     "username": "Introduce tu nombre de usuario...",
     "password": "Introduce tu contraseña...",
     "password-confirm": "Vuelve a introducir tu contraseña..."
@@ -38,7 +39,14 @@
   "register-account": {
     "title": "Create new user account",
     "welcome-message": "<h1>Hola</h1>",
-    "pending-account": "Pending account"
+    "pending-account": "Pending account",
+    "setup": {
+      "title": "Setup Account",
+      "invalid-link": "Invalid setup code link",
+      "welcome-message": "<h1>Welcome!</h1><b>You have been invited to a Dragonroll server!</b><p>Create your account by filling the following fields:</p><hr>",
+      "confirm": "Setup Account"
+    },
+    "invalid-link": "Invalid setup code link"
   },
   "main-menu": {
     "title": "Dragonroll",
@@ -65,6 +73,12 @@
       "manage-plugins-button": "Manage plugins",
       "manage-accounts": "Manage site accounts",
       "manage-plugins": "Manage plugins"
+    },
+    "pending-account": {
+      "title": "Pending account",
+      "content": "This account is pending for confirmation",
+      "copy-link": "Copy link",
+      "copy-success": "Copied account setup link successfully!"
     }
   },
   "campaigns": {

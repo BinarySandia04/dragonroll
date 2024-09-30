@@ -57,10 +57,8 @@ function OpenDatabaseWindow(){
     CreateWindow('database');
 }
 
-watch(game, () => {
-    if(game.value && in_game.value){
-        AddSound(game.value);
-
+watch(in_game, () => {
+    if(in_game.value){
         // Check if we are dm
         is_dm.value = GetClient().is_dm;
     }

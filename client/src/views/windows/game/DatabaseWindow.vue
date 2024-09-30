@@ -3,11 +3,11 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref, shallowRef, watch } from 'vue';
 import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
-import IconButton from '@/views/partials/game/IconButton.vue'
 import ConceptList from '@/views/partials/ConceptList.vue';
 import { FetchConcepts, GetConcepts } from '@/services/Data';
 import Tabs from '@/views/partials/Tabs.vue';
 import { GetCampaignModuleName } from '@/services/Campaign';
+import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 
 const handle = ref(null);
 
@@ -90,10 +90,7 @@ function ElementIcon(element){
             </Tabs>
         </div>
 
-
-        <div class="fixed-bottom-buttons">
-            <IconButton icon="/icons/iconoir/regular/plus.svg" :action="OpenCreateItemPrompt"></IconButton>
-        </div>
+        <FixedBottomButtons :plus="OpenCreateItemPrompt"></FixedBottomButtons>
     </div>
 </template>
 

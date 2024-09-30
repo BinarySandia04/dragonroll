@@ -9,6 +9,7 @@ import BigIconTemplate from '@/views/partials/BigIconTemplate.vue';
 import { SetMinSize, SetResizable } from '@/services/Windows';
 import { backendUrl } from '@/services/BackendURL';
 import { GetUser } from '@/services/User';
+import FixedBottomButtons from '../partials/FixedBottomButtons.vue';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -35,6 +36,10 @@ onMounted(() => {
         else userIcon.value = "public/img/def-avatar.jpg";
     }).catch((err) => console.log("Internal error"));
 });
+
+function RemoveUser(){
+    alert("Remove")
+}
 </script>
 
 
@@ -43,10 +48,15 @@ onMounted(() => {
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
         <BigIconTemplate :title="data.user.username" :img="userIcon">
-            <div v-show="isAdmin">
-                Admin
-            </div>
+        <div v-if="props.data.editable || isAdmin">
+            
+        </div>
+        <div v-else>
+
+        </div>
         </BigIconTemplate>
+
+        <FixedBottomButtons v-if="isAdmin" :remove="RemoveUser"></FixedBottomButtons>
     </div>
 </template>
 

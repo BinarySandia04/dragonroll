@@ -3,8 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const props = defineProps(['done', 'editable']);
-
-import IconButton from '../partials/game/IconButton.vue';
+import FixedBottomButtons from './FixedBottomButtons.vue';
 
 const editing = ref(false);
 const isEditable = ref(true);
@@ -62,17 +61,11 @@ defineExpose({
         <div v-show="!editing" class="preview">
             <div class="document" ref="preview">
             </div>
-
-            <div class="fixed-bottom-buttons">
-                <IconButton v-show="isEditable" icon="/icons/iconoir/regular/edit-pencil.svg" :action="EditContent"></IconButton>
-            </div>
+            <FixedBottomButtons v-show="isEditable" :edit="EditContent"></FixedBottomButtons>
         </div>
         <div v-show="editing" class="editor">
             <textarea class="editing" ref="editor"></textarea>
-            
-            <div class="fixed-bottom-buttons">
-                <IconButton v-show="isEditable" icon="/icons/iconoir/solid/eye.svg" :action="PreviewContent"></IconButton>
-            </div>
+            <FixedBottomButtons v-show="isEditable" :view="PreviewContent"></FixedBottomButtons>
         </div>
     </div>
 </div>
@@ -115,12 +108,5 @@ defineExpose({
     display: flex;
     flex-direction: column;
     background-color: var(--color-background);
-}
-.fixed-bottom-buttons {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 2;
-    display: flex;
 }
 </style>

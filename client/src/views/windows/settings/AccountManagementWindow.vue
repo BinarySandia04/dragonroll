@@ -7,12 +7,11 @@ import { onMounted, ref, shallowRef, toRaw } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import Api from '@/services/Api'
 
-import IconButton from '@/views/partials/game/IconButton.vue'
-
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import ConceptList from '../../partials/ConceptList.vue';
-import { backendUrl } from '../../../services/BackendURL';
-import { ClearWindow, CreateChildWindow, CreateWindow } from '../../../services/Windows';
+import ConceptList from '@/views/partials/ConceptList.vue';
+import { backendUrl } from '@/services/BackendURL';
+import { ClearWindow, CreateChildWindow } from '@/services/Windows';
+import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 
 const handle = ref(null);
 
@@ -104,9 +103,7 @@ function OpenCreateAccount(){
             :open="OpenAccount"
         ></ConceptList>
 
-        <div class="fixed-bottom-buttons">
-            <IconButton icon="/icons/iconoir/regular/plus.svg" :action="OpenCreateAccount"></IconButton>
-        </div>
+        <FixedBottomButtons :plus="OpenCreateAccount"></FixedBottomButtons>
     </div>
 </template>
 
@@ -115,14 +112,6 @@ function OpenCreateAccount(){
 .window-wrapper {
     display: flex;
     align-items: center;
-}
-
-.fixed-bottom-buttons {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 2;
-    display: flex;
 }
 </style>
 

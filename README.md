@@ -1,13 +1,19 @@
+<img align="center" src="client/public/img/logo-splash.png" alt="Logo">
+<hr>
+
+<h3 align="center">
+An open-source virtual table top for role-playing games
+</h3>
+<p align="center">
+  <a href="https://git.aranroig.com/BinarySandia04/That">Original web</a>
+</p>
+<br>
+
 # Dragonroll
 
-An open-source virtual table top for role-playing games
+Dragonroll is an open source online virtual tabletop aimed to be an alternative to Foundry and Roll20 
 
-Falta posar coses legals i credits de:
+## Installation 🛠️
 
-- WOC icones
-- Iconoir
-- Game Assets
-- Fonts
-- Splash art
-- Sounds (FreeSound)
-- Caeora (Tokens)
+TODO
+

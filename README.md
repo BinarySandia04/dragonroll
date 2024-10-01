@@ -36,4 +36,4 @@ or
 ./start-dev.sh
 ```
 
-if you want to start the development environment
+if you want to start the development environments

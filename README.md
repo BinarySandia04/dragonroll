@@ -5,7 +5,8 @@
 An open-source virtual table top for role-playing games
 </h3>
 <p align="center">
-  <a href="https://git.aranroig.com/BinarySandia04/That">Original web</a>
+  <a href="https://git.aranroig.com/BinarySandia04/Dragonroll">Original web</a> | 
+  <a href="">Documentation</a>
 </p>
 <br>
 

@@ -1,4 +1,5 @@
 {
+    "package": "example-plugin"
     "name": "Dragonroll example plugin",
     "description": "This is an example plugin to help you getting started with the Dragonroll API",
     "authors": [

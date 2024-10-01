@@ -26,6 +26,7 @@ function PopulateContext(val){
     let children = [];
 
     let elementNum = 0;
+    console.log(val);
     val.forEach(element => {
         let contextMenuElement = document.createElement('div');
         contextMenuElement.classList.add("context-menu-element");

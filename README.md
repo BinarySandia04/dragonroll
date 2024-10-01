@@ -15,5 +15,24 @@ Dragonroll is an open source online virtual tabletop aimed to be an alternative 
 
 ## Installation 🛠️
 
-TODO
+Run
+```
+./install.sh
+```
 
+This will install all the necesary npm packages both for the frontend and the backend
+
+## Running 🚀
+
+Run
+```
+./start.sh
+```
+
+or
+
+```
+./start-dev.sh
+```
+
+if you want to start the development environment

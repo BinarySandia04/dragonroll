@@ -23,13 +23,13 @@ async function updateElement(){
     if(tooltip) AddTooltip(tooltipContainer.value, tooltip);
 }
 
-onMounted(() => {
+onMounted(async () => {
     updateElement();
     watch(() => props.element, () => {
         updateElement();
     });
 
-    let context = props.context();
+    let context = await props.context();
     if(context) AddContextMenu(elementDiv.value, context);
 })
 </script>

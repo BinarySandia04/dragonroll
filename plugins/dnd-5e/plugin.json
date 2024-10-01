@@ -1,4 +1,5 @@
 {
+    "package": "dnd-5e",
     "name": "Dnd 5e System",
     "description": "This plugin provides the Dnd 5e module",
     "authors": [
@@ -8,6 +9,9 @@
     ],
     "version": "0.1",
     "client": {
+        "entrypoint": "main.js"
+    },
+    "backend": {
         "entrypoint": "main.js"
     }
 }

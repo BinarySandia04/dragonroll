@@ -13,6 +13,8 @@ const passport = require('passport');
 const server = http.createServer(app);
 const config = JSON.parse(fs.readFileSync("config.json"));
 
+const pluginManager = require('./services/plugins')
+
 // SET CONSTANTS
 const PORT = 8081;
 global.appRoot = path.resolve(__dirname);
@@ -68,6 +70,8 @@ app.use('/user', require('./routes/user'));
 // AUTH
 checkAuth = passport.authenticate('jwt', {session: false});
 app.use(checkAuth);
+
+pluginManager.init();
 
 // ROUTES WITH AUTH
 app.use('/campaign', require('./routes/campaign'));

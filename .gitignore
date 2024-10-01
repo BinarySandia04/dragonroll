@@ -1,15 +1,19 @@
 .DS_Store
 server/node_modules/
-client/node_modules/
 node_modules/
-client/dist/
-client/plugins/
-backend/plugins/
 
-client/public/data/
 server/uploads/
+
+# Client
+client/plugins/
+client/dist/
+client/public/data/
+client/node_modules/
 client/src/locales/
 client/public/plugins/
+
+# Backend
+backend/plugins/
 
 # local env files
 .env.local

@@ -97,6 +97,11 @@ for(let j = 0; j < plugins.length; j++){
     fs.copyFileSync(`./plugins/${plugins[j]}/plugin.json`, `./client/plugins/${plugins[j]}/plugin.json`);
   }
 
+  if(fs.existsSync(`./plugins/${plugins[j]}/backend/`)){
+    fs.cpSync(`./plugins/${plugins[j]}/backend/`, `./backend/plugins/${plugins[j]}`, {recursive: true});
+    fs.copyFileSync(`./plugins/${plugins[j]}/plugin.json`, `./backend/plugins/${plugins[j]}/plugin.json`);
+  }
+
   if(fs.existsSync(`./plugins/${plugins[j]}/public/`)){
     fs.cpSync(`./plugins/${plugins[j]}/public/`, `./client/public/plugins/${plugins[j]}`, {recursive: true});
   }

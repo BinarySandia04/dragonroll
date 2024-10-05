@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path')
-const Api = require('./api').Api
+const BackendApi = require('./api').BackendApi
 
 const basePath = path.resolve(__dirname, '../')
 console.log(basePath)
@@ -25,7 +25,7 @@ function init(){
 
     // Execute main
     Object.keys(plugins).forEach(k => {
-        plugins[k].Main(new Api(k))
+        plugins[k].Main(new BackendApi(k))
     })
 }
 

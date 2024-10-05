@@ -66,7 +66,11 @@ function ShowMainMenu(){
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <WindowHandle :window="id" ref="handle"></WindowHandle>
 
-        <img src="/img/logo-splash.png" class="splash-image" draggable="false">
+        <picture align="center">
+          <source media="(prefers-color-scheme: dark)" srcset="/img/logo-splash.png">
+          <source media="(prefers-color-scheme: light)" srcset="/img/logo-splash-light.png">
+          <img alt="Dragonroll logo" src="client/public/img/logo-splash.png" class="splash-image" draggable="false">
+        </picture>
 
         <form v-on:submit.prevent="login">
             <div class="form-field">

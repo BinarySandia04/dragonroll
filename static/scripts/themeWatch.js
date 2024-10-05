@@ -12,6 +12,10 @@ function updateLogoThemes(){
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
+    let darkLogos = document.getElementsByClassName('logo-splash-dark');
+    let lightLogos = document.getElementsByClassName('logo-splash-light');
+    for(let i = 0; i < darkLogos.length; i++)  darkLogos[i].style.display = "none";
+    for(let i = 0; i < lightLogos.length; i++) lightLogos[i].style.display = "none";
 
     const attrObserver = new MutationObserver((mutations) => {
         mutations.forEach(mu => {

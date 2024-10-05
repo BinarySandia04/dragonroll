@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Gen docs
 npm run generate-docs
 

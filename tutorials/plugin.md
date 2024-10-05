@@ -1,1 +1,0 @@
-This guide will help you through creating a plugin for Dragonroll

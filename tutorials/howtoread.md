@@ -1,0 +1,3 @@
+- The classes starting with the prefix `Client` are client specific
+- The classes starting with the prefix `Backend` are backend specific
+- All the other classes are accessible from both sides

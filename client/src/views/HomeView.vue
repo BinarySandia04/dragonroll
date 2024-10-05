@@ -10,7 +10,6 @@ import { CreateWindow } from '@/services/Windows'
 import { GetUser, HasAdmin, LoadUser } from '@/services/User.js'
 import { DisplayToast, SetEmitter } from '@/services/Dragonroll';
 import { FetchResources } from '@/services/Resources';
-import { ImportModule } from '@/services/Modules';
 import { FetchPlugins } from '@/services/Plugins';
 import useEmitter from '@/services/Emitter';
 const emitter = useEmitter();
@@ -64,8 +63,6 @@ async function start(){
 
   await FetchResources();
   await FetchPlugins();
-
-  await ImportModule('dnd-5e')
 
   DisplayToast('aqua', 'All plugins loaded successfully');
 }

@@ -1,6 +1,5 @@
 <script setup>
-import { inject, onMounted, ref } from 'vue';
-import { GetEmitter } from '../../services/Dragonroll';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps(['data', 'click']);
 const data = props.data;
@@ -13,8 +12,9 @@ function Select(){
 }
 
 onMounted(() => {
+    console.log(data);
     title.value = data.title;
-    image.value.src = "modules/" + data.id + "/icon.png"
+    image.value.src = `plugins/${data.id}/${data.icon}`;
 })
 
 </script>

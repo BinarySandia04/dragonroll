@@ -2,24 +2,20 @@
 // Entrypoint
 function Main(Api){
     console.log("Hello World!");
-    console.log(Api);
 
-    Api.Modules.CreateModule({
-        "id": "dnd-5e",
-        "title": "Dungeons & Dragons 5e",
-        "description": "Dungeons & Dragons Fifth edition game system support",
-        "authors": [
-            {
-                "name": "Aran Roig"
-            }
-        ],
-        "version": "0.1",
-        "color": "#e92026"
-    });
+    let dndModule = Api.createModule('dnd-5e');
 
-    Api.Windows.InjectWindow('dnd-5e', 'character_sheet', 'CharacterSheet');
-    Api.Windows.InjectWindow('dnd-5e', 'item_sheet', 'ItemSheet');
-    Api.Windows.InjectWindow('dnd-5e', 'create_item_prompt', 'CreateItemPrompt');
+    dndModule.title = "Dungeons & Dragons 5e";
+    dndModule.description = "Dungeons & Dragons Fifth edition game system support";
+    dndModule.version = "0.1";
+    dndModule.color = "#e92026";
+    dndModule.icon = "icon.png"
+
+    Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
+    Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
+    Api.windows.registerWindow('create_item_promptç', Api.createView('CreateItemPrompt'));
+
+    Api.registerModule(dndModule);
 }
 
 export { Main };

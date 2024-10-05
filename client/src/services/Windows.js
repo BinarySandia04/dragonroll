@@ -67,9 +67,9 @@ let windowMap = {
     plugin_window: PluginWindow
 };
 
-async function InjectWindow(plugin, window_type, window_component){
+async function InjectWindow(window_type, plugin, window_component){
     let systemWidows = {};
-    systemWidows[plugin + "/" + window_type] = (await import(`../../plugins/${plugin}/views/${window_component}.vue`)).default;
+    systemWidows[window_type] = (await import(`../../plugins/${plugin}/views/${window_component}.vue`)).default;
     windowMap = {...windowMap, ...systemWidows};
 
     console.log("Window injected");

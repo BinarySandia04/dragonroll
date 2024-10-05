@@ -84,7 +84,7 @@ class BackendRouter {
 /**
  * @hideconstructor
  */
-class Model {
+class BackendModel {
     #_name;
     #_plugin;
     #_schema;

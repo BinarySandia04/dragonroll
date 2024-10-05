@@ -1,5 +1,8 @@
 {
-    "plugin": {
-        "title": "Creating a plugin"
+    "firstplugin": {
+        "title": "Creating your first plugin"
+    },
+    "howtoread": {
+        "title": "How to read this documentation"
     }
 }

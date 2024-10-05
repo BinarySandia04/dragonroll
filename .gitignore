@@ -15,6 +15,9 @@ client/public/plugins/
 # Backend
 backend/plugins/
 
+# Docs
+docs/
+
 # local env files
 .env.local
 .env.*.local

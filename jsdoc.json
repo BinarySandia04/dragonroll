@@ -1,0 +1,26 @@
+{
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",
+        "include": ["./client/src/services/Api.js", "./backend/services/api.js", "package.json", "README.md"],
+        "exclude": ["node_modules"]
+    },
+    "plugins": ["plugins/markdown"],
+    "recurseDepth": 10,
+    "opts": {
+        "encoding": "utf8",
+        "readme": "./README.md",
+        "destination": "docs/",
+        "recurse": true,
+        "verbose": true,
+        "template": "node_modules/clean-jsdoc-theme",
+        "theme_opts": {
+            "default_theme": "dark",
+            "homepageTitle": "Dragonroll API",
+            "title": "<img src='media/logo-splash.png' class='my-custom-class'/>"
+        }
+    },
+    "markdown": {
+        "hardwrap": false,
+        "idInHeadings": true
+    }
+}

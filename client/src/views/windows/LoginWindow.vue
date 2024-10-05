@@ -7,7 +7,7 @@ import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { SetUser, GetUser } from '@/services/User'
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { ClearWindows, CreateWindow } from '@/services/Windows';
@@ -31,7 +31,7 @@ onMounted(() => {
 });
 
 function login(){
-  Api().post('/user/login', { username: username.value, password: password.value }).then((response) => {
+  Server().post('/user/login', { username: username.value, password: password.value }).then((response) => {
     const data = response.data;
     console.log(data);
 

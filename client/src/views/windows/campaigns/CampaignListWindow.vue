@@ -5,7 +5,7 @@ import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { CreateChildWindow } from '@/services/Windows';
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 import CampaignEntry from '@/views/partials/CampaignEntry.vue';
 import { GetEmitter } from '@/services/Dragonroll';
 
@@ -37,7 +37,7 @@ function JoinCampaign(){
 }
 
 function RefreshCampaigns(){
-    Api().get('/campaign/list').then((response) => {
+    Server().get('/campaign/list').then((response) => {
         response.data.forEach((camp) => {
             if(camp.is_dm) {
                 myCampaigns.value.push(camp.campaign);

@@ -5,7 +5,7 @@ const { t } = useI18n()
 
 import { onMounted, ref, shallowRef, toRaw } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import ConceptList from '@/views/partials/ConceptList.vue';
@@ -31,7 +31,7 @@ onMounted(() => {
 });
 
 function RefreshUsers(){
-    Api().get('/admin/users').then(response => {
+    Server().get('/admin/users').then(response => {
         let users = response.data.users;
         elements.value = [];
         users.forEach(user => {
@@ -58,7 +58,7 @@ function RefreshUsers(){
 }
 
 async function ElementIcon(element){
-    let response = await Api().get('/user/retrieve-avatar?username=' + element.name);
+    let response = await Server().get('/user/retrieve-avatar?username=' + element.name);
     if(response.data.image) return backendUrl + "public/" + response.data.image;
     return "public/img/def-avatar.jpg";
 }

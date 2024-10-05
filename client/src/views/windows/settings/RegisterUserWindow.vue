@@ -8,7 +8,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 
 import { ClearWindow, CreateWindow } from '@/services/Windows';
 import { DisplayToast } from '@/services/Dragonroll';
@@ -38,7 +38,7 @@ onMounted(() => {
 
 
 function register(){
-    Api().post('/user/register').then((response) => {
+    Server().post('/user/register').then((response) => {
         const data = response.data;
         console.log(data);
         if(data.error){

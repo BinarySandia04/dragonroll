@@ -8,7 +8,7 @@ import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { DisplayToast } from '@/services/Dragonroll';
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 
 const handle = ref(null);
 
@@ -26,7 +26,7 @@ onMounted(() => {
 
 function JoinCampaign(){
     let invite_code = code.value;
-    Api().post('/campaign/join', {
+    Server().post('/campaign/join', {
         invite_code
     }).then(response => {
         if(response.data.status == "ok"){

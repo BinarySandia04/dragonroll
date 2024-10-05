@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUpdated, ref } from 'vue';
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 import { backendUrl } from '../../services/BackendURL';
 import { GetClient, GetPlayer, GetPlayerList } from '../../services/Dragonroll';
 import { GetUser } from '../../services/User';
@@ -17,7 +17,7 @@ const status = ref("");
 
 function retrieveAvatar(){
     let userAvatarDisplay = avatar.value;
-    Api().get('/user/retrieve-avatar?username=' + player.user.username).then((response) => {
+    Server().get('/user/retrieve-avatar?username=' + player.user.username).then((response) => {
         if(response.data.image) userAvatarDisplay.src = backendUrl + "public/" + response.data.image;
     }).catch((err) => console.log("Internal error"));
 }

@@ -5,7 +5,7 @@ import { SetupHandle, SetSize, ResetPosition, ClearWindow } from '@/services/Win
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import ErrorMessage from '@/components/partials/ErrorMessage.vue'
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 import SystemSelector from '@/views/partials/SystemSelector.vue';
 import { GetEmitter } from '@/services/Dragonroll';
 
@@ -40,7 +40,7 @@ function Select(system_id){
 
 
 function NewCampaign(){
-    Api().post('/campaign/create', {
+    Server().post('/campaign/create', {
         name: campaignName.value,
         system
     }).then((response) => {

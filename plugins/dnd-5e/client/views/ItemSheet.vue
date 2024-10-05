@@ -1,6 +1,6 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import Api from '@/services/Api';
+import Server from '@/services/Server';
 
 import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, CreateWindow, SetMinSize, SetResizable } from '@/services/Windows';
@@ -70,7 +70,7 @@ function Upload(){
         oldInfo = structuredClone(concept.value.info);
         console.log("MAIASIUDHSAHJ")
     }
-    Api().put('/concept/update?campaign=' + GetCampaign()._id + "&id=" + concept.value._id + extraParams, {concept: concept.value}).then(response => {
+    Server().put('/concept/update?campaign=' + GetCampaign()._id + "&id=" + concept.value._id + extraParams, {concept: concept.value}).then(response => {
         console.log(response);
     });
 }
@@ -139,7 +139,7 @@ onMounted(() => {
     item_type.value = data.item_type;
 
     if(data.item_create){
-        Api().post('/concept/create?campaign=' + GetCampaign()._id, {
+        Server().post('/concept/create?campaign=' + GetCampaign()._id, {
             data: {
                 type: data.item_type,
                 name: "New " + data.item_type

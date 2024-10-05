@@ -4,7 +4,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 import BigIconTemplate from '@/views/partials/BigIconTemplate.vue';
 import { SetMinSize, SetResizable } from '@/services/Windows';
 import { backendUrl } from '@/services/BackendURL';
@@ -31,7 +31,7 @@ onMounted(() => {
 
     isAdmin.value = GetUser().admin;
 
-    Api().get('/user/retrieve-avatar?username=' + data.user.username).then((response) => {
+    Server().get('/user/retrieve-avatar?username=' + data.user.username).then((response) => {
         if(response.data.image) userIcon.value = backendUrl + "public/" + response.data.image;
         else userIcon.value = "public/img/def-avatar.jpg";
     }).catch((err) => console.log("Internal error"));

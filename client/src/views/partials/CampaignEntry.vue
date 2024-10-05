@@ -2,7 +2,7 @@
 
 import { onMounted, ref } from 'vue';
 
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 import { AddSound } from '../../services/Sound';
 import { ConnectToCampaign, DisplayCampaign } from '../../services/Campaign';
 

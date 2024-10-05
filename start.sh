@@ -8,7 +8,6 @@ terminate(){
 }
 
 script_full_path=$(dirname "$0")
-node prebuild.js
 cd client
 ./start.sh &
 cd ..

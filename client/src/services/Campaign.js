@@ -6,7 +6,7 @@ import { GetUser } from "./User";
 import { chat } from './Chat';
 import { ClearAll, CreateWindow } from './Windows';
 
-import Api from '@/services/Api';
+import Server from '@/services/Server';
 import { GetCampaign } from './Dragonroll';
 
 let _currentCampaign = null;
@@ -37,7 +37,7 @@ function DisplayCampaign(data = _currentCampaign){
 }
 
 function UpdateCampaignData(data){
-    Api().put('/campaign/update?campaign=' + GetCampaign()._id, {campaign: data}).then(response => {
+    Server().put('/campaign/update?campaign=' + GetCampaign()._id, {campaign: data}).then(response => {
 
     });
 }

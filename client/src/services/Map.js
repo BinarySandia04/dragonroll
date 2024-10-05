@@ -1,6 +1,6 @@
 import { initCustomFormatter, ref, toRaw } from 'vue';
 
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 import { _SendMap, GetCampaign } from './Dragonroll';
 import { backendUrl } from './BackendURL';
 import { socket } from './Socket';
@@ -213,7 +213,7 @@ function GetMap(id){
 
 function UpdateMapList(){
     return new Promise((resolve, reject) => {
-        Api().get('/maps/list?campaign=' + GetCampaign()._id).then(response => {
+        Server().get('/maps/list?campaign=' + GetCampaign()._id).then(response => {
             mapList.value = response.data.data;
             resolve();
         }).catch((err) => console.log(err));
@@ -237,7 +237,7 @@ function RenameMap(id, new_title){
 }
 
 function SaveMap(id){
-    Api().post('/maps/update?campaign=' + GetCampaign()._id + "&map=" + id, {data: currentMap}).then(response => {
+    Server().post('/maps/update?campaign=' + GetCampaign()._id + "&map=" + id, {data: currentMap}).then(response => {
         console.log("Map updated");
     }).catch(err => console.log(err));
 }
@@ -263,7 +263,7 @@ function UploadResource(image){
         const formData = new FormData();
         formData.append("image", dataURLtoFile(image.src));
 
-        Api().post('/maps/create-resource?campaign=' + GetCampaign()._id, formData, {
+        Server().post('/maps/create-resource?campaign=' + GetCampaign()._id, formData, {
             headers: { "Content-Type": "multipart/form-data"}
         }).then(response => {
             resolve(response.data.data);
@@ -272,7 +272,7 @@ function UploadResource(image){
 }
 
 function CreateMap(){
-    Api().post('/maps/create', {
+    Server().post('/maps/create', {
         campaign: GetCampaign()._id,
         data: currentMap,
     }).then(response => {

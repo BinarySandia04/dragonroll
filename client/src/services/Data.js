@@ -1,4 +1,4 @@
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 import { GetCampaign } from "./Dragonroll";
 import { socket } from './Socket';
 import { reactive } from 'vue';
@@ -12,7 +12,7 @@ function InitData(){
 }
 
 function FetchConcepts(){
-    Api().get('/concept/list?campaign=' + GetCampaign()._id).then(response => {
+    Server().get('/concept/list?campaign=' + GetCampaign()._id).then(response => {
         data.value.concepts = response.data.data;
     }).catch((err) => console.log(err));
 }
@@ -27,7 +27,7 @@ socket.on('update-concepts', () => {
 });
 
 let GetConcepts = () => data.value.concepts;
-let GetConcept = (id) => Api().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + id)
+let GetConcept = (id) => Server().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + id)
 
 
 export {

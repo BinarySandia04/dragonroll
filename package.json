@@ -4,11 +4,16 @@
   "description": "Vtt",
   "main": "prebuild.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-docs": "npx jsdoc -c jsdoc.json"
   },
   "author": "Aran Roig",
   "license": "ISC",
   "dependencies": {
     "motion": "^10.18.0"
+  },
+  "devDependencies": {
+    "clean-jsdoc-theme": "^4.3.0",
+    "jsdoc": "^4.0.3"
   }
 }

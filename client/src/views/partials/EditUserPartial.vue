@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { GetUser, LogoutUser } from '@/services/User'
 
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 
 import useEmitter from '@/services/Emitter';
 import { ClearWindows, CreateWindow, CreateChildWindow, ClearWindow } from '../../services/Windows';
@@ -14,7 +14,7 @@ username.value = GetUser().username;
 
 function retrieveAvatar(){
     let userAvatarDisplay = document.getElementById("upload-image");
-    Api().get('/user/retrieve-avatar?username=' + GetUser().username).then((response) => {
+    Server().get('/user/retrieve-avatar?username=' + GetUser().username).then((response) => {
         if(response.data.image) userAvatarDisplay.src = backendUrl + "public/" + response.data.image;
     }).catch((err) => console.log("Internal error"));
 }
@@ -53,7 +53,7 @@ onMounted(() => {
 
         formData.append("image", image);
 
-        Api().post('/user/upload-avatar', formData, {
+        Server().post('/user/upload-avatar', formData, {
             headers: { "Content-Type": "multipart/form-data" }
         }).then((response) => {
             retrieveAvatar();

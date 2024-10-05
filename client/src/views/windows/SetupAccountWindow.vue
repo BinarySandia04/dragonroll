@@ -8,7 +8,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 
 import { ClearWindow, CreateWindow } from '@/services/Windows';
 import { DisplayToast } from '@/services/Dragonroll';
@@ -41,7 +41,7 @@ function setup(){
       return;
   }
 
-  Api().post('/user/setup?code=' + data.setupCode, 
+  Server().post('/user/setup?code=' + data.setupCode, 
     {
         name: name.value,
         username: username.value,

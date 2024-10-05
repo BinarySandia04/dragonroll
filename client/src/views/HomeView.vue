@@ -5,7 +5,7 @@ const { t } = useI18n()
 import { onMounted } from 'vue';
 import WindowManager from '@/views/managers/WindowManager.vue'
 
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 import { CreateWindow } from '@/services/Windows'
 import { GetUser, HasAdmin, LoadUser } from '@/services/User.js'
 import { DisplayToast, SetEmitter } from '@/services/Dragonroll';
@@ -35,7 +35,7 @@ async function DisplayFirstWindow(){
   // Check if we have a link
   if(route.query.setupCode){
     // Let's try to activate it
-    Api().get('/user/verify-setup?code=' + route.query.setupCode).then(res => {
+    Server().get('/user/verify-setup?code=' + route.query.setupCode).then(res => {
       if(res.data.code){
         // Yep exists
         CreateWindow('setup_account', {

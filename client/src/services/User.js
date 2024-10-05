@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import Api from '@/services/Api'
+import Server from '@/services/Server'
 
 
 const UserStatus = ref(0);
@@ -20,7 +20,7 @@ function SetUser(token){
 }
 
 async function HasAdmin(){
-    let response = await Api().get('/user/has-admin');
+    let response = await Server().get('/user/has-admin');
     return response.data.status != "init";
 }
 
@@ -29,7 +29,7 @@ function SetUserSetting(key, value){
         let user = GetUser()
         if(!user.settings) user.settings = {};
         user.settings[key] = value;
-        Api().post('/user/update-settings', {settings: user.settings}).then(response => {
+        Server().post('/user/update-settings', {settings: user.settings}).then(response => {
             resolve(response.data.settings);
         });
     });
@@ -37,7 +37,7 @@ function SetUserSetting(key, value){
 
 function GetUserSetting(key){
     return new Promise((resolve, reject) => {
-        Api().get('/user/get-settings').then(response => {
+        Server().get('/user/get-settings').then(response => {
             if(response.data.settings)
                 resolve(response.data.settings[key]);
             else resolve(undefined);

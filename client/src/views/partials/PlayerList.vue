@@ -2,7 +2,7 @@
 import { onMounted, onUpdated, ref } from 'vue';
 import { SetupHandle, SetSize, SetPosition, ResetPosition } from '@/services/Windows';
 
-import Api from '@/services/Api.js'
+import Server from '@/services/Server.js'
 import PlayerEntry from './PlayerEntry.vue';
 import { GetPlayerList } from '../../services/Dragonroll';
 

@@ -2,16 +2,55 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
- * Test
+ * Class for managing the backend api
+ * @hideconstructor
  */
-class Router {
-    constructor(){
-
+class BackendApi {
+    #_plugin;
+    #_router;
+    
+    /**
+     * This object is already created for you
+     * @param {plugin} Plugin instance
+     */
+    constructor(plugin){
+        this.#_plugin = plugin;
+        this.#_router = new BackendRouter(plugin.package);
     }
 
     /**
-     * @param {String} route
+     * Gets the router for your plugin
+     * @type {BackendRouter}
+     */
+    get router(){
+        return this.#_router;
+    }
+
+    /**
+     * Returns a new database model for the plugin
+     * @param {String} name 
+     * @param {Object} schema 
+     * @returns {Model}
+     */
+    createModel(name, schema){
+        return new Model(name, this.#_plugin, schema);
+    }
+};
+
+/**
+ * This class registers routes to the backend that can be accessed from the frontend
+ * @hideconstructor
+ */
+class BackendRouter {
+    #_root;
+
+    constructor(path){
+        this.#_root = `plugins/${path}`;
+    }
+
+    /**
      * Hola
+     * @param {String} route
      */
     get(route){
 
@@ -42,39 +81,23 @@ class Router {
     }
 }
 
-class BackendApi {
+/**
+ * @hideconstructor
+ */
+class Model {
+    #_name;
     #_plugin;
-    #_router;
-    
-    /**
-     * This object is already created for you
-     * @param {plugin} Plugin instance
-     */
-    constructor(plugin){
-        this._plugin = plugin;
-        this._router = new Router();
-    }
+    #_schema;
 
-    /**
-     * Gets the router for your plugin
-     * @type {Router} router
-     */
-    get router(){
-        return this.router;
-    }
-
-    /**
-     * Returns a new database model for the plguin
-     * @param {String} name 
-     * @param {Object} schema 
-     * @returns {mongoose.model}
-     */
-    createModel(name, schema){
-        return mongoose.model(name, new Schema(schema))
+    constructor(name, plugin, schema){
+        this.#_name = name;
+        this.#_plugin = plugin;
+        this.#_schema = schema;
     }
 };
 
+
+
 module.exports = {
-    BackendApi,
-    Router
+    BackendApi
 }

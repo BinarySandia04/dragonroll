@@ -1,5 +1,5 @@
 import { GetPluginPaths } from "./Resources"
-import { Api } from '@/services/Api'
+import { ClientApi } from '@/services/Api'
 
 let pluginInfo = []
 
@@ -23,7 +23,7 @@ async function FetchPlugins(){
         });
 
         import(/* @vite-ignore */ `../../plugins/${pluginName}/${pluginData.client.entrypoint}`).then(module => {
-            module.Main(Api);
+            module.Main(new ClientApi(pluginData));
         })
     }
 }

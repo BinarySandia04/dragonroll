@@ -1,5 +1,5 @@
 {
-    "test": {
-        "title": "Test tutorial"
+    "plugin": {
+        "title": "Creating a plugin"
     }
 }

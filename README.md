@@ -1,6 +1,6 @@
 <picture align="center">
-  <source media="(prefers-color-scheme: dark)" srcset="media/logo-splash.png">
-  <source media="(prefers-color-scheme: light)" srcset="media/logo-splash-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="static/media/logo-splash.png">
+  <source media="(prefers-color-scheme: light)" srcset="static/media/logo-splash-light.png">
   <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="client/public/img/logo-splash.png">
 </picture>
 <hr>

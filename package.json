@@ -1,6 +1,6 @@
 {
   "name": "dragonroll",
-  "version": "1.0.1",
+  "version": "0.1",
   "description": "Vtt",
   "main": "prebuild.js",
   "scripts": {

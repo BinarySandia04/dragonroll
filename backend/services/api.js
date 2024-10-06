@@ -30,10 +30,17 @@ class BackendApi {
      * Returns a new database model for the plugin
      * @param {String} name 
      * @param {Object} schema 
-     * @returns {Model}
+     * @returns {BackendModel}
+     * @example
+     * let itemModel = Api.createModel('Item', {
+     *   name: {type: String, required: true, default: "New Item"},
+     *   description: {type: String}
+     *   type: {type: String, required: true, default: "Misc Item"},
+     *   image: { type: String }
+     * });
      */
     createModel(name, schema){
-        return new Model(name, this.#_plugin, schema);
+        return new BackendModel(name, this.#_plugin, schema);
     }
 };
 
@@ -79,6 +86,21 @@ class BackendRouter {
     delete(route){
 
     }
+
+    /**
+     * Creates backend REST routes for the specified model. These routes are located
+     * relative to the plugin base route:
+     * - `/<plugin>/<model>` (POST) - Creates the element
+     * - `/<plugin>/<model>` (GET) - Gets a list with elements
+     *    - `?id=<id>` return the document with that id
+     *    - `?<paramName>=<paramValue>` returns all documents that match this criteria
+     * - `/<plugin>/<model>` (UPDATE) - Updates a element by id
+     * - `/<plugin>/<model>` (DELETE) - Deletes an element
+     * @param {BackendModel} model 
+     */
+    createModelRoutes(model, path){
+
+    }
 }
 
 /**
@@ -88,13 +110,82 @@ class BackendModel {
     #_name;
     #_plugin;
     #_schema;
+    #_mongoSchema;
 
     constructor(name, plugin, schema){
         this.#_name = name;
         this.#_plugin = plugin;
         this.#_schema = schema;
+        this.#_mongoSchema = mongoose.model(`${plugin}/${name}`, new Schema(schema));
+    }
+
+    /**
+     * Finds and returns a promise with the result of the query
+     * @param {Object} params 
+     * @returns {Promise<Object>}
+     */
+    find(params){
+        return this.#_mongoSchema.find(params);
+    }
+
+    /**
+     * Finds one element and returns a promise with the result of the query
+     * @param {Object} params 
+     * @returns {Promise<Object>}
+     */
+    findOne(params){
+        return this.#_mongoSchema.findOne(params);
+    }
+
+    /**
+     * Finds an element by id and returns a promise with the result of the query
+     * @param {String} id 
+     * @returns {Promise<Object>}
+     */
+    findById(id){
+        return this.#_mongoSchema.findById(id);
+    }
+
+    /**
+     * Creates an element given the data and returns a promise with the result of the operation
+     * @param {Object} data 
+     * @returns {Promise<Object>}
+     */
+    create(data){
+        return this.#_mongoSchema.create(data);
+    }
+
+    /**
+     * Updates an element given the parameters with the given data and returns a promise with the result of the operation
+     * @param {Object} params
+     * @param {Object} data 
+     * @returns {Promise<Object>}
+     */
+    updateOne(params, data){
+        return this.#_mongoSchema.updateOne(params, data);
+    }
+
+    /**
+     * Updates elements given the parameters with the given data and returns a promise with the result of the operation
+     * @param {Object} params
+     * @param {Object} data 
+     * @returns {Promise<Object>}
+     */
+    updateMany(params, data){
+        return this.#_mongoSchema.updateMany(params, data);
     }
 };
+
+/**
+ * @hideconstructor
+ */
+class BackendModelDocument {
+
+
+    save(){
+
+    }
+}
 
 
 

@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const passport = require('passport');
-const rateLimitMiddleware = require("../config/rate-limiter");
+const rateLimitMiddleware = require("../services/rate-limiter");
 
 const Campaign = require("../models/Campaign");
 const CampaignUser = require("../models/CampaignUser");
 const Map = require("../models/Map");
 const fs = require('fs');
 
-const upload = require("../config/storage");
-const { hasCampaign } = require('../config/middleware');
+const upload = require("../services/storage");
+const { hasCampaign } = require('../services/middleware');
 
 router.post('/create-resource', hasCampaign, upload.single("image"), (req, res) => {
     const imageName = req.file.filename;

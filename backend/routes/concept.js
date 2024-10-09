@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Concept = require('../models/Concept');
-const { hasCampaign } = require('../config/middleware');
+const { hasCampaign } = require('../services/middleware');
 const { getIo } = require('../io/socket');
 
 const io = getIo();

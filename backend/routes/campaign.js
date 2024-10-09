@@ -6,7 +6,7 @@ const passport = require('passport');
 const Campaign = require("../models/Campaign");
 const CampaignUser = require("../models/CampaignUser");
 
-const upload = require("../config/storage");
+const upload = require("../services/storage");
 
 /*
 router.post('/register', passport.authenticate('jwt', {session: false}), rateLimitMiddleware, (req, res) => {

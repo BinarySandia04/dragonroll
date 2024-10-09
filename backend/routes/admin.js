@@ -3,9 +3,9 @@ const router = express.Router();
 
 
 const bcrypt = require('bcryptjs');
-const rateLimitMiddleware = require("../config/rate-limiter");
+const rateLimitMiddleware = require("../services/rate-limiter");
 
-const { isAdmin } = require('../config/middleware');
+const { isAdmin } = require('../services/middleware');
 const User = require("../models/User");
 
 router.post('/register', rateLimitMiddleware, (req, res) => {

@@ -4,16 +4,16 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const secret = require('../config/keys').secret;
-const rateLimitMiddleware = require("../config/rate-limiter");
+const secret = require('../services/keys').secret;
+const rateLimitMiddleware = require("../services/rate-limiter");
 const { default: jwtDecode } = require('jwt-decode');
 const crypto = require("crypto");
 
-const { isAdmin } = require('../config/middleware');
+const { isAdmin } = require('../services/middleware');
 
 const User = require("../models/User");
 
-const upload = require("../config/storage");
+const upload = require("../services/storage");
 
 // Admin registers new user
 router.post('/register', isAdmin, (req, res) => {

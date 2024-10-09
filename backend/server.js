@@ -12,11 +12,15 @@ const cors = require('cors');
 const passport = require('passport');
 const server = http.createServer(app);
 const config = JSON.parse(fs.readFileSync("config.json"));
+const database = require('./services/database');
 
 const pluginManager = require('./services/plugins')
 
 // SET CONSTANTS
-const PORT = 8081;
+let PORT = 8081;
+if(process.env.NODE_ENV == 'test')
+    PORT = 8082;
+
 global.appRoot = path.resolve(__dirname);
 let mongo_final_ip = "";
 console.log("Production? " + !process.env.DEBUG);
@@ -37,16 +41,14 @@ const io = socketIo(server, {
 socket.setIo(io);
 
 // CONNECT TO MONGODB
-mongoose.connect(mongo_final_ip).then(() => {
-    console.log("Connected to database");
-}).catch((error) => {
-    console.log(error);
-});
+
+if(process.env.NODE_ENV != 'test')
+    database.connectDB();
 
 // PASSPORT
 app.use(morgan('tiny'));
 app.use(passport.initialize());
-require('./config/passport')(passport);
+require('./services/passport')(passport);
 
 // PUBLIC
 app.use("/public", express.static(__dirname + '/public'));
@@ -71,7 +73,8 @@ app.use('/user', require('./routes/user'));
 checkAuth = passport.authenticate('jwt', {session: false});
 app.use(checkAuth);
 
-pluginManager.init();
+if(process.env.NODE_ENV != 'test')
+    pluginManager.init();
 
 // ROUTES WITH AUTH
 app.use('/campaign', require('./routes/campaign'));
@@ -87,3 +90,5 @@ require('./io/campaign')(socket.getIo());
 server.listen(PORT, () => {
     console.log("Dragonroll backend started");
 });
+
+module.exports = { app, server }

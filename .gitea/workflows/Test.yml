@@ -1,0 +1,36 @@
+name: test
+run-name: CI Test
+on: [push]
+jobs:
+  run-tests-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: "Install dependencies" 
+        working-directory: ./client
+        run: npm ci
+      - name: "Test client"
+        working-directory: ./client
+        run: npm run test
+  run-tests-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: "Install dependencies" 
+        working-directory: ./server
+        run: npm ci
+      - name: "Test server"
+        working-directory: ./server
+        run: npm run test

@@ -21,7 +21,6 @@
     "clean-jsdoc-theme": "^4.3.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jsdoc": "^4.0.3",
-    "vue-jest": "^3.0.7"
+    "jsdoc": "^4.0.3"
   }
 }

@@ -13,7 +13,8 @@ jobs:
         with:
           node-version: '14'
       - name: "Install dependencies" 
-        run: ./install.sh
+        working-directory: ./client
+        run: npm ci
       - name: "Test client"
         working-directory: ./client
         run: npm run test:unit

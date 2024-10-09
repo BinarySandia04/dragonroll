@@ -4,7 +4,6 @@
   "description": "Vtt",
   "main": "prebuild.js",
   "scripts": {
-    "test:unit": "jest",
     "generate-docs": "npx jsdoc -c jsdoc.json"
   },
   "author": "Aran Roig",

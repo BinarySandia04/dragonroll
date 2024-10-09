@@ -29,8 +29,8 @@ jobs:
         with:
           node-version: '22'
       - name: "Install dependencies" 
-        working-directory: ./server
+        working-directory: ./backend
         run: npm ci
       - name: "Test server"
-        working-directory: ./server
+        working-directory: ./backend
         run: npm run test

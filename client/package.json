@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test:unit": "jest",
+    "test:unit": "npx jest",
     "dev": "vite --port 3000 --host",
     "build": "vite build",
     "preview": "vite preview",

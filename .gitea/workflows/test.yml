@@ -16,4 +16,4 @@ jobs:
         run: ./install.sh
       - name: "Test client"
         working-directory: ./client
-        run: npm test:unit
+        run: npm run test:unit

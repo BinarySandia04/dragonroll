@@ -9,11 +9,15 @@ function Main(Api){
     dndModule.description = "Dungeons & Dragons Fifth edition game system support";
     dndModule.version = "0.1";
     dndModule.color = "#e92026";
-    dndModule.icon = "icon.png"
+    dndModule.icon = "icon.png";
 
-    Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
-    Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
-    Api.windows.registerWindow('create_item_promptç', Api.createView('CreateItemPrompt'));
+    dndModule.setCharacterSheet(Api.createView('CharacterSheet'));
+    dndModule.setItemSheet(Api.createView('ItemSheet'));
+    dndModule.setItemPrompt(Api.createView('CreateItemPrompt'));
+    
+    // Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
+    // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
+    // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     Api.registerModule(dndModule);
 }

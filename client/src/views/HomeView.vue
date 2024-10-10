@@ -20,6 +20,7 @@ import TooltipManager from '@/views/managers/TooltipManager.vue';
 import ContextMenuManager from '@/views/managers/ContextMenuManager.vue';
 
 import { useRoute } from 'vue-router'
+import Background from './managers/Background.vue';
 
 LoadUser();
 
@@ -80,6 +81,7 @@ const route = useRoute()
   <TooltipManager></TooltipManager>
   <ContextMenuManager></ContextMenuManager>
   <WindowManager></WindowManager>
+  <Background></Background>
 </template>
 
 

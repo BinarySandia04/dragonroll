@@ -4,5 +4,11 @@
     },
     "howtoread": {
         "title": "How to read this documentation"
+    },
+    "vdragonviews": {
+        "title": "Using Dragonroll views"
+    },
+    "window": {
+        "title": "Creating a window"
     }
 }

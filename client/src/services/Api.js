@@ -32,7 +32,7 @@ class ClientApi {
      * @returns {ClientView} a new ClientView corresponding to the view
      */
     createView(path){
-        return new ClientView(path);
+        return new ClientView(this.#_plugin, path);
     }
 
     /**
@@ -41,7 +41,7 @@ class ClientApi {
      * @returns {ClientModule}
      */
     createModule(id){
-        return new ClientModule(id);
+        return new ClientModule(this.#_plugin, id);
     }
 
     /**
@@ -88,6 +88,10 @@ class ClientWindows {
     registerWindow(name, view){
         _Windows.InjectWindow(`${this.#_plugin}/${name}`, this.#_plugin, view.path)
     }
+
+    get _plugin(){
+        return this.#_plugin;
+    }
 }
 
 /**
@@ -95,10 +99,11 @@ class ClientWindows {
  * @hideconstructor
  */
 class ClientView {
-
+    #_plugin;
     #_path;
 
-    constructor(path){
+    constructor(plugin, path){
+        this.#_plugin = plugin;
         this.#_path = path;
     }
 
@@ -108,12 +113,17 @@ class ClientView {
     get path(){
         return this.#_path;
     }
+
+    get _plugin(){
+        return this.#_plugin;
+    }
 }
 
 /**
  * @hideconstructor
  */
 class ClientModule {
+    #_plugin;
     #_id;
     #_title;
     #_description;
@@ -121,7 +131,14 @@ class ClientModule {
     #_color;
     #_icon;
 
-    constructor(id){ this.#_id = id; }
+    #_character_sheet;
+    #_item_sheet;
+    #_item_prompt;
+
+    constructor(plugin, id){
+        this.#_plugin = plugin;
+        this.#_id = id;
+    }
 
     /**
      * The title of the module
@@ -154,11 +171,51 @@ class ClientModule {
     set icon(icon){ this.#_icon = icon; }
 
     /**
+     * 
+     * @param {ClientView} window 
+     */
+    setCharacterSheet(window){
+        this.#_character_sheet = window;
+    }
+
+    /**
+     * 
+     * @param {ClientView} window 
+     */
+    setItemSheet(window){
+        this.#_item_sheet = window;
+    }
+
+    /**
+     * 
+     * @param {ClientView} window 
+     */
+    setItemPrompt(window){
+        this.#_item_prompt = window;
+    }
+
+    /**
      * Gets the module info in a json format
      * @returns {Object}
      */
     get info(){
-        return {id: this.#_id, title: this.#_title, description: this.#_description, version: this.#_version, color: this.#_color, icon: this.#_icon}
+        return {
+            id: this.#_id,
+            title: this.#_title,
+            description: this.#_description,
+            version: this.#_version,
+            color: this.#_color,
+            icon: this.#_icon,
+            windows: {
+                character_sheet: this.#_character_sheet,
+                item_sheet: this.#_item_sheet,
+                create_item_prompt: this.#_item_prompt,
+            }
+        }
+    }
+
+    get _plugin(){
+        return this.#_plugin;
     }
 }
 

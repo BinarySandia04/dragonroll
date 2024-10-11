@@ -1,4 +1,6 @@
 // === colors ===
+@import '~prismjs/themes/prism-dark.css';
+
 :root {
     // accent colors
     --vp-c-accent: #E13F65;
@@ -87,7 +89,7 @@
     --vp-c-accent-soft: rgba(185, 64, 16, 0.16);
   
     // background colors
-    --vp-c-bg: #1b1b1f;
+    --vp-c-bg: #181818;
     --vp-c-bg-alt: #161618;
     --vp-c-bg-elv: #202127;
   

@@ -1,6 +1,11 @@
+import { FetchData, InitData } from "./data";
 
 // Entrypoint
-function Main(Api){
+let Api;
+
+function Main(api){
+    Api = api
+
     console.log("Hello World!");
 
     let dndModule = Api.createModule('dnd-5e');
@@ -53,7 +58,13 @@ function Main(Api){
     // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
+    dndModule.init = () => {
+        console.log("INIT")
+        InitData();
+        FetchData();
+    }
+
     Api.registerModule(dndModule);
 }
 
-export { Main };
+export { Main, Api };

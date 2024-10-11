@@ -1,17 +1,17 @@
 import { ref } from "vue";
-import { FetchData, InitData } from "./Data";
+import { GetCampaignModule } from "./Campaign";
 
 const inGameRef = ref(false);
 let InGameRef = () => inGameRef;
 
 function LaunchGame(){
     inGameRef.value = true;
-    InitData();
-    FetchData();
+    GetCampaignModule().init();
 }
 
 function ExitGame(){
     inGameRef.value = false;
+    GetCampaignModule().exit();
 }
 
 export {

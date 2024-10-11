@@ -1,14 +1,16 @@
+import { Api } from './main.js'
+
 import Server from '@/services/Server'
 import { reactive } from 'vue';
 
-import { GetCampaign } from "./Dragonroll";
-import { socket } from './Socket';
+import { GetCampaign } from "@/services/Dragonroll";
+import { socket } from '@/services/Socket';
 
 let data = reactive({});
 
 function InitData(){
     data.value = {
-        concepts: [],
+        concepts: []
     };
 }
 
@@ -21,7 +23,6 @@ function FetchConcepts(){
 function FetchData(){
     FetchConcepts();
 }
-
 
 socket.on('update-concepts', () => {
     FetchConcepts();

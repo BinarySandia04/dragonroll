@@ -2,18 +2,20 @@
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 import Server from '@/services/Server';
 
+import { GetConcept } from './../data.js';
+
 import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, CreateWindow, SetMinSize, SetResizable } from '@/services/Windows';
 import IconSelector from '@/views/partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/ContextMenu';
 import { GetCampaign } from '@/services/Dragonroll';
-import { GetConcept } from '@/services/Data';
 import Tabs from '@/views/partials/Tabs.vue';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 import Tags from '@/views/partials/Tags.vue';
 import NumberInput from '@/views/partials/NumberInput.vue';
 const props = defineProps(['data']);
 const data = props.data;
+
 
 const handle = ref(null);
 const item_type = ref("");

@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { AddContextMenu } from '@/services/ContextMenu';
 import { AddTooltip } from '@/services/Tooltip';
-import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+import { marked } from "marked";
 
 const props = defineProps(['element', 'context', 'tooltip', 'icon']);
 

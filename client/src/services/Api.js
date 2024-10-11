@@ -143,6 +143,8 @@ class ClientModule {
     #_color;
     #_icon;
     #_buttons;
+    #_init;
+    #_exit;
 
     #_character_sheet;
     #_item_sheet;
@@ -182,6 +184,10 @@ class ClientModule {
      * Sets the icon for the module. It must be placed inside the public folder of the plugin
      */
     set icon(icon){ this.#_icon = icon; }
+
+    set init(init){ this.#_init = init; }
+
+    set exit(exit){ this.#_exit = exit; }
 
     /**
      * 
@@ -228,6 +234,8 @@ class ClientModule {
                 item_sheet: this.#_item_sheet,
                 create_item_prompt: this.#_item_prompt,
             },
+            init: this.#_init,
+            exit: () => {},
             buttons: this.#_buttons
         }
     }

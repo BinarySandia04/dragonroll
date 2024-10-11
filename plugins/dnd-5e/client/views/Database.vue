@@ -4,12 +4,11 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref, shallowRef, watch } from 'vue';
 import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
 import ConceptList from '@/views/partials/ConceptList.vue';
-import { FetchConcepts, GetConcepts } from '@/services/Data';
 import Tabs from '@/views/partials/Tabs.vue';
 import { GetCampaignModuleName } from '@/services/Campaign';
 import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 
-import './../main.js'
+import { FetchConcepts, GetConcepts } from './../data.js'
 
 const handle = ref(null);
 

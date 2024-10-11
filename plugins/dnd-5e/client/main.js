@@ -11,9 +11,43 @@ function Main(Api){
     dndModule.color = "#e92026";
     dndModule.icon = "icon.png";
 
+    let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
+    let actorsWindow = Api.registerWindow('actors', Api.createView('Actors'));
+
+    /*
+    let characterSheetWindow = Api.registerWindow('character_sheet', Api.createView('CharacterSheet'));
+    let itemSheetWindow = Api.registerWindow('item_sheet', Api.createView('ItemSheet'));
+    let createItemPromptWindow = Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
+
     dndModule.setCharacterSheet(Api.createView('CharacterSheet'));
     dndModule.setItemSheet(Api.createView('ItemSheet'));
     dndModule.setItemPrompt(Api.createView('CreateItemPrompt'));
+    */
+
+    dndModule.setButtons({
+        right: [
+            {
+                id: 'database-button',
+                icon: '/icons/iconoir/regular/bookmark-book.svg',
+                action: () => {
+                    Api.createWindow(databaseWindow, {
+                        title: "Database",
+                        id: databaseWindow,
+                        close: () => Api.clearWindow(databaseWindow)
+                    });
+                }
+            }, {
+                id: 'group-button',
+                icon: '/icons/iconoir/regular/group.svg',
+                action: () => {
+                    Api.createWindow(actorsWindow, {
+                        title: "Actors",
+                        id: actorsWindow,
+                        close: () => Api.clearWindow(actorsWindow)
+                    });
+                }
+            }]
+    });
     
     // Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
     // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));

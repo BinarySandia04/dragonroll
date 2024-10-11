@@ -18,8 +18,6 @@ let id = data.id;
 const elements = shallowRef([]);
 
 // SHOULD MOVE!!!
-
-
 onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 700, height: 800});
@@ -36,7 +34,6 @@ onMounted(() => {
 function OpenCreateItemPrompt(){
     CreateWindow(`${GetCampaignModuleName()}/create_item_prompt`, {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
 }
-
 
 function OpenConcept(element){
     CreateWindow(`${GetCampaignModuleName()}/item_sheet`, {

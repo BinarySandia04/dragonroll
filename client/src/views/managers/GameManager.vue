@@ -6,10 +6,13 @@ import { AddSound } from '../../services/Sound';
 import TileMap from './TileMap.vue';
 import { GetCampaign, GetClient } from '../../services/Dragonroll';
 import { ClearAll, ClearWindow, CreateWindow } from '../../services/Windows';
+import { GetCampaignModule, GetCampaignModuleName } from '../../services/Campaign';
 
 const game = ref(null);
 const in_game = InGameRef();
 const is_dm = ref(false);
+
+const rightModuleButtons = ref([]);
 
 function OpenCampaignPreview(){
     CreateWindow('campaign_preview', {
@@ -61,6 +64,9 @@ watch(in_game, () => {
     if(in_game.value){
         // Check if we are dm
         is_dm.value = GetClient().is_dm;
+
+        console.log("Can we get the module here?");
+        rightModuleButtons.value = GetCampaignModule().buttons.right;
     }
 });
 
@@ -86,9 +92,12 @@ watch(in_game, () => {
         </div>
 
         <div class="horizontal-button">
-            <IconButton icon="/icons/iconoir/regular/group.svg" :action="OpenCharactersWindow"></IconButton>
-            <IconButton icon="/icons/iconoir/regular/bookmark-book.svg" :action="OpenDatabaseWindow"></IconButton>
+            <IconButton v-for="button in rightModuleButtons" :action="button.action" :icon="button.icon" :key="button.id"></IconButton>
             <IconButton icon="/icons/iconoir/regular/chat-bubble.svg" :action="OpenChat"></IconButton>
+            <!--
+                <IconButton icon="/icons/iconoir/regular/group.svg" :action="OpenCharactersWindow"></IconButton>
+                <IconButton icon="/icons/iconoir/regular/bookmark-book.svg" :action="OpenDatabaseWindow"></IconButton>
+            -->
         </div>
 
         <!-- Tilemap -->

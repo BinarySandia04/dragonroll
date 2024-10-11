@@ -52,6 +52,25 @@ class ClientApi {
         _Modules.CreateModule(module);
     }
 
+        /**
+     * Registers a new window for the given view
+     * @param {string} name 
+     * @param {ClientView} view 
+     */
+    registerWindow(name, view){
+        _Windows.InjectWindow(`${this.#_plugin.package}/${name}`, this.#_plugin.package, view.path)
+        return `${this.#_plugin.package}/${name}`;
+    }
+
+    createWindow(type, data){
+        _Windows.CreateWindow(type, data);
+    }
+
+    clearWindow(id){
+        console.log(id)
+        _Windows.ClearWindow(id);
+    }
+
     /**
      * Returns the client router
      * @type {ClientRouter}
@@ -80,14 +99,7 @@ class ClientWindows {
         this.#_plugin = plugin;
     }
 
-    /**
-     * Registers a new window for the given view
-     * @param {string} name 
-     * @param {ClientView} view 
-     */
-    registerWindow(name, view){
-        _Windows.InjectWindow(`${this.#_plugin}/${name}`, this.#_plugin, view.path)
-    }
+
 
     get _plugin(){
         return this.#_plugin;
@@ -130,6 +142,7 @@ class ClientModule {
     #_version;
     #_color;
     #_icon;
+    #_buttons;
 
     #_character_sheet;
     #_item_sheet;
@@ -194,6 +207,10 @@ class ClientModule {
         this.#_item_prompt = window;
     }
 
+    setButtons(buttons){
+        this.#_buttons = buttons;
+    }
+
     /**
      * Gets the module info in a json format
      * @returns {Object}
@@ -210,7 +227,8 @@ class ClientModule {
                 character_sheet: this.#_character_sheet,
                 item_sheet: this.#_item_sheet,
                 create_item_prompt: this.#_item_prompt,
-            }
+            },
+            buttons: this.#_buttons
         }
     }
 

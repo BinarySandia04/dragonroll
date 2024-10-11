@@ -8,6 +8,7 @@ import { ClearAll, CreateWindow } from './Windows';
 
 import Server from '@/services/Server';
 import { GetCampaign } from './Dragonroll';
+import { GetModule } from './Modules';
 
 let _currentCampaign = null;
 let _currentPlayer = null;
@@ -64,6 +65,10 @@ function GetCampaignModuleName(){
     return GetCampaign().system;
 }
 
+function GetCampaignModule(){
+    return GetModule(GetCampaign().system);
+};
+
 export {
     _currentCampaign,
     _currentPlayer,
@@ -73,5 +78,6 @@ export {
     DisplayCampaign,
     UpdateCampaignData,
     GetCampaignModuleName,
+    GetCampaignModule,
     Disconnect
 }

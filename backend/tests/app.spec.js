@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const { app, server } = require('../server.js');
 const request = supertest(app);
 
-const { connectDB, disconnectDB } = require('../services/database');
+const { connectDB, disconnectDB } = require('../services/database.js');
 
 describe('API test', () => {
   beforeAll(() => {

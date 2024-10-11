@@ -17,7 +17,8 @@ client/public/plugins/
 backend/plugins/
 
 # Docs
-docs/
+documentation/docs/.vuepress/.cache
+documentation/docs/.vuepress/.temp
 
 # local env files
 .env.local

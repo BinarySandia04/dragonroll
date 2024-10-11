@@ -25,7 +25,6 @@ import WelcomeWindow from '@/views/windows/WelcomeWindow.vue'
 import CompendiumWindow from '@/views/windows/CompendiumWindow.vue'
 import BookAnvilWindow from '@/views/windows/BookAnvilWindow.vue'
 import IconSelectorWindow from '@/views/windows/selectors/IconSelectorWindow.vue'
-import DatabaseWindow from '@/views/windows/game/DatabaseWindow.vue'
 import AccountManagementWindow from '@/views/windows/settings/AccountManagementWindow.vue'
 import PluginManagementWindow from '@/views/windows/settings/PluginManagementWindow.vue'
 import PluginWindow from '../views/windows/settings/PluginWindow.vue';
@@ -61,7 +60,6 @@ let windowMap = {
     compendium_window: CompendiumWindow,
     book_anvil_window: BookAnvilWindow,
     icon_selector: IconSelectorWindow,
-    database: DatabaseWindow,
     plugin_management: PluginManagementWindow,
     account_management: AccountManagementWindow,
     plugin_window: PluginWindow
@@ -197,11 +195,6 @@ const defValues = {
     'icon_selector': {
         id: 'icon-selector',
         title: "Select an Icon",
-    },
-    'database': {
-        id: 'database',
-        title: "database.title",
-        close: () => ClearWindow('database')
     }
 }
 

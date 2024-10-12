@@ -18,7 +18,7 @@ export default defineUserConfig({
         text: "Guides",
         prefix: "/guide/",
         link: "/guide/",
-        children: ['/get-started']
+        children: ['/get-started', '/firstplugin']
       },
 
       {

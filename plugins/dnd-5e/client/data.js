@@ -4,7 +4,6 @@ import Server from '@/services/Server'
 import { reactive } from 'vue';
 
 import { GetCampaign } from "@/services/Dragonroll";
-import { socket } from '@/services/Socket';
 
 let data = reactive({});
 
@@ -24,9 +23,15 @@ function FetchData(){
     FetchConcepts();
 }
 
+Api.socket.on('update-concepts', () => {
+    FetchConcepts();
+});
+
+/*
 socket.on('update-concepts', () => {
     FetchConcepts();
 });
+*/
 
 let GetConcepts = () => data.value.concepts;
 let GetConcept = (id) => Server().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + id)

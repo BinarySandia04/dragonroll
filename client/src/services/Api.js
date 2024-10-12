@@ -7,6 +7,7 @@ import * as _Sound from "@/services/Sound"
 import * as _Tooltip from "@/services/Tooltip"
 import * as _Windows from "@/services/Windows"
 import Server from '@/services/Server';
+import { socket } from '@/services/Socket';
 
 /**
  * Class for managing the client api
@@ -16,6 +17,7 @@ class ClientApi {
     #_plugin
     #_router
     #_windows
+    #_socket
 
     /**
      * @param {*} plugin 
@@ -24,6 +26,7 @@ class ClientApi {
         this.#_plugin = plugin
         this.#_router = new ClientRouter(plugin.package)
         this.#_windows = new ClientWindows(plugin.package)
+        this.#_socket = new ClientSocket(plugin.package)
     }
 
     /**
@@ -85,6 +88,10 @@ class ClientApi {
      */
     get windows(){
         return this.#_windows;
+    }
+
+    get socket(){
+        return this.#_socket;
     }
 }
 
@@ -242,6 +249,18 @@ class ClientModule {
 
     get _plugin(){
         return this.#_plugin;
+    }
+}
+
+class ClientSocket {
+    #_package
+
+    constructor(plugin){
+        this.#_package = plugin;
+    }
+
+    on(msg, callback){
+        socket.on(`${this.#_package}/${msg}`, callback);
     }
 }
 

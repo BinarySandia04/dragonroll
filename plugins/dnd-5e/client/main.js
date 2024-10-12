@@ -59,7 +59,6 @@ function Main(api){
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     dndModule.init = () => {
-        console.log("INIT")
         InitData();
         FetchData();
     }

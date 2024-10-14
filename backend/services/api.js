@@ -133,6 +133,7 @@ class BackendModule {
         return this.#_router;
     }
 
+    // Creates a model for the Module
     createModel(name, schema){
         return new BackendModel(name, `${this.#_plugin.package}/${this.#_id}`, schema);
     }

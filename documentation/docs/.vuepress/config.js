@@ -30,18 +30,18 @@ export default defineUserConfig({
             text: "Plugin",
             prefix: "plugin/",
             collapsable: true,
-            children: ['/client/test']
+            children: ['/plugin/plugin.json']
           },
           {
             text: "Client API",
             prefix: "client/",
             collapsable: true,
-            children: ['/client/test']
+            children: ['/client/api']
           },
           {
             text: "Server API",
             prefix: "server/",
-            children: ['/server/test']
+            children: ['/server/api']
           }
         ]
       }

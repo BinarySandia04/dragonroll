@@ -65,7 +65,7 @@ class ClientApi {
         return `${this.#_plugin.package}/${name}`;
     }
 
-    createWindow(type, data){
+    createWindow(type, data = {id: type}){
         _Windows.CreateWindow(type, data);
     }
 

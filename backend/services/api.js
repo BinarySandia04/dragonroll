@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const express = require('express');
+const router = express.Router();
+
 /**
  * Class for managing the backend api
  * @hideconstructor
@@ -15,7 +18,7 @@ class BackendApi {
      */
     constructor(plugin){
         this.#_plugin = plugin;
-        this.#_router = new BackendRouter(plugin.package);
+        this.#_router = new BackendRouter(`/plugin/${plugin.package}`);
     }
 
     /**
@@ -24,6 +27,10 @@ class BackendApi {
      */
     get router(){
         return this.#_router;
+    }
+
+    get _router(){
+        return router;
     }
 
     /**
@@ -40,7 +47,11 @@ class BackendApi {
      * });
      */
     createModel(name, schema){
-        return new BackendModel(name, this.#_plugin, schema);
+        return new BackendModel(name, this.#_plugin.package, schema);
+    }
+
+    createModule(id){
+        return new BackendModule(this.#_plugin, id);
     }
 };
 
@@ -59,32 +70,32 @@ class BackendRouter {
      * Hola
      * @param {String} route
      */
-    get(route){
-
+    get(route, callback){
+        router.get(this.#_root + route, callback);
     }
 
     /**
      * @param {String} route
      * 
      */
-    post(route){
-
+    post(route, callback){
+        router.post(this.#_root + route, callback);
     }
 
     /**
      * @param {String} route
      * 
      */
-    put(route){
-
+    put(route, callback){
+        router.put(this.#_root + route, callback);
     }
 
     /**
      * @param {String} route
      * 
      */
-    delete(route){
-
+    delete(route, callback){
+        router.delete(this.#_root + route, callback);
     }
 
     /**
@@ -103,20 +114,41 @@ class BackendRouter {
     }
 }
 
+class BackendModule {
+    #_plugin;
+    #_id;
+    #_router;
+    
+    constructor(plugin, id){
+        this.#_plugin = plugin;
+        this.#_id = id;
+        this.#_router = new BackendRouter(`/module/${plugin.package}/${id}`)
+    }
+
+    get router(){
+        return this.#_router;
+    }
+
+    createModel(name, schema){
+        return new BackendModel(name, `${this.#_plugin.package}/${this.#_id}`, schema);
+    }
+}
+
 /**
  * @hideconstructor
  */
 class BackendModel {
     #_name;
-    #_plugin;
+    #_prefix;
     #_schema;
+    
     #_mongoSchema;
 
-    constructor(name, plugin, schema){
+    constructor(name, prefix, schema){
         this.#_name = name;
-        this.#_plugin = plugin;
-        this.#_schema = schema;
-        this.#_mongoSchema = mongoose.model(`${plugin}/${name}`, new Schema(schema));
+        this.#_prefix = prefix;
+        this.#_schema = ParseSchema(schema);
+        this.#_mongoSchema = mongoose.model(`${prefix}/${name}`, new Schema(schema));
     }
 
     /**
@@ -176,18 +208,26 @@ class BackendModel {
     }
 };
 
-/**
- * @hideconstructor
- */
-class BackendModelDocument {
+function ParseSchema(schema){
+    const typeTable = {
+        String: String,
+        Object: Object,
+        ObjectId: mongoose.Types.ObjectId,
+        Boolean: Boolean,
+        Date: Date,
+    };
+    
+    let newSchema = structuredClone(schema);
 
-
-    save(){
-
+    // Codi molt guai
+    for(const key in newSchema){
+        if(Array.isArray(newSchema[key].type))
+            newSchema[key][0].type = [ typeTable[newSchema[key][0].type] ];
+        else
+            newSchema[key].type = typeTable[newSchema[key].type];
     }
+    return newSchema;
 }
-
-
 
 module.exports = {
     BackendApi

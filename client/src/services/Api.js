@@ -24,7 +24,7 @@ class ClientApi {
      */
     constructor(plugin){
         this.#_plugin = plugin
-        this.#_router = new ClientRouter(plugin.package)
+        this.#_router = new ClientRouter(`/plugin/${plugin.package}`)
         this.#_windows = new ClientWindows(plugin.package)
         this.#_socket = new ClientSocket(plugin.package)
     }
@@ -144,6 +144,8 @@ class ClientView {
 class ClientModule {
     #_plugin;
     #_id;
+    #_router;
+
     #_title;
     #_description;
     #_version;
@@ -153,13 +155,12 @@ class ClientModule {
     #_init;
     #_exit;
 
-    #_character_sheet;
-    #_item_sheet;
-    #_item_prompt;
+    
 
     constructor(plugin, id){
         this.#_plugin = plugin;
         this.#_id = id;
+        this.#_router = new ClientRouter(`/module/${plugin.package}/${id}`);
     }
 
     /**
@@ -196,32 +197,12 @@ class ClientModule {
 
     set exit(exit){ this.#_exit = exit; }
 
-    /**
-     * 
-     * @param {ClientView} window 
-     */
-    setCharacterSheet(window){
-        this.#_character_sheet = window;
-    }
-
-    /**
-     * 
-     * @param {ClientView} window 
-     */
-    setItemSheet(window){
-        this.#_item_sheet = window;
-    }
-
-    /**
-     * 
-     * @param {ClientView} window 
-     */
-    setItemPrompt(window){
-        this.#_item_prompt = window;
-    }
-
     setButtons(buttons){
         this.#_buttons = buttons;
+    }
+
+    get router(){
+        return this.#_router;
     }
 
     /**
@@ -236,11 +217,6 @@ class ClientModule {
             version: this.#_version,
             color: this.#_color,
             icon: this.#_icon,
-            windows: {
-                character_sheet: this.#_character_sheet,
-                item_sheet: this.#_item_sheet,
-                create_item_prompt: this.#_item_prompt,
-            },
             init: this.#_init,
             exit: () => {},
             buttons: this.#_buttons

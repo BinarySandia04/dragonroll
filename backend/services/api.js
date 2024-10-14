@@ -11,14 +11,16 @@ const router = express.Router();
 class BackendApi {
     #_plugin;
     #_router;
+    #_expressRouter;
     
     /**
      * This object is already created for you
      * @param {plugin} Plugin instance
      */
-    constructor(plugin){
+    constructor(plugin, router){
         this.#_plugin = plugin;
-        this.#_router = new BackendRouter(`/plugin/${plugin.package}`);
+        this.#_expressRouter = router;
+        this.#_router = new BackendRouter(`plugin/${plugin.package}`, this.#_expressRouter);
     }
 
     /**
@@ -51,7 +53,7 @@ class BackendApi {
     }
 
     createModule(id){
-        return new BackendModule(this.#_plugin, id);
+        return new BackendModule(this.#_plugin, id, this.#_expressRouter);
     }
 };
 
@@ -61,9 +63,11 @@ class BackendApi {
  */
 class BackendRouter {
     #_root;
+    #_expressRouter
 
-    constructor(path){
-        this.#_root = `plugins/${path}`;
+    constructor(path, expressRouter){
+        this.#_root = `/${path}`;
+        this.#_expressRouter = expressRouter;
     }
 
     /**
@@ -71,7 +75,7 @@ class BackendRouter {
      * @param {String} route
      */
     get(route, callback){
-        router.get(this.#_root + route, callback);
+        this.#_expressRouter.get(this.#_root + route, callback);
     }
 
     /**
@@ -79,7 +83,7 @@ class BackendRouter {
      * 
      */
     post(route, callback){
-        router.post(this.#_root + route, callback);
+        this.#_expressRouter.post(this.#_root + route, callback);
     }
 
     /**
@@ -87,7 +91,7 @@ class BackendRouter {
      * 
      */
     put(route, callback){
-        router.put(this.#_root + route, callback);
+        this.#_expressRouter.put(this.#_root + route, callback);
     }
 
     /**
@@ -95,7 +99,7 @@ class BackendRouter {
      * 
      */
     delete(route, callback){
-        router.delete(this.#_root + route, callback);
+        this.#_expressRouter.delete(this.#_root + route, callback);
     }
 
     /**
@@ -119,10 +123,10 @@ class BackendModule {
     #_id;
     #_router;
     
-    constructor(plugin, id){
+    constructor(plugin, id, expressRouter){
         this.#_plugin = plugin;
         this.#_id = id;
-        this.#_router = new BackendRouter(`/module/${plugin.package}/${id}`)
+        this.#_router = new BackendRouter(`module/${plugin.package}/${id}`, expressRouter)
     }
 
     get router(){

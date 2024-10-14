@@ -2,7 +2,9 @@ const fs = require('fs');
 const path = require('path')
 const BackendApi = require('./api').BackendApi
 const express = require('express');
-const router = express.Router();
+const router = express.Router({
+    mergeParams: true
+});
 
 const basePath = path.resolve(__dirname, '../')
 console.log(basePath)
@@ -27,12 +29,9 @@ function init(){
 
     // Execute main
     Object.keys(plugins).forEach(k => {
-        let pluginApi = new BackendApi(plugins[k].info);
+        let pluginApi = new BackendApi(plugins[k].info, router);
         plugins[k].payload.Main(pluginApi);
-        router.use(pluginApi._router);
     });
-
-
 
     return {
         router

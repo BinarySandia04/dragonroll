@@ -26,8 +26,11 @@ LoadUser();
 
 SetEmitter(emitter);
 
+
 async function DisplayFirstWindow(){
   if(GetUser()){
+
+    Server().get('/plugins/module/dnd-5e/dnd-5e/testing').then(res => {})
     CreateWindow('main_menu');
     return;
   }
@@ -47,6 +50,7 @@ async function DisplayFirstWindow(){
       }
       DisplayToast("red", t('register-account.setup.invalid-link'));
       CreateWindow('login');
+
     });
   } else {
     if(await HasAdmin()){

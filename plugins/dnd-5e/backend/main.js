@@ -11,16 +11,26 @@ function Main(api){
     let dndModule = Api.createModule('dnd-5e');
 
     let itemModel = Api.createModel("item", {
-        name: { type: "String", required: true, default: "New Concept"},
-        type: { type: "String", required: true, default: "Concept" },
+        name: { type: "String", required: true, default: "New item"},
+        type: { type: "String", required: true, default: "Item" },
         info: { type: "Object" }, // For preview only
         data: { type: "Object" }, // Advanced item
         book: { type: "ObjectId", ref: "Book"},
         campaign: { type: "ObjectId", ref: "Campaign"},
     });
 
-    dndModule.router.get('/test', (req, res) => {
+    dndModule.router.get('/testing', (req, res) => {
+        /*
+        let item = itemModel.create({
+            name: "Test item!",
+            type: "The test item"
+        })
+        */
+
         console.log("FUNCIONA!!!!");
+        res.json({
+            status: "ok"
+        })
     })
 
     // Api.router.createModelRoutes(itemModel, 'item');

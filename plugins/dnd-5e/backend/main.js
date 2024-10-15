@@ -33,6 +33,7 @@ function Main(api){
         })
     })
 
+    Api.socket.on("test", () => console.log("test"));
     // Api.router.createModelRoutes(itemModel, 'item');
 }
 

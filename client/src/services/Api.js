@@ -152,22 +152,17 @@ class ClientModule {
     #_id;
     #_router;
 
-    #_title;
-    #_description;
-    #_version;
-    #_color;
-    #_icon;
     #_buttons;
     #_previewData;
     #_init;
+    #_socket;
     #_exit;
-
-    
 
     constructor(plugin, id){
         this.#_plugin = plugin;
         this.#_id = id;
         this.#_router = new ClientRouter(`/module/${plugin.package}/${id}`);
+        this.#_socket = new ClientSocket(`${plugin.package}/${id}`)
     }
 
     setData(data){
@@ -186,6 +181,10 @@ class ClientModule {
         return this.#_router;
     }
 
+    get socket(){
+        return this.#_socket;
+    }
+
     /**
      * Gets the module info in a json format
      * @returns {Object}
@@ -195,7 +194,7 @@ class ClientModule {
             id: this.#_id,
             previewData: this.#_previewData,
             init: this.#_init,
-            exit: () => {},
+            exit: this.#_exit,
             buttons: this.#_buttons
         }
     }
@@ -206,14 +205,14 @@ class ClientModule {
 }
 
 class ClientSocket {
-    #_package
+    #_prefix
 
-    constructor(plugin){
-        this.#_package = plugin;
+    constructor(prefix){
+        this.#_prefix = prefix;
     }
 
     on(msg, callback){
-        socket.on(`${this.#_package}/${msg}`, callback);
+        socket.on(`${this.#_prefix}/${msg}`, callback);
     }
 }
 
@@ -243,80 +242,20 @@ class ClientRouter {
         this.#_path = path;
     }
 
-    /**
-     * Sends a get request to an specified route of a plugin, and then executes the routerCallback with the response
-     * @param {String} route
-     * @param {routerCallback} callback
-     */
-    get(route, callback){
-        Server().get(`${path}/${route}`).then(callback).catch(err => console.log(err));
+    get(route){
+        return Server().get(`${path}/${route}`);
     }
 
-    /**
-     * Sends a post request to specified plugin route
-     * @param {String} route
-     * @param {Object} data
-     * @param {routerCallback} callback
-     */
-    post(route, data, callback){
-        Server().post(`${path}/${route}`, data).then(callback).catch(err => console.log(err));
+    post(route, data = {}){
+        return Server().post(`${path}/${route}`, data);
     }
 
-    /**
-     * Sends a put request to specified plugin route
-     * @param {String} route
-     * @param {Object} data
-     * @param {routerCallback} callback
-     */
-    put(route, data, callback){
-        Server().put(`${path}/${route}`, data).then(callback).catch(err => console.log(err));
+    put(route, data = {}){
+        return Server().put(`${path}/${route}`, data);
     }
 
-    /**
-     * Sends a delete request to specified plugin route
-     * @param {String} route
-     * @param {routerCallback} callback
-     */
-    delete(route, callback){
-        Server().delete(`${route}`).then(callback).catch(err => console.log(err));
-    }
-
-    /**
-     * Sends a get request to an specified route
-     * @param {String} route
-     * @param {routerCallback} callback
-     */
-    baseGet(route, callback){
-        Server().get(`${route}`).then(callback).catch(err => console.log(err));
-    }
-
-    /**
-     * Sends a post request to specified route
-     * @param {String} route
-     * @param {Object} data
-     * @param {routerCallback} callback
-     */
-    basePost(route, data, callback){
-        Server().post(`${route}`, data).then(callback).catch(err => console.log(err));
-    }
-
-    /**
-     * Sends a put request to specified route
-     * @param {String} route
-     * @param {Object} data
-     * @param {routerCallback} callback
-     */
-    basePut(route, data, callback){
-        Server().put(`${route}`, data).then(callback).catch(err => console.log(err));
-    }
-
-    /**
-     * Sends a delete request to specified route
-     * @param {String} route
-     * @param {routerCallback} callback
-     */
-    baseDelete(route, callback){
-        Server().delete(`${route}`).then(callback).catch(err => console.log(err));
+    delete(route){
+        return Server().delete(`${route}`);
     }
 }
 

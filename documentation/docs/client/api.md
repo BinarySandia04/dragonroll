@@ -214,29 +214,124 @@ dndModule.setData({
 
 ### onInit
 
+Sets a callback when the module is instantiated, i.e, when the client enters a campaign using that module
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``callback`` | Function() | yes | The function to call when the module is instantiated |
+
+
 ### onExit
+
+Sets a callback when the module instance is destroyed, i.e, when the user leaves a game with a campaign using that module
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``callback`` | Function() | yes | The function to call when the module is destroyed |
 
 ### setButtons
 
 ### router
 
+Gets the [ClientRouter](#clientrouter) associated with that module. The paths of this router can be easily catched by the same BackendRouter associated with the module with the same id.
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientRouter](#clientrouter) | The router associated with the module |
+
+### socket
+
+Gets the [ClientSocket](#clientsocket) object associated with the Module.
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientSocket](#clientsocket) | The module socket |
+
+### baseSocket
+
+Gets the [ClientSocket](#clientsocket) pointing to the root of the application. Use it only for calling internal socket.io events of Dragonroll.
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientSocket](#clientsocket) | The socket object |
+
 ## ClientRouter
+
+The `ClientRouter` class is used to make http requests between the Dragonroll client and the Dragonroll backend. To make the routing process easier, Dragonroll provides different instances of the `ClientRouter` class depending on the context. For example, you can have a ClientRouter for registering routes for an specific module inside your plugin, and another for registering more general routes that you may want to create within the backend part of your plugin. It is also possible to make http requests 
+to the internal Dragonroll routes using the `baseRouter` 
 
 ### get
 
+#### Parameters
+
+Creates a `GET` request to the backend
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``path`` | String | yes | The path to the route to make the HTTP request |
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| Callback\<Response\> | A callback with data about the result of the request |
+
 ### post
+
+#### Parameters
+
+Creates a `POST` request to the backend
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``path`` | String | yes | The path to the route to make the HTTP request |
+| ``data`` | Object | no | The body of the request |
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| Callback\<Response\> | A callback with data about the result of the request |
 
 ### put
 
+#### Parameters
+
+Creates a `PUT` request to the backend
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``path`` | String | yes | The path to the route to make the HTTP request |
+| ``data`` | Object | no | The body of the request |
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| Callback\<Response\> | A callback with data about the result of the request |
+
 ### delete
 
-### baseGet
 
-### basePost
+#### Parameters
 
-### basePut
+Creates a `GET` request to the backend
 
-### baseDelete
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``path`` | String | yes | The path to the route to make the HTTP request |
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| Callback\<Response\> | A callback with data about the result of the request |
 
 ## ClientSocket
 

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const express = require('express');
-const router = express.Router();
 
 /**
  * Class for managing the backend api
@@ -12,14 +11,18 @@ class BackendApi {
     #_plugin;
     #_router;
     #_expressRouter;
+    #_internalSocket;
+    #_socket;
     
     /**
      * This object is already created for you
      * @param {plugin} Plugin instance
      */
-    constructor(plugin, router){
+    constructor(plugin, router, internalSocket){
         this.#_plugin = plugin;
         this.#_expressRouter = router;
+        this.#_internalSocket = internalSocket;
+        this.#_socket = new BackendSocket(`plugin/${plugin.package}`, internalSocket);
         this.#_router = new BackendRouter(`plugin/${plugin.package}`, this.#_expressRouter);
     }
 
@@ -31,8 +34,12 @@ class BackendApi {
         return this.#_router;
     }
 
-    get _router(){
-        return router;
+    get socket(){
+        return this.#_socket;
+    }
+
+    get _socket(){
+        return internalSocket;
     }
 
     /**
@@ -53,7 +60,7 @@ class BackendApi {
     }
 
     createModule(id){
-        return new BackendModule(this.#_plugin, id, this.#_expressRouter);
+        return new BackendModule(this.#_plugin, id, this.#_expressRouter, this.#_internalSocket);
     }
 };
 
@@ -122,15 +129,23 @@ class BackendModule {
     #_plugin;
     #_id;
     #_router;
+    #_socket;
+    #_internalSocket;
     
-    constructor(plugin, id, expressRouter){
+    constructor(plugin, id, expressRouter, internalSocket){
         this.#_plugin = plugin;
         this.#_id = id;
+        this.#_internalSocket = internalSocket;
         this.#_router = new BackendRouter(`module/${plugin.package}/${id}`, expressRouter)
+        this.#_socket = new BackendSocket(`module/${plugin.package}/${id}`, this.#_internalSocket);
     }
 
     get router(){
         return this.#_router;
+    }
+
+    get socket(){
+        return this.#_socket;
     }
 
     // Creates a model for the Module
@@ -212,6 +227,20 @@ class BackendModel {
         return this.#_mongoSchema.updateMany(params, data);
     }
 };
+
+class BackendSocket {
+    #_prefix;
+    #_internalSocket;
+
+    constructor(prefix, internalSocket){
+        this.#_prefix = prefix;
+        this.#_internalSocket = internalSocket;
+    }
+
+    on(msg, callback){
+        this.#_internalSocket[`${this.#_prefix}/${msg}`] = callback;
+    }
+}
 
 function ParseSchema(schema){
     const typeTable = {

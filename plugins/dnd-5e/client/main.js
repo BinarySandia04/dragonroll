@@ -1,4 +1,4 @@
-import { FetchData, InitData } from "./data";
+import { FetchConcepts, FetchData, InitData } from "./data";
 
 // Entrypoint
 let Api;
@@ -29,12 +29,6 @@ function Main(api){
     let characterSheetWindow = Api.registerWindow('character_sheet', Api.createView('CharacterSheet'));
     let itemSheetWindow = Api.registerWindow('item_sheet', Api.createView('ItemSheet'));
     let createItemPromptWindow = Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
-    
-    /*
-    dndModule.setCharacterSheet(Api.createView('CharacterSheet'));
-    dndModule.setItemSheet(Api.createView('ItemSheet'));
-    dndModule.setItemPrompt(Api.createView('CreateItemPrompt'));
-    */
 
     dndModule.setButtons({
         right: [
@@ -61,6 +55,12 @@ function Main(api){
             }]
     });
     
+
+    Api.socket.on('update-concepts', () => {
+        FetchConcepts();
+    });
+
+
     // Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
     // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));

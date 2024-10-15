@@ -38,6 +38,7 @@ const io = socketIo(server, {
         origin: '*',
     }
 });
+
 socket.setIo(io);
 
 // CONNECT TO MONGODB
@@ -81,12 +82,12 @@ app.use('/concept', require('./routes/concept'))
 app.use('/admin', require('./routes/admin'))
 // GET localhost:8081/concept/list
 
-const pluginData = pluginManager.init();
-app.use('/plugins', pluginData.router);
-
 // SETUP IO
 require('./io/campaign')(socket.getIo());
 
+// INIT PLUGINS
+const pluginData = pluginManager.init();
+app.use('/plugins', pluginData.router);
 
 // DEBUG ROUTER
 function print (path, layer) {

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path')
 const BackendApi = require('./api').BackendApi
 const express = require('express');
+const { getIo } = require('../io/socket');
 const router = express.Router({
     mergeParams: true
 });
@@ -11,6 +12,7 @@ console.log(basePath)
 
 let pluginsInfo = [];
 let plugins = {};
+let internalSocket = {};
 
 function init(){
     console.log("Initializing plugins");
@@ -29,10 +31,17 @@ function init(){
 
     // Execute main
     Object.keys(plugins).forEach(k => {
-        let pluginApi = new BackendApi(plugins[k].info, router);
+        let pluginApi = new BackendApi(plugins[k].info, router, internalSocket);
         plugins[k].payload.Main(pluginApi);
     });
 
+    console.log(internalSocket);
+    getIo().on('connect', (socket) => {
+        Object.keys(internalSocket).forEach(k => {
+            socket.on(k, internalSocket[k]);
+        });
+    })
+    
     return {
         router
     }

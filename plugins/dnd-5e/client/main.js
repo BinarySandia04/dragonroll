@@ -26,9 +26,9 @@ function Main(api){
     let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
     let actorsWindow = Api.registerWindow('actors', Api.createView('Actors'));
 
-    let characterSheetWindow = Api.registerWindow('character_sheet', Api.createView('CharacterSheet'));
-    let itemSheetWindow = Api.registerWindow('item_sheet', Api.createView('ItemSheet'));
-    let createItemPromptWindow = Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
+    Api.registerWindow('character_sheet', Api.createView('CharacterSheet'));
+    Api.registerWindow('item_sheet', Api.createView('ItemSheet'));
+    Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     dndModule.setButtons({
         right: [

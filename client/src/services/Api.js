@@ -216,6 +216,17 @@ class ClientSocket {
     }
 }
 
+function ParseQuery(queryData){
+    let keys = Object.keys(queryData);
+    if(keys.length == 0) return "";
+    let res = "?";
+    for(let i = 0; i < keys.length; i++){
+        res += keys[i] + "=" + queryData[keys];
+        if(i != keys.length - 1) res += "&";
+    }
+    return res;
+}
+
 /**
  * @typedef {Object} Response
  * @property {Object} data
@@ -237,25 +248,27 @@ class ClientSocket {
  */
 class ClientRouter {
     #_path;
+    #_defParams;
 
-    constructor(path){
+    constructor(path, defParams){
         this.#_path = path;
+        this.#_defParams = defParams;
     }
 
-    get(route){
-        return Server().get(`${path}/${route}`);
+    get(route, query){
+        return Server().get(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`);
     }
 
-    post(route, data = {}){
-        return Server().post(`${path}/${route}`, data);
+    post(route, query, data = {}){
+        return Server().post(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`, data);
     }
 
-    put(route, data = {}){
-        return Server().put(`${path}/${route}`, data);
+    put(route, query, data = {}){
+        return Server().put(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`, data);
     }
 
-    delete(route){
-        return Server().delete(`${route}`);
+    delete(route, query){
+        return Server().delete(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`);
     }
 }
 

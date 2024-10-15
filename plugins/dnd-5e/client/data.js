@@ -14,6 +14,7 @@ function InitData(){
 }
 
 function FetchConcepts(){
+    console.log(Api.router)
     Server().get('/concept/list?campaign=' + GetCampaign()._id).then(response => {
         data.value.concepts = response.data.data;
     }).catch((err) => console.log(err));

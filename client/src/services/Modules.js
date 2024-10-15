@@ -19,6 +19,8 @@ let GetModules = () => modules;
 // let GetModulesToLoad = () => modulesToLoad;
 
 function GetModule(id){
+    console.log(modules);
+    console.log(modules[id])
     return modules[id];
 }
 

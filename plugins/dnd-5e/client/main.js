@@ -2,19 +2,26 @@ import { FetchData, InitData } from "./data";
 
 // Entrypoint
 let Api;
+let dndModule;
 
 function Main(api){
     Api = api
 
-    console.log("Hello World!");
+    
+    console.log("Module registered!");
+    dndModule = Api.createModule('dnd-5e');
 
-    let dndModule = Api.createModule('dnd-5e');
-
-    dndModule.title = "Dungeons & Dragons 5e";
-    dndModule.description = "Dungeons & Dragons Fifth edition game system support";
-    dndModule.version = "0.1";
-    dndModule.color = "#e92026";
-    dndModule.icon = "icon.png";
+    dndModule.setData({
+        title: "Dungeons & Dragons 5e",
+        description: "Dungeons & Dragons Fifth edition game system support",
+        version: "0.1",
+        color: "#e92026",
+        authors: [{
+            name: "Aran Roig",
+            webpage: "aranroig.com"  
+        }],
+        icon: "icon.png"
+    });
 
     let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
     let actorsWindow = Api.registerWindow('actors', Api.createView('Actors'));
@@ -58,12 +65,18 @@ function Main(api){
     // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
-    dndModule.init = () => {
+    dndModule.onInit = () => {
         InitData();
         FetchData();
     }
 
     Api.registerModule(dndModule);
+
+
 }
 
-export { Main, Api };
+export { 
+    Main,
+    Api,
+    dndModule
+};

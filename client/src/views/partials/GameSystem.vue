@@ -13,8 +13,8 @@ function Select(){
 
 onMounted(() => {
     console.log(data);
-    title.value = data.title;
-    image.value.src = `plugins/${data.id}/${data.icon}`;
+    title.value = data.previewData.title;
+    image.value.src = `plugins/${data.id}/${data.previewData.icon}`;
 })
 
 </script>

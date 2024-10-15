@@ -150,6 +150,102 @@ let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
 
 ### router
 
+Gets the router object associated with the API. It has no prefix and can make all kinds of calls to the Dragonroll backend
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientRouter](#clientrouter) | The client router |
+
+### baseRouter
+
+Gets the royter object associated with the API. It has no prefix and can make all kinds of calls to the Dragonroll backend.
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientRouter](#clientrouter) | The client router from root |
+
 ### socket
 
+Gets the socket object associated with the Plugin.
+
+#### Returns
+
+| Type | Description |
+| ---- | ----------- |
+| [ClientSocket](#clientsocket) | The client socket |
+
 ## ClientModule
+
+### setData
+
+Sets the information data displayed in Dragonroll of the current module
+
+#### Parameters
+
+This method accepts an Object type with the following properties:
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| ``title`` | String | yes | The display name of the module |
+| ``description`` | String | yes | The description of the module |
+| ``version`` | String | yes | The version of the module |
+| ``color`` | String | yes | The display color for the module |
+| ``authors`` | [Author] | no | The authors of the module |
+| ``icon`` | String | yes | The icon to be displayed with the module. Relative to the `public` folder |
+
+
+#### Example
+
+```js
+dndModule.setData({
+  title: "Dungeons & Dragons 5e",
+  description: "Dungeons & Dragons Fifth edition game system support",
+  version: "0.1",
+  color: "#e92026",
+  authors: [{
+      name: "Aran Roig",
+      webpage: "aranroig.com"  
+  }],
+  icon: "icon.png"
+});
+```
+
+### onInit
+
+### onExit
+
+### setButtons
+
+### router
+
+## ClientRouter
+
+### get
+
+### post
+
+### put
+
+### delete
+
+### baseGet
+
+### basePost
+
+### basePut
+
+### baseDelete
+
+## ClientSocket
+
+### on
+
+## ClientView
+
+### path
+
+## WindowType
+
+## WindowData

@@ -16,6 +16,7 @@ import { socket } from '@/services/Socket';
 class ClientApi {
     #_plugin
     #_router
+    #_baseRouter
     #_windows
     #_socket
 
@@ -25,6 +26,7 @@ class ClientApi {
     constructor(plugin){
         this.#_plugin = plugin
         this.#_router = new ClientRouter(`/plugin/${plugin.package}`)
+        this.#_baseRouter = new ClientRouter("")
         this.#_windows = new ClientWindows(plugin.package)
         this.#_socket = new ClientSocket(plugin.package)
     }
@@ -80,6 +82,10 @@ class ClientApi {
      */
     get router(){
         return this.#_router;
+    }
+
+    get baseRouter(){
+        return this.#_baseRouter;
     }
 
     /**
@@ -152,6 +158,7 @@ class ClientModule {
     #_color;
     #_icon;
     #_buttons;
+    #_previewData;
     #_init;
     #_exit;
 
@@ -163,39 +170,13 @@ class ClientModule {
         this.#_router = new ClientRouter(`/module/${plugin.package}/${id}`);
     }
 
-    /**
-     * The title of the module
-     * @type {string}
-     */
-    set title(title) { this.#_title = title; }
+    setData(data){
+        this.#_previewData = data;
+    }
 
-    /**
-     * The description of the module
-     * @type {string}
-     */
-    set description(description){ this.#_description = description; }
+    set onInit(init){ this.#_init = init; }
 
-    /**
-     * The version of the module
-     * @type {string}
-     */
-    set version(version){ this.#_version = version; }
-
-    /**
-     * The accent color of the module. This will be displayed for example
-     * in the background title inside the campaign preview
-     * @type {string}
-     */
-    set color(color){ this.#_color = color; }
-
-    /**
-     * Sets the icon for the module. It must be placed inside the public folder of the plugin
-     */
-    set icon(icon){ this.#_icon = icon; }
-
-    set init(init){ this.#_init = init; }
-
-    set exit(exit){ this.#_exit = exit; }
+    set onExit(exit){ this.#_exit = exit; }
 
     setButtons(buttons){
         this.#_buttons = buttons;
@@ -212,11 +193,7 @@ class ClientModule {
     get info(){
         return {
             id: this.#_id,
-            title: this.#_title,
-            description: this.#_description,
-            version: this.#_version,
-            color: this.#_color,
-            icon: this.#_icon,
+            previewData: this.#_previewData,
             init: this.#_init,
             exit: () => {},
             buttons: this.#_buttons

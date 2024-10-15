@@ -75,7 +75,7 @@ onMounted(() => {
 
     AddSound(container.value)
 
-    campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).color ? GetModule(data.campaign.system).color : "#1f1f1f";
+    campaign_title.value.style.backgroundColor = GetModule(data.campaign.system).previewData.color ? GetModule(data.campaign.system).color : "#1f1f1f";
 
     AddTooltip(copy_code_button.value, `<p>${t('campaigns.preview.copy-explain')}</p>`, {max_width: 300})
 });

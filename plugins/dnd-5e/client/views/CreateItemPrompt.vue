@@ -1,10 +1,9 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import { ClearWindow, CreateWindow } from '@/services/Windows';
-import { GetCampaignModuleName } from '../../../../client/src/services/Campaign';
+import { Global } from '@/services/PluginGlobals';
+
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -12,6 +11,8 @@ const handle = ref(null);
 let id = data.id;
 
 const radioContainer = ref(null);
+const Api = Global('dnd-5e').Api;
+const PluginData = Global('dnd-5e').Data;
 
 onMounted(() => {
     SetupHandle(id, handle);
@@ -24,15 +25,15 @@ function ConfirmSelection(){
     if(!selected) return;
     let value = selected.value;
 
-    CreateWindow(`${GetCampaignModuleName()}/item_sheet`, {
+    Api.createWindow(PluginData.windows.item_sheet, {
         id: 'item_sheet',
         title: 'Edit Item',
         item_type: value,
         item_create: true,
-        close: () => ClearWindow('item_sheet')
+        close: () => Api.clearWindow('item_sheet')
     });
 
-    ClearWindow(id);
+    Api.clearWindow(id);
 }
 
 </script>

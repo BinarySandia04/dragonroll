@@ -2,11 +2,11 @@
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref, shallowRef, watch } from 'vue';
-import { ClearWindow, CreateWindow, ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
+import { ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
 import ConceptList from '@/views/partials/ConceptList.vue';
 import Tabs from '@/views/partials/Tabs.vue';
-import { GetCampaignModuleName } from '@/services/Campaign';
 import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
+import { Global } from '@/services/PluginGlobals';
 
 import { FetchConcepts, GetConcepts } from './../data.js'
 
@@ -14,6 +14,9 @@ const handle = ref(null);
 
 const props = defineProps(['data']);
 const data = props.data;
+
+const Api = Global('dnd-5e').Api;
+const PluginData = Global('dnd-5e').Data;
 
 let id = data.id;
 const elements = shallowRef([]);
@@ -32,15 +35,15 @@ onMounted(() => {
     FetchConcepts();
 });
 function OpenCreateItemPrompt(){
-    CreateWindow(`${GetCampaignModuleName()}/create_item_prompt`, {id: 'create_item_prompt', title: 'Create Item', close: () => ClearWindow('create_item_prompt')})
+    Api.createWindow(PluginData.windows.create_item_prompt, {id: 'create_item_prompt', title: 'Create Item', close: () => Api.clearWindow('create_item_prompt')})
 }
 
 function OpenConcept(element){
-    CreateWindow(`${GetCampaignModuleName()}/item_sheet`, {
+    Api.createWindow(PluginData.windows.item_sheet, {
         id: 'item_sheet_' + element._id,
         title: 'Edit Item',
         item_id: element._id,
-        close: () => ClearWindow('item_sheet_' + element._id)
+        close: () => Api.clearWindow('item_sheet_' + element._id)
     });
 }
 

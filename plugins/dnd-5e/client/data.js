@@ -6,11 +6,11 @@ import { GetCampaign } from "@/services/Dragonroll";
 
 let data = reactive({});
 
-let Api = Global('dnd-5e')['api'];
+let Api = Global('dnd-5e').Api;
 let dndModule = Global('dnd-5e')['dndModule'];
 
 function InitData(){
-    Api = Global('dnd-5e')['api'];
+    Api = Global('dnd-5e').Api;
     dndModule = Global('dnd-5e')['dndModule'];
 
     data.value = {
@@ -30,7 +30,7 @@ function FetchData(){
 }
 
 let GetConcepts = () => data.value.concepts;
-let GetConcept = (id) => Server().get('/concept/get?campaign=' + GetCampaign()._id + "&id=" + id)
+let GetConcept = (id) => dndModule.router.get('/item/get', {id})
 
 
 export {

@@ -4,7 +4,7 @@ import { Global } from '@/services/PluginGlobals';
 var dndModule;
 
 function Main(Api){
-    Global('dnd-5e')['api'] = Api;
+    Global('dnd-5e')['Api'] = Api;
     
     console.log("Module registered!");
     dndModule = Api.createModule('dnd-5e');
@@ -24,9 +24,13 @@ function Main(Api){
     let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
     let actorsWindow = Api.registerWindow('actors', Api.createView('Actors'));
 
-    Api.registerWindow('character_sheet', Api.createView('CharacterSheet'));
-    Api.registerWindow('item_sheet', Api.createView('ItemSheet'));
-    Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
+    Global('dnd-5e').Data = {
+        windows: {
+            character_sheet: Api.registerWindow('character_sheet', Api.createView('CharacterSheet')),
+            item_sheet: Api.registerWindow('item_sheet', Api.createView('ItemSheet')),
+            create_item_prompt: Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'))
+        }
+    }
 
     dndModule.setButtons({
         right: [
@@ -57,11 +61,6 @@ function Main(Api){
     Api.socket.on('update-concepts', () => {
         FetchConcepts();
     });
-
-
-    // Api.windows.registerWindow('character_sheet', Api.createView('CharacterSheet'));
-    // Api.windows.registerWindow('item_sheet', Api.createView('ItemSheet'));
-    // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     dndModule.onInit = () => {
         InitData();

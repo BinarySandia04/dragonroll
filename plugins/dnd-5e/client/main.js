@@ -1,12 +1,10 @@
 import { FetchConcepts, FetchData, InitData } from "./data";
+import { Global } from '@/services/PluginGlobals';
 
-// Entrypoint
-let Api;
-let dndModule;
+var dndModule;
 
-function Main(api){
-    Api = api
-
+function Main(Api){
+    Global('dnd-5e')['api'] = Api;
     
     console.log("Module registered!");
     dndModule = Api.createModule('dnd-5e');
@@ -66,11 +64,14 @@ function Main(api){
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     dndModule.onInit = () => {
-        InitData(Api, dndModule);
+        InitData();
         FetchData();
     }
 
     Api.registerModule(dndModule);
+
+
+    Global('dnd-5e')['dndModule'] = dndModule;
 }
 
 export { 

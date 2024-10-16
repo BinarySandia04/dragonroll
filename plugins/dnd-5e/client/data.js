@@ -1,16 +1,17 @@
 import Server from '@/services/Server'
 import { reactive } from 'vue';
+import { Global } from '@/services/PluginGlobals';
 
 import { GetCampaign } from "@/services/Dragonroll";
 
 let data = reactive({});
 
-let Api;
-let dndModule;
+let Api = Global('dnd-5e')['api'];
+let dndModule = Global('dnd-5e')['dndModule'];
 
-function InitData(api, module){
-    Api = api;
-    dndModule = module;
+function InitData(){
+    Api = Global('dnd-5e')['api'];
+    dndModule = Global('dnd-5e')['dndModule'];
 
     data.value = {
         concepts: []

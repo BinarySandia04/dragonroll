@@ -111,7 +111,7 @@ function ConfigureBookmarks(){
             </div>
             <div class="two-column-layout">
                 <div class="flex-container border">
-                    <img class="player-sheet-splash" src="/img/monke.jpg">
+                    <img class="player-sheet-splash" src="/img/traktor.png">
                     <!--<img class="player-sheet-splash" src="/img/dracblau.png">-->
                     <div class="player-info-div">
 

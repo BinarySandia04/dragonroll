@@ -1,12 +1,13 @@
 import { ref } from "vue";
 import { GetCampaignModule } from "./Campaign";
+import { GetCampaign } from "./Dragonroll";
 
 const inGameRef = ref(false);
 let InGameRef = () => inGameRef;
 
 function LaunchGame(){
     inGameRef.value = true;
-    GetCampaignModule().init();
+    GetCampaignModule().init(GetCampaign());
 }
 
 function ExitGame(){

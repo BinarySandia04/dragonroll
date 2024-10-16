@@ -66,17 +66,13 @@ function Main(api){
     // Api.windows.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'));
 
     dndModule.onInit = () => {
-        InitData();
+        InitData(Api, dndModule);
         FetchData();
     }
 
     Api.registerModule(dndModule);
-
-
 }
 
 export { 
-    Main,
-    Api,
-    dndModule
+    Main
 };

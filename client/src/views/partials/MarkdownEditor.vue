@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
-import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+import { marked } from "marked";
 
 const props = defineProps(['done', 'editable']);
 import FixedBottomButtons from './FixedBottomButtons.vue';

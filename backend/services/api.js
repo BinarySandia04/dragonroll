@@ -22,8 +22,8 @@ class BackendApi {
         this.#_plugin = plugin;
         this.#_expressRouter = router;
         this.#_internalSocket = internalSocket;
-        this.#_socket = new BackendSocket(`plugin/${plugin.package}`, internalSocket);
-        this.#_router = new BackendRouter(`plugin/${plugin.package}`, this.#_expressRouter);
+        this.#_socket = new BackendSocket(`plugins/${plugin.package}`, internalSocket);
+        this.#_router = new BackendRouter(`${plugin.package}`, this.#_expressRouter);
     }
 
     /**
@@ -136,8 +136,8 @@ class BackendModule {
         this.#_plugin = plugin;
         this.#_id = id;
         this.#_internalSocket = internalSocket;
-        this.#_router = new BackendRouter(`module/${plugin.package}/${id}`, expressRouter)
-        this.#_socket = new BackendSocket(`module/${plugin.package}/${id}`, this.#_internalSocket);
+        this.#_router = new BackendRouter(`${plugin.package}/_module/${id}`, expressRouter)
+        this.#_socket = new BackendSocket(`plugins/${plugin.package}/${id}`, this.#_internalSocket);
     }
 
     get router(){
@@ -149,8 +149,11 @@ class BackendModule {
     }
 
     // Creates a model for the Module
+    // it also includes the campaign id for later on
     createModel(name, schema){
-        return new BackendModel(name, `${this.#_plugin.package}/${this.#_id}`, schema);
+        return new BackendModel(name, `${this.#_plugin.package}/${this.#_id}`, {...{
+            campaign: { type: "ObjectId", ref: "Campaign"}
+        }, ...schema});
     }
 }
 

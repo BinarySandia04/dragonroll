@@ -15,22 +15,29 @@ function Main(api){
         type: { type: "String", required: true, default: "Item" },
         info: { type: "Object" }, // For preview only
         data: { type: "Object" }, // Advanced item
-        book: { type: "ObjectId", ref: "Book"},
-        campaign: { type: "ObjectId", ref: "Campaign"},
+        book: { type: "ObjectId", ref: "Book"}
     });
 
+    
     dndModule.router.get('/testing', (req, res) => {
         /*
         let item = itemModel.create({
             name: "Test item!",
             type: "The test item"
+            })
+            */
+       
+           console.log("FUNCIONA!!!!");
+           res.json({
+               status: "ok"
+            })
         })
-        */
-
-        console.log("FUNCIONA!!!!");
-        res.json({
-            status: "ok"
-        })
+        
+    dndModule.router.get('/item/list', (req, res) => {
+        const campaign = req.campaign;
+        itemModel.find({campaign}).select('-data').lean().then(data => {
+            res.json({status: "ok", data});
+        });
     })
 
     Api.socket.on("test", () => console.log("test"));

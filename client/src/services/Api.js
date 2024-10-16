@@ -25,10 +25,10 @@ class ClientApi {
      */
     constructor(plugin){
         this.#_plugin = plugin
-        this.#_router = new ClientRouter(`/plugin/${plugin.package}`)
-        this.#_baseRouter = new ClientRouter("")
+        this.#_router = new ClientRouter(`/plugins/${plugin.package}`, {})
+        this.#_baseRouter = new ClientRouter("", {})
         this.#_windows = new ClientWindows(plugin.package)
-        this.#_socket = new ClientSocket(plugin.package)
+        this.#_socket = new ClientSocket(`plugins/${plugin.package}`)
     }
 
     /**
@@ -158,10 +158,12 @@ class ClientModule {
     #_socket;
     #_exit;
 
+    #_campaign;
+
     constructor(plugin, id){
         this.#_plugin = plugin;
         this.#_id = id;
-        this.#_router = new ClientRouter(`/module/${plugin.package}/${id}`);
+        this.#_router = new ClientRouter(`/plugins/${plugin.package}/_module/${id}`, {});
         this.#_socket = new ClientSocket(`${plugin.package}/${id}`)
     }
 
@@ -169,7 +171,13 @@ class ClientModule {
         this.#_previewData = data;
     }
 
-    set onInit(init){ this.#_init = init; }
+    set onInit(init){ this.#_init = (campaign) => {
+            this.#_campaign = campaign;
+            this.#_router._setParam("campaign", campaign._id);
+            console.log(campaign);
+            init();
+        }; 
+    }
 
     set onExit(exit){ this.#_exit = exit; }
 
@@ -256,19 +264,35 @@ class ClientRouter {
     }
 
     get(route, query){
-        return Server().get(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`);
+        if(route.startsWith('/')) route = route.substring(1, route.length);
+        let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
+        console.log("GET " + f);
+        return Server().get(f);
     }
 
     post(route, query, data = {}){
-        return Server().post(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`, data);
+        if(route.startsWith('/')) route = route.substring(1, route.length);
+        let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
+        console.log("POST " + f);
+        return Server().post(f, data);
     }
 
     put(route, query, data = {}){
-        return Server().put(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`, data);
+        if(route.startsWith('/')) route = route.substring(1, route.length);
+        let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
+        console.log("PUT " + f);
+        return Server().put(f, data);
     }
 
     delete(route, query){
-        return Server().delete(`${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`);
+        if(route.startsWith('/')) route = route.substring(1, route.length);
+        let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
+        console.log("DELETE " + f);
+        return Server().delete(f);
+    }
+
+    _setParam(key, value){
+        this.#_defParams[key] = value;
     }
 }
 

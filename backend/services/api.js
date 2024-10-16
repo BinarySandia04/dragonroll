@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const express = require('express');
+const { getIo } = require('../io/socket');
 
 /**
  * Class for managing the backend api
@@ -192,6 +193,10 @@ class BackendModel {
         return this.#_mongoSchema.findOne(params);
     }
 
+    findOneAndUpdate(findParams, updateParams){
+        return this.#_mongoSchema.findOneAndUpdate(findParams, updateParams);
+    }
+
     /**
      * Finds an element by id and returns a promise with the result of the query
      * @param {String} id 
@@ -242,6 +247,10 @@ class BackendSocket {
 
     on(msg, callback){
         this.#_internalSocket[`${this.#_prefix}/${msg}`] = callback;
+    }
+
+    emit(campaign, msg, data = {}){
+        getIo().to(campaign).emit(msg, data);
     }
 }
 

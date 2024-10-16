@@ -7,11 +7,11 @@ import { GetCampaign } from "@/services/Dragonroll";
 let data = reactive({});
 
 let Api = Global('dnd-5e').Api;
-let dndModule = Global('dnd-5e')['dndModule'];
+let dndModule = Global('dnd-5e').DndModule;
 
 function InitData(){
     Api = Global('dnd-5e').Api;
-    dndModule = Global('dnd-5e')['dndModule'];
+    dndModule = Global('dnd-5e').DndModule;
 
     data.value = {
         concepts: []

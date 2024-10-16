@@ -1,20 +1,23 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
-import Server from '@/services/Server';
 
 import { GetConcept } from './../data.js';
 
 import { onMounted, ref, shallowRef } from 'vue';
-import { SetupHandle, SetSize, ResetPosition, CreateWindow, SetMinSize, SetResizable } from '@/services/Windows';
+import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
 import IconSelector from '@/views/partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/ContextMenu';
-import { GetCampaign } from '@/services/Dragonroll';
 import Tabs from '@/views/partials/Tabs.vue';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 import Tags from '@/views/partials/Tags.vue';
 import NumberInput from '@/views/partials/NumberInput.vue';
+
+import { Global } from '@/services/PluginGlobals';
 const props = defineProps(['data']);
 const data = props.data;
+const api = Global('dnd-5e').Api;
+const pluginData = Global('dnd-5e').Data;
+const dndModule = Global('dnd-5e').DndModule;
 
 
 const handle = ref(null);
@@ -66,13 +69,13 @@ let concept = shallowRef({});
 let oldInfo;
 
 function Upload(){
-    let extraParams = "";
+    let params = {id: concept.value._id};
     if(oldInfo != concept.value.info){
-        extraParams = "&fireUpdate=true";
+        params['fireUpdate'] = true;
         oldInfo = structuredClone(concept.value.info);
-        console.log("MAIASIUDHSAHJ")
     }
-    Server().put('/concept/update?campaign=' + GetCampaign()._id + "&id=" + concept.value._id + extraParams, {concept: concept.value}).then(response => {
+
+    dndModule.router.put('/concept/update', params, {concept: concept.value}).then(response => {
         console.log(response);
     });
 }
@@ -141,7 +144,7 @@ onMounted(() => {
     item_type.value = data.item_type;
 
     if(data.item_create){
-        Server().post('/concept/create?campaign=' + GetCampaign()._id, {
+        dndModule.router.post('/item/create', {}, {
             data: {
                 type: data.item_type,
                 name: "New " + data.item_type

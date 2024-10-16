@@ -70,7 +70,7 @@ function Main(Api){
     Api.registerModule(dndModule);
 
 
-    Global('dnd-5e')['dndModule'] = dndModule;
+    Global('dnd-5e').DndModule = dndModule;
 }
 
 export { 

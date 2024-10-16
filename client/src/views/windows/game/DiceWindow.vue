@@ -52,7 +52,6 @@ function ThrowDice(expr){
     audio.type = "audio/wav"
     audio.play();
 
-    console.log(result)
     diceResult.value = result;
 
     SendMessage({

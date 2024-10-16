@@ -21,7 +21,6 @@ function InitData(){
 function FetchConcepts(){
     dndModule.router.get('/item/list', {}).then(response => {
         data.value.concepts = response.data.data;
-        console.log(response.data);
     }).catch(err => console.log(err));
 }
 

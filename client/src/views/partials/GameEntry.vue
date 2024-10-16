@@ -12,8 +12,6 @@ const props = defineProps(['data']);
 let data = props.data;
 
 onMounted(() => {
-    console.log(data.height);
-    console.log(data.editable)
     if(data.editable) editable.value = true;
 })
 

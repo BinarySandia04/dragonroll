@@ -58,7 +58,7 @@ function Main(Api){
     });
     
 
-    Api.socket.on('update-concepts', () => {
+    dndModule.socket.on('update-concepts', () => {
         FetchConcepts();
     });
 
@@ -68,7 +68,6 @@ function Main(Api){
     }
 
     Api.registerModule(dndModule);
-
 
     Global('dnd-5e').DndModule = dndModule;
 }

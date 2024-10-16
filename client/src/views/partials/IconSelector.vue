@@ -14,7 +14,6 @@ function SelectIcon(){
     CreateChildWindow(props.window, 'icon_selector', {
         id: 'icon-selector-' + uuid,
         done: (res) => {
-            console.log(res);
             icon.value = res.selected.path;
             done(res);
             ClearWindow('icon-selector-' + uuid);

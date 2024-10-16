@@ -75,8 +75,8 @@ function Upload(){
         oldInfo = structuredClone(concept.value.info);
     }
 
-    dndModule.router.put('/concept/update', params, {concept: concept.value}).then(response => {
-        console.log(response);
+    dndModule.router.put('/item/update', params, {concept: concept.value}).then(response => {
+        // console.log(response);
     });
 }
 

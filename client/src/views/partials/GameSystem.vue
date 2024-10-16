@@ -12,7 +12,6 @@ function Select(){
 }
 
 onMounted(() => {
-    console.log(data);
     title.value = data.previewData.title;
     image.value.src = `plugins/${data.id}/${data.previewData.icon}`;
 })

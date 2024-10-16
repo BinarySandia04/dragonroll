@@ -35,7 +35,6 @@ function RefreshUsers(){
         let users = response.data.users;
         elements.value = [];
         users.forEach(user => {
-            console.log(user);
             if(user.setupCode){
                 elements.value.push({
                     name: t('register-account.pending-account'),

@@ -13,7 +13,6 @@ let windowId = props.windowId;
 
 function DisplaySystemSelector(){
     CreateChildWindow(windowId, 'system_selector', {'done': (data) => {
-        console.log("Hola")
         let module = GetModule(data.selected);
         selectedSystem.value = data.selected;
         selectedImage.value.src = `modules/${module.id}/icon.png`;

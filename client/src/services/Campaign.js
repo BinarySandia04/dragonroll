@@ -19,8 +19,6 @@ function ConnectToCampaign(campaign){
     chat.value = [];
 
     socket.emit('enter', GetUser(), _currentCampaign._id);
-    console.log("Hola")
-    console.log(_currentCampaign)
 }
 
 function Disconnect(){
@@ -48,7 +46,6 @@ socket.on('update-players', data => {
 })
 
 socket.on('init-info', data => {
-    console.log("Hola2")
     _UpdatePlayers(data.players);
     DisplayCampaign();
 })

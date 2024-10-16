@@ -7,7 +7,6 @@ let sessions = {};
 async function GetOfflinePlayers(campaign){
     let players = await CampaignUser.find({campaign}).populate('user').exec();
     let finalPlayers = [];
-    console.log(players)
     // TODO: Filter
     players.forEach(player => finalPlayers.push(FilterUser(player)));
 
@@ -48,7 +47,7 @@ module.exports = io => {
                             }
                             
                             
-                            console.log(socket.user.username + " ha entrado!");
+                            // console.log(socket.user.username + " ha entrado!");
                             SetPlayerProperty(campaignId, socket.user._id, "online", true);
                             // io.to(socket.campaign).emit('update-players', sessions[campaignId].players)
                             socket.emit('init-info', {players: sessions[campaignId].players})

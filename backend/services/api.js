@@ -250,7 +250,8 @@ class BackendSocket {
     }
 
     emit(campaign, msg, data = {}){
-        getIo().to(campaign).emit(msg, data);
+        console.log('\x1b[35m%s\x1b[0m', "EMIT " + `${this.#_prefix}/${msg}` + " IN " + campaign);
+        getIo().in(campaign).emit(`${this.#_prefix}/${msg}`, data);
     }
 }
 
@@ -272,6 +273,7 @@ function ParseSchema(schema){
         else
             newSchema[key].type = typeTable[newSchema[key].type];
     }
+
     return newSchema;
 }
 

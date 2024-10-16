@@ -65,7 +65,6 @@ watch(in_game, () => {
         // Check if we are dm
         is_dm.value = GetClient().is_dm;
 
-        console.log("Can we get the module here?");
         rightModuleButtons.value = GetCampaignModule().buttons.right;
     }
 });

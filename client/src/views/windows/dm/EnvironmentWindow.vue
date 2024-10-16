@@ -21,7 +21,6 @@ onMounted(() => {
     SetSize(id, {width: 200, height: 300});
     ResetPosition(id, {x: data.x, y: data.y});
 
-    console.log(env_background.value.GetColor());
     watch(env_background.value.GetColor(), () => {
         ChangeBackgroundColor(env_background.value.GetColor().value);
     });

@@ -78,7 +78,6 @@ app.use(checkAuth);
 // ROUTES WITH AUTH
 app.use('/campaign', require('./routes/campaign'));
 app.use('/maps', require('./routes/map'))
-app.use('/concept', require('./routes/concept'))
 app.use('/admin', require('./routes/admin'))
 // GET localhost:8081/concept/list
 
@@ -96,9 +95,9 @@ function print (path, layer) {
     } else if (layer.name === 'router' && layer.handle.stack) {
       layer.handle.stack.forEach(print.bind(null, path.concat(split(layer.regexp))))
     } else if (layer.method) {
-      console.log('%s /%s',
-        layer.method.toUpperCase(),
-        path.concat(split(layer.regexp)).filter(Boolean).join('/'))
+      console.log('\x1b[33m%s\x1b[0m',
+        `${layer.method.toUpperCase()} /${
+        path.concat(split(layer.regexp)).filter(Boolean).join('/')}`)
     }
   }
   

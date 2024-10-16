@@ -3,8 +3,6 @@ let Api;
 
 function Main(api){
     Api = api;
-    
-    console.log("Hello World from backend!");
 
     // Create our module in the backend. We only need the package name, it must be equal to the one that
     // we made inside the client
@@ -26,22 +24,20 @@ function Main(api){
             type: "The test item"
             })
             */
-       
-           console.log("FUNCIONA!!!!");
            res.json({
                status: "ok"
             })
         })
         
     dndModule.router.get('/item/list', (req, res) => {
-        const campaign = req.campaign;
+        const campaign = req.query.campaign;
         itemModel.find({campaign}).select('-data').lean().then(data => {
             res.json({status: "ok", data});
         });
     });
 
     dndModule.router.post('/item/create', (req, res) => {
-        const campaign = req.campaign;
+        const campaign = req.query.campaign;
         let data = req.body.data;
         
         if(!(data.type && data.name)) {
@@ -56,7 +52,7 @@ function Main(api){
     });
 
     dndModule.router.get('/item/get', (req, res) => {
-        const campaign = req.campaign;
+        const campaign = req.query.campaign;
         let id = req.query.id;
 
         itemModel.findOne({_id: id, campaign}).lean().then(concept => {
@@ -65,12 +61,12 @@ function Main(api){
     })
 
     dndModule.router.put('/item/update', (req, res) => {
-        const campaign = req.campaign;
+        const campaign = req.query.campaign;
         let id = req.query.id;
     
         itemModel.findOneAndUpdate({_id: id, campaign}, req.body.concept).then(result => {
             if(req.query.fireUpdate) dndModule.socket.emit(campaign, 'update-concepts');
-            dndModule.socket.emit(campaign).emit('update-concept', id);
+            dndModule.socket.emit(campaign, 'update-concept', id);
             res.json({status: "ok"});
         });
     })

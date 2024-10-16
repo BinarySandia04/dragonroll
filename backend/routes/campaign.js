@@ -83,7 +83,6 @@ router.post('/join', (req, res) => {
 router.get('/list', (req, res) => {
     CampaignUser.find({user: req.user}).populate("campaign").lean().then((data) => {
         res.json(data);
-        console.log(data);
         return;
     }).catch((err) => res.json({status: "error", msg: "internal"}));
 });
@@ -91,8 +90,6 @@ router.get('/list', (req, res) => {
 router.get('/players', (req, res) => {
     Campaign.findById(req.query.campaign).lean().then((campaign) => {
         CampaignUser.find({campaign}).populate('user').then((data) => {
-            console.log("djskajdk")
-            console.log(data);
             res.json(data);
             return;
         }).catch((err) => res.json({status: "error", msg: "internal"}));

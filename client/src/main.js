@@ -29,7 +29,6 @@ let locale = 'en-US';
 
 let supportedLocales = ['en-US', 'es-ES', 'ca'];
 let navLocale = window.navigator.language;
-console.log(navLocale);
 
 if(supportedLocales.includes(navLocale)) locale = navLocale;
 
@@ -38,7 +37,6 @@ try {
 } catch(ex) {
     LogoutUser();
 }
-console.log(locale);
 
 const i18n = createI18n({
     legacy: false,

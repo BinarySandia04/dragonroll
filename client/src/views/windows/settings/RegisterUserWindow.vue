@@ -40,13 +40,10 @@ onMounted(() => {
 function register(){
     Server().post('/user/register').then((response) => {
         const data = response.data;
-        console.log(data);
         if(data.error){
-            console.log(data);
             errorMessage.value = data.msg;
         } else {
             errorMessage.value = "";
-            console.log("Logged successfully");
             DisplayToast('green', 'Account created successfully', 3000);
             CallWindow(id, 'done');
         }

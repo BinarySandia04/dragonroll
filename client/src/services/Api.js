@@ -72,7 +72,6 @@ class ClientApi {
     }
 
     clearWindow(id){
-        console.log(id)
         _Windows.ClearWindow(id);
     }
 
@@ -164,7 +163,7 @@ class ClientModule {
         this.#_plugin = plugin;
         this.#_id = id;
         this.#_router = new ClientRouter(`/plugins/${plugin.package}/_module/${id}`, {});
-        this.#_socket = new ClientSocket(`${plugin.package}/${id}`)
+        this.#_socket = new ClientSocket(`plugins/${plugin.package}/${id}`)
     }
 
     setData(data){
@@ -174,7 +173,6 @@ class ClientModule {
     set onInit(init){ this.#_init = (campaign) => {
             this.#_campaign = campaign;
             this.#_router._setParam("campaign", campaign._id);
-            console.log(campaign);
             init();
         }; 
     }
@@ -220,6 +218,7 @@ class ClientSocket {
     }
 
     on(msg, callback){
+        // alert(`${this.#_prefix}/${msg}`)
         socket.on(`${this.#_prefix}/${msg}`, callback);
     }
 }
@@ -229,7 +228,7 @@ function ParseQuery(queryData){
     if(keys.length == 0) return "";
     let res = "?";
     for(let i = 0; i < keys.length; i++){
-        res += keys[i] + "=" + queryData[keys];
+        res += keys[i] + "=" + queryData[keys[i]];
         if(i != keys.length - 1) res += "&";
     }
     return res;
@@ -266,28 +265,28 @@ class ClientRouter {
     get(route, query){
         if(route.startsWith('/')) route = route.substring(1, route.length);
         let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
-        console.log("GET " + f);
+        console.log("%cGET%c " + f, 'color: #00ff00', 'color: unset');
         return Server().get(f);
     }
 
     post(route, query, data = {}){
         if(route.startsWith('/')) route = route.substring(1, route.length);
         let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
-        console.log("POST " + f);
+        console.log("%cPOST%c " + f, 'color: #0384fc', 'color: unset');
         return Server().post(f, data);
     }
 
     put(route, query, data = {}){
         if(route.startsWith('/')) route = route.substring(1, route.length);
         let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
-        console.log("PUT " + f);
+        console.log("%cPUT%c " + f, 'color: #ff8000', 'color: unset');
         return Server().put(f, data);
     }
 
     delete(route, query){
         if(route.startsWith('/')) route = route.substring(1, route.length);
         let f = `${this.#_path}/${route}${ParseQuery({...this.#_defParams, ...query})}`;
-        console.log("DELETE " + f);
+        console.log("%cDELETE%c " + f, 'color: #fa254c', 'color: unset');
         return Server().delete(f);
     }
 

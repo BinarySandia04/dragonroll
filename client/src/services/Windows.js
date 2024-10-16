@@ -69,8 +69,6 @@ async function InjectWindow(window_type, plugin, window_component){
     let systemWidows = {};
     systemWidows[window_type] = (await import(`../../plugins/${plugin}/views/${window_component}.vue`)).default;
     windowMap = {...windowMap, ...systemWidows};
-
-    console.log("Window injected");
 }
 
 // Presets

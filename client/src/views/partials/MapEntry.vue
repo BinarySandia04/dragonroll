@@ -14,7 +14,6 @@ const props = defineProps(['data']);
 let data = props.data;
 
 function ShowMap(){
-    console.log("ShowMap")
     SendMap(data._id);
 }
 

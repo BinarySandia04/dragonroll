@@ -7,7 +7,6 @@ const colorPicker = ref(null);
 
 onMounted(() => {
     colorValue.value.addEventListener('click', () => {
-        console.log("Click");
         colorPicker.value.click();
     })
 

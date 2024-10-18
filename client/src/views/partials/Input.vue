@@ -23,7 +23,9 @@ defineExpose({
 
 <style lang="scss" scoped>
 .number-input {
-    max-width: 70px;
+    flex-grow: 1;
+    flex-shrink: 1;
     text-align: center;
+    width: 100px;
 }
 </style>

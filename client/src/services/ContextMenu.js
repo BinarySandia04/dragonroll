@@ -71,8 +71,8 @@ function PopulateContext(val){
 
         animate(contextMenuElement, {
             opacity: [0, 1],
-            translateY: [20, -2]
-        }, {delay: (elementNum / 2) * 0.1, duration: 0.25}).finished.then(() => {
+            translateY: [-20, -2]
+        }, {duration: 0.15}).finished.then(() => {
 
         });
         elementNum++;

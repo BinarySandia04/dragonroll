@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { AddContextMenu } from '@/services/ContextMenu';
 import { AddTooltip } from '@/services/Tooltip';
+import { GetKey } from '@/services/Utils';
 import { marked } from "marked";
 
 const props = defineProps(['element', 'context', 'tooltip', 'icon']);
@@ -14,7 +15,8 @@ const icon = ref("icons/game-icons/ffffff/lorc/crossed-swords.svg")
 async function updateElement(){
     element.value = props.element;
     // Do whatever
-    let desc = element.value.info.description;
+    let desc = undefined;
+    GetKey(element.value, "info.description", (val) => desc = val);
     desc = desc ? marked.parse(desc) : '';
     
     if(props.icon) icon.value = await props.icon(element.value);

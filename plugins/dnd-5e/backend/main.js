@@ -16,18 +16,13 @@ function Main(api){
         book: { type: "ObjectId", ref: "Book"}
     });
 
-    
-    dndModule.router.get('/testing', (req, res) => {
-        /*
-        let item = itemModel.create({
-            name: "Test item!",
-            type: "The test item"
-            })
-            */
-           res.json({
-               status: "ok"
-            })
-        })
+    let entityModel = Api.createModel('entity', {
+
+    });
+
+    let characterModel = Api.createModel('character', {
+
+    });
         
     dndModule.router.get('/item/list', (req, res) => {
         const campaign = req.query.campaign;
@@ -50,7 +45,6 @@ function Main(api){
             res.json({status: "ok", item});
         });
     });
-
     dndModule.router.get('/item/get', (req, res) => {
         const campaign = req.query.campaign;
         let id = req.query.id;
@@ -59,7 +53,6 @@ function Main(api){
             res.json({status: "ok", concept});
         });
     })
-
     dndModule.router.put('/item/update', (req, res) => {
         const campaign = req.query.campaign;
         let id = req.query.id;

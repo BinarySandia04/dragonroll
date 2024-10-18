@@ -307,9 +307,50 @@ span.artifact {
 }
 
 .form-element label {
-  flex-grow: 1;
+  flex-grow: 0;
+  margin-right: 6px;
+  margin-left: 6px;
 }
 
 .form-element.centered {
   justify-content: center;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+
+.subsection.border:first-child {
+  border-left: none;
+}
+
+.subsection.border {
+  border-left: 1px solid var(--color-border);
+}
+
+.subsection {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 32px;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.subsection.left {
+  align-items: left;
+  justify-content: left;
+
+}
+
+.subsection.right {
+  align-items: right;
+  justify-content: right;
+
+}
+
+.subsection.center {
+  align-items: center;
+  justify-content: center; 
 }

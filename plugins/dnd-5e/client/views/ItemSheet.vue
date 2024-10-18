@@ -10,9 +10,13 @@ import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/Con
 import Tabs from '@/views/partials/Tabs.vue';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 import Tags from '@/views/partials/Tags.vue';
-import NumberInput from '@/views/partials/NumberInput.vue';
+import Input from '@/views/partials/Input.vue';
+import { GetKey, SetKey } from '@/services/Utils.js';
 
 import { Global } from '@/services/PluginGlobals';
+import Dropdown from '@/views/partials/Dropdown.vue';
+import FormElement from '@/views/partials/FormElement.vue';
+
 const props = defineProps(['data']);
 const data = props.data;
 const api = Global('dnd-5e').Api;
@@ -31,6 +35,7 @@ const properties = ref(null);
 const quantity = ref(null);
 const weight = ref(null);
 const price = ref(null);
+const item_type_name = ref("");
 
 function GenRarities(){
     let rarities = [];
@@ -81,7 +86,7 @@ function Upload(){
 }
 
 function SetParam(param, value){
-    concept.value.info[param] = value;
+    SetKey(concept.value, `info.${param}`, value);
     Upload();
 }
 
@@ -100,19 +105,17 @@ function PropertiesChanged(properties){
 function InitValues(){
     let rarities = GenRarities();
     let weapon_types = GenTypes(["", "Melee", "Ranged", "Martial Melee", "Martial Ranged", "Natural", "Improvised", "Siege Weapon"]);
-
-    if(!concept.value.data) concept.value.data = {};
-    if(!concept.value.info) concept.value.info = {};
     
-    if(concept.value.info.icon) icon_selector.value.icon = concept.value.info.icon;
-    if(concept.value.info.rarity) rarity.value.innerHTML = `<span class='important ${concept.value.info.rarity.replace(/\s+/g, '-').toLowerCase()}'>${concept.value.info.rarity}</span>`;
-    if(concept.value.info.weapon_type) weaponType.value.innerHTML = `<span class='important'>${concept.value.info.weapon_type}</span>`;
-    if(concept.value.info.description) description.value.text = concept.value.info.description;
-    if(concept.value.info.properties) properties.value.selected = concept.value.info.properties;
-
-    if(concept.value.info.quantity) quantity.value.Set(concept.value.info.quantity);
-    if(concept.value.info.weight) weight.value.Set(concept.value.info.weight);
-    if(concept.value.info.price) price.value.Set(concept.value.info.price);
+    icon_selector.value.icon = GetKey(concept.value, "info.icon");
+    rarity.value.innerHTML = `<span class='important ${GetKey(concept.value, "info.rarity") ? GetKey(concept.value, "info.rarity").replace(/\s+/g, '-').toLowerCase() : ""}'>${GetKey(concept.value, "info.rarity")}</span>`;
+    weaponType.value.innerHTML = `<span class='important'>${GetKey(concept.value, "info.weapon_type")}</span>`;
+    description.value.text = GetKey(concept.value, "info.description");
+    properties.value.selected = GetKey(concept.value, "info.properties");
+    quantity.value.Set(GetKey(concept.value, "info.quantity"));
+    weight.value.Set(GetKey(concept.value, "info.weight"));
+    price.value.Set(GetKey(concept.value, "info.price"));
+    item_type_name.value = GetKey(concept.value, "type");
+    item_name.value.innerHTML = GetKey(concept.value, "name");
 
     quantity.value.OnUpdate((val) => SetParam('quantity', val));
     weight.value.OnUpdate((val) => SetParam('weight', val));
@@ -135,34 +138,32 @@ function InitValues(){
 }
 
 onMounted(() => {
-
     SetupHandle(id, handle);
     SetSize(id, {width: 600, height: 700});
     SetResizable(id, true);
     SetMinSize(id, {width: 400, height: 300});
     ResetPosition(id, "center");
-    item_type.value = data.item_type;
-
-    if(data.item_create){
-        dndModule.router.post('/item/create', {}, {
-            data: {
-                type: data.item_type,
-                name: "New " + data.item_type
-            },
-        }).then(response => {
-            concept.value = response.data.concept;
-            InitValues();
-
-        }).catch(err => console.log(err));
-    } else {
-        // Get concept
-        GetConcept(data.item_id).then(response => {
-            concept.value = response.data.concept;
-            InitValues();
-        }).catch(err => console.log(err));
-    }
 });
 
+item_type.value = data.item_type;
+if(data.item_create){
+    dndModule.router.post('/item/create', {}, {
+        data: {
+            type: data.item_type,
+            name: "New " + data.item_type
+        },
+    }).then(response => {
+        concept.value = response.data.concept;
+        InitValues();
+
+    }).catch(err => console.log(err));
+} else {
+    // Get concept
+    GetConcept(data.item_id).then(response => {
+        concept.value = response.data.concept;
+        InitValues();
+    }).catch(err => console.log(err));
+}
 </script>
 
 
@@ -174,10 +175,13 @@ onMounted(() => {
             <div class="item-header">
                 <IconSelector :window="id" ref="icon_selector" :done="IconSelected"></IconSelector>
                 <div class="header-info">
-                    <h1 contenteditable="true" spellcheck="false" ref="item_name">{{ concept.name }}</h1>
                     <div class="row">
-                        <div class="grow subsection" ref="weaponType"></div>
-                        <div class="grow subsection" ref="rarity"></div>
+                        <h1 class="grow subsection left" contenteditable="true" spellcheck="false" ref="item_name"></h1>
+                        <h1 class="subsection right">{{ item_type_name }}</h1>
+                    </div>
+                    <div class="row">
+                        <div class="grow subsection center border" ref="weaponType"></div>
+                        <div class="grow subsection center border" ref="rarity"></div>
                     </div>
                 </div>
             </div>
@@ -189,18 +193,18 @@ onMounted(() => {
                     <div class="description-container">
                         <div class="description-sidebar">
                             <div class="form-container">
-                                <div class="form-element">
+                                <FormElement>
                                     <label>{{$t('general.quantity')}}</label>
-                                    <NumberInput ref="quantity"></NumberInput>
-                                </div>
-                                <div class="form-element">
+                                    <Input ref="quantity"></Input>
+                                </FormElement>
+                                <FormElement>
                                     <label>{{$t('general.weight')}}</label>
-                                    <NumberInput ref="weight"></NumberInput>
-                                </div>
-                                <div class="form-element">
+                                    <Input ref="weight"></Input>
+                                </FormElement>
+                                <FormElement>
                                     <label>{{$t('general.price')}}</label>
-                                    <NumberInput ref="price"></NumberInput>
-                                </div>
+                                    <Input ref="price"></Input>
+                                </FormElement>
                             </div>
                         </div>
                         <div class="description">
@@ -210,8 +214,21 @@ onMounted(() => {
                 </template>
                 <template #details>
                     <h2 class="section">Properties</h2>
-                    <Tags ref="properties" :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
+                    <FormElement>
+                        <label>Properties</label>
+                        <Tags ref="properties" :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
+                    </FormElement>
+                    <h2 class="section">Usage</h2>
+                    <FormElement>
+                        <label>Range</label>
+                        <Input></Input><label>/</label><Input></Input><Dropdown :options="['ft', 'm']" :selected="'ft'"></Dropdown>
+                    </FormElement>
                     <h2 class="section">Damage</h2>
+                    <FormElement>
+                        <label>Damage</label>
+                        <Dropdown :options="['None','Acid','Bludgeoning','Cold','Fire','Force','Lightning','Necrotic','Piercing','Poison','Psychic','Radiant','Slashing','Thunder','Healing','Healing (Temp)']"></Dropdown>
+                        <Input></Input>
+                    </FormElement>
                 </template>
             </Tabs>
         </div>
@@ -245,7 +262,7 @@ h2.section {
     width: 100%;
     
     .description-sidebar {
-        min-width: 200px;
+        max-width: 200px;
     }
 
     .description {
@@ -285,26 +302,11 @@ h2.section {
     width: 100%;
 }
 
-.grow {
-    flex-grow: 1;
-}
-
 .window-wrapper {
     display: flex;
     align-items: center;
 
     user-select: none;
-}
-
-.subsection {
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:first-child {
-        border-right: 1px solid var(--color-border);
-    }
 }
 
 </style>

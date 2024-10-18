@@ -16,7 +16,7 @@ const PluginData = Global('dnd-5e').Data;
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 250, height: 320});
+    SetSize(id, {width: 250, height: 410});
     ResetPosition(id, "center");
 });
 
@@ -72,6 +72,18 @@ function ConfirmSelection(){
                     <img class="icon" src="/icons/game-icons/000000/lorc/claw-hammer.svg">
                     <span>Tool</span>
                     <input type="radio" name="selector" value="Tool">
+                </div>
+
+                <div class="radio-item">
+                    <img class="icon" src="/icons/game-icons/000000/lorc/scroll-unfurled.svg">
+                    <span>Spell</span>
+                    <input type="radio" name="selector" value="Spell">
+                </div>
+
+                <div class="radio-item">
+                    <img class="icon" src="/icons/game-icons/000000/delapouite/round-star.svg">
+                    <span>Feature</span>
+                    <input type="radio" name="selector" value="Feature">
                 </div>
             </div>
 

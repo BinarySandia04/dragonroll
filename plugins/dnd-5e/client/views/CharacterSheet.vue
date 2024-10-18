@@ -68,7 +68,7 @@ function ConfigureBookmarks(){
                 <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/book-cover.svg">
             </div>
             <div class="bookmark">
-                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/power-lightning.svg">
+                <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/scroll-unfurled.svg">
             </div>
             <div class="bookmark">
                 <img class="icon bookmark-icon" draggable="false" src="/icons/game-icons/ffffff/lorc/feather.svg">

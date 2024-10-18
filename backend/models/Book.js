@@ -7,7 +7,6 @@ const BookSchema = new Schema({
     description: { type: String },
     system: {type: String, required: true},
     image: { type: String },
-    contents: [ {type: mongoose.Types.ObjectId, ref: "Concept"} ],
 });
 
 module.exports = mongoose.model('Book', BookSchema);

@@ -71,6 +71,7 @@ defineExpose({
 <style scoped lang="scss">
 .tags-container {
     display: flex;
+    flex-grow: 1;
     flex-wrap: wrap;
     padding-left: 4px;
     padding-right: 4px;

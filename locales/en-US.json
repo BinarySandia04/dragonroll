@@ -110,13 +110,5 @@
   "systems": {
     "title": "Select a game system",
     "not-selected": "No game system selected"
-  },
-  "database": {
-    "title": "Database",
-    "tabs": {
-      "items": "Items",
-      "spells": "Spells",
-      "features": "Features"
-    }
   }
 }

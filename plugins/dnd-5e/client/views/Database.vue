@@ -1,4 +1,6 @@
 <script setup>
+import { marked } from "marked";
+
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref, shallowRef, watch } from 'vue';
@@ -7,6 +9,7 @@ import ConceptList from '@/views/partials/ConceptList.vue';
 import Tabs from '@/views/partials/Tabs.vue';
 import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 import { Global } from '@/services/PluginGlobals';
+import { GetKey } from '@/services/Utils.js';
 
 import { FetchConcepts, GetConcepts } from './../data.js'
 
@@ -19,17 +22,34 @@ const Api = Global('dnd-5e').Api;
 const PluginData = Global('dnd-5e').Data;
 
 let id = data.id;
-const elements = shallowRef([]);
+
+const weapons = shallowRef([]);
+const equipment = shallowRef([]);
+const consumables = shallowRef([]);
+const containers = shallowRef([]);
+const tools = shallowRef([]);
+const spells = shallowRef([]);
+const features = shallowRef([]);
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 700, height: 800});
+    SetSize(id, {width: 800, height: 800});
     ResetPosition(id, "center");
     SetResizable(id, true);
-    SetMinSize(id, {width: 350, height: 300});
+    SetMinSize(id, {width: 800, height: 300});
 
     watch(GetConcepts, () => {
-        elements.value = GetConcepts();
+        let elements = GetConcepts();
+        weapons.value = elements.filter((e) => e.type == "Weapon");
+        equipment.value = elements.filter((e) => e.type == "Equipment");
+        consumables.value = elements.filter((e) => e.type == "Consumable");
+        containers.value = elements.filter((e) => e.type == "Container");
+        tools.value = elements.filter((e) => e.type == "Tool");
+        spells.value = elements.filter((e) => e.type == "Spell");
+        features.value = elements.filter((e) => e.type == "Feature");
+
+        console.log(elements);
+        console.log(elements);
     });
     
     FetchConcepts();
@@ -55,15 +75,18 @@ function ElementContext(element){
 }
 
 function ElementTooltip(element){
+    let descHtml = GetKey(element, 'info.description');
+    if(descHtml) descHtml = marked.parse(descHtml);
+    else descHtml = '';
     return `<div class='document item'>
         <h2>${element.name}</h2>
-        <img src='${element.info.icon}'></img>
-        <div class='document'>${element.info.description ?? ''}</div>
+        <img src='${GetKey(element, "info.icon")}'></img>
+        <div class='document'>${descHtml}</div>
     </div>`;
 }
 
 function ElementIcon(element){
-    return element.info ? element.info.icon : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
+    return GetKey(element, "info.icon") ? GetKey(element, "info.icon") : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
 }
 </script>
 
@@ -74,13 +97,71 @@ function ElementIcon(element){
 
         <div class="main-container">
             <Tabs :rows="[
-                    {id: 'items', value: 'database.tabs.items'}, 
-                    {id: 'spells', value: 'database.tabs.spells'},
-                    {id: 'features', value: 'database.tabs.features'}
+                    {id: 'weapons', value: 'plugins.dnd-5e.database.tabs.weapons'}, 
+                    {id: 'equipment', value: 'plugins.dnd-5e.database.tabs.equipment'}, 
+                    {id: 'consumables', value: 'plugins.dnd-5e.database.tabs.consumables'}, 
+                    {id: 'containers', value: 'plugins.dnd-5e.database.tabs.containers'}, 
+                    {id: 'tools', value: 'plugins.dnd-5e.database.tabs.tools'}, 
+                    {id: 'spells', value: 'plugins.dnd-5e.database.tabs.spells'},
+                    {id: 'features', value: 'plugins.dnd-5e.database.tabs.features'},
                 ]">
-                <template #items>
+                <template #weapons>
                     <ConceptList 
-                        :elements="elements"
+                        :elements="weapons"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #equipment>
+                    <ConceptList 
+                        :elements="equipment"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #consumables>
+                    <ConceptList 
+                        :elements="consumables"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #containers>
+                    <ConceptList 
+                        :elements="containers"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #tools>
+                    <ConceptList 
+                        :elements="tools"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #spells>
+                    <ConceptList 
+                        :elements="spells"
+                        :open="OpenConcept"
+                        :context="ElementContext"
+                        :tooltip="ElementTooltip"
+                        :icon="ElementIcon"
+                    ></ConceptList>
+                </template>
+                <template #features>
+                    <ConceptList 
+                        :elements="features"
                         :open="OpenConcept"
                         :context="ElementContext"
                         :tooltip="ElementTooltip"

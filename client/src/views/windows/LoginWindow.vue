@@ -69,7 +69,7 @@ function ShowMainMenu(){
         <picture align="center">
           <source media="(prefers-color-scheme: dark)" srcset="/img/logo-splash.png">
           <source media="(prefers-color-scheme: light)" srcset="/img/logo-splash-light.png">
-          <img alt="Dragonroll logo" src="client/public/img/logo-splash.png" class="splash-image" draggable="false">
+          <img alt="Dragonroll logo" src="/img/logo-splash.png" class="splash-image" draggable="false">
         </picture>
 
         <form v-on:submit.prevent="login">

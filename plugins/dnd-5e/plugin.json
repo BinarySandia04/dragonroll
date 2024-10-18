@@ -1,7 +1,8 @@
 {
     "package": "dnd-5e",
-    "name": "Dnd 5e System",
-    "description": "This plugin provides the Dnd 5e module",
+    "name": "plugin.name",
+    "description": "plugin.desc",
+    "icon": "icon.png",
     "authors": [
         {
             "name": "Aran Roig"
@@ -13,5 +14,13 @@
     },
     "backend": {
         "entrypoint": "main.js"
-    }
+    },
+    "modules": [
+        {
+            "id": "dnd-5e",
+            "name": "module.name",
+            "desc": "module.desc",
+            "icon": "icon.png"
+        }
+    ]
 }

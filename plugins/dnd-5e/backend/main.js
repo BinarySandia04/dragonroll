@@ -16,55 +16,75 @@ function Main(api){
         book: { type: "ObjectId", ref: "Book"}
     });
 
+    let entityDataModel = Api.createModel('entitydata', {
+        name: { type: "String", required: true },
+        hp: { type: "Number", required: true },
+        max_hp: { type: "Number", required: true },
+        effects: [ { type: "ObjectId", ref: "dnd-5e/effect" } ],
+        attributes: { type: "Object" }, // {str, dex, ...}
+        saving_attributes: {type: "Object"},
+        skill_prof: { type: "Object" },
+        initiative: { type: "Number" },
+        speed: {type: "Number" },
+        ac: {type: "Number"},
+        proficency: { type: "Number" },
+        size: {type: "String"},
+        items: [ {type: "ObjectId", ref: 'dnd-5e/item'} ],
+        competences: {type: "Object"},
+        resources: {type: "Object"},
+        class: { type: "ObjectId", ref: "dnd-5e/progressable" },
+        race: { type: "ObjectId", ref: "dnd-5e/progressable" },
+        lvl: { type: "Number" },
+        desc: { type: "String" },
+        token: { type: "Object" }
+    });
+
+    let monsterModel = Api.createModel('monster', {
+        hp_formulae: { type: "String", required: true },
+        cr: { type: "Number" },
+        xp_drop: { type: "Number" }
+    }, entityDataModel);
+
+    let actorModel = Api.createModel('actor', {
+        picture: { type: "String" },
+        xp: { type: "Number", required: true },
+        death_throws: { type: "Object" }
+    }, entityDataModel);
+
+    let tableModel = Api.createModel('table', {
+        name: { type: "String", required: true },
+        info: { type: "Object" }
+    });
+
+    let progressableModel = Api.createModel('progressable', {
+        name: { type: "String", required: true },
+        type: { type: "String", required: true },
+        icon: { type: "String", required: true },
+        resources: { type: "Object" },
+        tables: [ { type: "ObjectId", ref: "dnd-5e/table" } ],
+        rewards: { type: "Object" }
+    });
+
+    let effectsModel = Api.createModel('effect', {
+        name: { type: "String", required: true },
+        icon: { type: "String", required: true },
+        desc: { type: "String" }
+    });
+
     let entityModel = Api.createModel('entity', {
-
+        data: { type: "ObjectId" },
+        position: { type: "Object" }
     });
 
-    let characterModel = Api.createModel('character', {
+    dndModule.createModelRoutes(itemModel);
+    dndModule.createModelRoutes(monsterModel);
+    dndModule.createModelRoutes(actorModel);
+    dndModule.createModelRoutes(tableModel);
+    dndModule.createModelRoutes(progressableModel);
+    dndModule.createModelRoutes(effectsModel);
+    dndModule.createModelRoutes(entityModel);
 
-    });
-        
-    dndModule.router.get('/item/list', (req, res) => {
-        const campaign = req.query.campaign;
-        itemModel.find({campaign}).select('-data').lean().then(data => {
-            res.json({status: "ok", data});
-        });
-    });
-
-    dndModule.router.post('/item/create', (req, res) => {
-        const campaign = req.query.campaign;
-        let data = req.body.data;
-        
-        if(!(data.type && data.name)) {
-            res.json({status: "error", msg: "args"});
-            return;
-        }
-
-        itemModel.create({campaign, type: data.type, name: data.name, info: {}, data: {}}).then(item => {
-            dndModule.socket.emit(campaign, 'update-concepts');
-            res.json({status: "ok", item});
-        });
-    });
-    dndModule.router.get('/item/get', (req, res) => {
-        const campaign = req.query.campaign;
-        let id = req.query.id;
-
-        itemModel.findOne({_id: id, campaign}).lean().then(concept => {
-            res.json({status: "ok", concept});
-        });
-    })
-    dndModule.router.put('/item/update', (req, res) => {
-        const campaign = req.query.campaign;
-        let id = req.query.id;
-    
-        itemModel.findOneAndUpdate({_id: id, campaign}, req.body.concept).then(result => {
-            if(req.query.fireUpdate) dndModule.socket.emit(campaign, 'update-concepts');
-            dndModule.socket.emit(campaign, 'update-concept', id);
-            res.json({status: "ok"});
-        });
-    })
-
-    Api.socket.on("test", () => console.log("test"));
+    // Api.socket.on("test", () => console.log("test"));
     // Api.router.createModelRoutes(itemModel, 'item');
 }
 

@@ -80,7 +80,7 @@ function Upload(){
         oldInfo = structuredClone(concept.value.info);
     }
 
-    dndModule.router.put('/item/update', params, {concept: concept.value}).then(response => {
+    dndModule.router.put('/item/update', params, {data: concept.value}).then(response => {
         // console.log(response);
     });
 }
@@ -153,14 +153,14 @@ if(data.item_create){
             name: "New " + data.item_type
         },
     }).then(response => {
-        concept.value = response.data.concept;
+        concept.value = response.data.data;
         InitValues();
 
     }).catch(err => console.log(err));
 } else {
     // Get concept
     GetConcept(data.item_id).then(response => {
-        concept.value = response.data.concept;
+        concept.value = response.data.data;
         InitValues();
     }).catch(err => console.log(err));
 }

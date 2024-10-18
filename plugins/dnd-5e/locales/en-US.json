@@ -1,4 +1,12 @@
 {
+    "plugin": {
+        "name": "Dnd 5e System",
+        "desc": "This plugin provides the Dnd 5e module and the basic books for making a barebone campaign"
+    },
+    "module": {
+        "name": "Dnd 5e",
+        "desc": "The official Dnd 5e system for Dragonroll"
+    },
     "database": {
         "title": "Database",
         "tabs": {

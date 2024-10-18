@@ -29,8 +29,6 @@ SetEmitter(emitter);
 
 async function DisplayFirstWindow(){
   if(GetUser()){
-
-    Server().get('/plugins/dnd-5e/_module/dnd-5e/testing').then(res => {})
     CreateWindow('main_menu');
     return;
   }

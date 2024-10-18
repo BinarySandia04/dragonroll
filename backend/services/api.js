@@ -56,8 +56,8 @@ class BackendApi {
      *   image: { type: String }
      * });
      */
-    createModel(name, schema){
-        return new BackendModel(name, this.#_plugin.package, schema);
+    createModel(name, schema, parentModels = undefined){
+        return new BackendModel(name, this.#_plugin.package, schema, parentModels);
     }
 
     createModule(id){
@@ -109,21 +109,6 @@ class BackendRouter {
     delete(route, callback){
         this.#_expressRouter.delete(this.#_root + route, callback);
     }
-
-    /**
-     * Creates backend REST routes for the specified model. These routes are located
-     * relative to the plugin base route:
-     * - `/<plugin>/<model>` (POST) - Creates the element
-     * - `/<plugin>/<model>` (GET) - Gets a list with elements
-     *    - `?id=<id>` return the document with that id
-     *    - `?<paramName>=<paramValue>` returns all documents that match this criteria
-     * - `/<plugin>/<model>` (UPDATE) - Updates a element by id
-     * - `/<plugin>/<model>` (DELETE) - Deletes an element
-     * @param {BackendModel} model 
-     */
-    createModelRoutes(model, path){
-
-    }
 }
 
 class BackendModule {
@@ -151,10 +136,63 @@ class BackendModule {
 
     // Creates a model for the Module
     // it also includes the campaign id for later on
-    createModel(name, schema){
+    createModel(name, schema, parentModels = undefined){
         return new BackendModel(name, `${this.#_plugin.package}/${this.#_id}`, {...{
             campaign: { type: "ObjectId", ref: "Campaign"}
-        }, ...schema});
+        }, ...schema}, parentModels);
+    }
+
+    // scope => ['campaign'] 
+    // coses que es necessiten verificar a tots els models
+    // i s'agafa de req.query
+    createModelRoutes(model, scope = []){
+        this.router.get(`/${model.name}/list`, (req, res) => {
+            let query = {}
+            scope.forEach(k => query[k] = req.query[k]);
+            model.find(query).select('-data').lean().then(data => {
+                res.json({status: 'ok', data});
+            });
+        });
+
+        this.router.get(`/${model.name}/get`, (req, res) => {
+            let query = {}
+            scope.forEach(k => query[k] = req.query[k]);
+            query['_id'] = req.query.id;
+            model.findOne(query).lean().then(data => {
+                res.json({status: 'ok', data});
+            })
+        });
+
+        this.router.post(`/${model.name}/create`, (req, res) => {
+            let query = {}
+            scope.forEach(k => query[k] = req.query[k]);
+            model.create({...query, ...req.body.data}).then(data => {
+                this.socket.emit(query['campaign'], `update-${model.name}`);
+                res.json({status: "ok", data});
+            });
+        });
+
+        this.router.put(`/${model.name}/update`, (req, res) => {
+            let query = {}
+            scope.forEach(k => query[k] = req.query[k]);
+            query['_id'] = req.query.id;
+            model.findOneAndUpdate(query, req.body.data).then(data => {
+                if(req.query.fireUpdate) this.socket.emit(query['campaign'], `update-${model.name}-all`);
+                this.socket.emit(query['campaign'], `update-${model.name}`, req.query.id);
+                res.json({status: 'ok'});
+            })
+        });
+
+        this.router.delete(`/${model.name}/destroy`, (req, res) => {
+            let query = {}
+            scope.forEach(k => query[k] = req.query[k]);
+            query['_id'] = req.query.id;
+            model.deleteOne(query).then(data => {
+                if(req.query.fireUpdate) this.socket.emit(query['campaign'], `update-${model.name}-all`);
+                this.socket.emit(query['campaign'], `update-${model.name}`, req.query.id);
+                res.json({status: 'ok'});
+            });
+        });
     }
 }
 
@@ -168,11 +206,16 @@ class BackendModel {
     
     #_mongoSchema;
 
-    constructor(name, prefix, schema){
+    constructor(name, prefix, schema, parentModels){
         this.#_name = name;
         this.#_prefix = prefix;
         this.#_schema = ParseSchema(schema);
-        this.#_mongoSchema = mongoose.model(`${prefix}/${name}`, new Schema(schema));
+        if(parentModels === undefined) {
+            this.#_mongoSchema = mongoose.model(`${prefix}/${name}`, new Schema(schema));
+        } else {
+            parentModels.mongoSchema.discriminator(`${prefix}/${name}`, new Schema(schema));
+            this.#_mongoSchema = mongoose.model(`${prefix}/${name}`);
+        }
     }
 
     /**
@@ -234,6 +277,18 @@ class BackendModel {
     updateMany(params, data){
         return this.#_mongoSchema.updateMany(params, data);
     }
+
+    deleteOne(params){
+        return this.#_mongoSchema.deleteOne(params);
+    }
+
+    get name(){
+        return this.#_name;
+    }
+
+    get mongoSchema() {
+        return this.#_mongoSchema;
+    }
 };
 
 class BackendSocket {
@@ -262,6 +317,7 @@ function ParseSchema(schema){
         ObjectId: mongoose.Types.ObjectId,
         Boolean: Boolean,
         Date: Date,
+        Number: Number
     };
     
     let newSchema = structuredClone(schema);

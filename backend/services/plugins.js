@@ -1,18 +1,19 @@
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
 const BackendApi = require('./api').BackendApi
 const express = require('express');
 const { getIo } = require('../io/socket');
+const { datagenTask } = require('./datagen');
 const router = express.Router({
     mergeParams: true
 });
 
 const basePath = path.resolve(__dirname, '../')
-console.log(basePath)
 
 let pluginsInfo = [];
 let plugins = {};
 let internalSocket = {};
+let datagenRegistry = {};
 
 function init(){
     console.log("Initializing plugins");
@@ -31,9 +32,12 @@ function init(){
 
     // Execute main
     Object.keys(plugins).forEach(k => {
-        let pluginApi = new BackendApi(plugins[k].info, router, internalSocket);
+        datagenRegistry[k] = {modelNames: []};
+        let pluginApi = new BackendApi(plugins[k].info, router, internalSocket, datagenRegistry[k]);
         plugins[k].payload.Main(pluginApi);
     });
+
+    datagenTask(datagenRegistry);
 
     console.log(internalSocket);
     getIo().on('connect', (socket) => {

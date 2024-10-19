@@ -8,6 +8,7 @@ import * as _Tooltip from "@/services/Tooltip"
 import * as _Windows from "@/services/Windows"
 import Server from '@/services/Server';
 import { socket } from '@/services/Socket';
+const { t } = useI18n() 
 
 /**
  * Class for managing the client api
@@ -73,6 +74,10 @@ class ClientApi {
 
     clearWindow(id){
         _Windows.ClearWindow(id);
+    }
+
+    t(key){
+        return t(`plugins.${plugin.package}.${key}`);
     }
 
     /**

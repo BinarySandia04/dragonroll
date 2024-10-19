@@ -1,5 +1,6 @@
 {
     "package": "dnd-5e",
+    "id": "dnd-5e-base",
     "name": "info.name",
     "desc": "info.description"
 }

@@ -13,18 +13,20 @@ class BackendApi {
     #_router;
     #_expressRouter;
     #_internalSocket;
+    #_datagenRegisrty;
     #_socket;
     
     /**
      * This object is already created for you
      * @param {plugin} Plugin instance
      */
-    constructor(plugin, router, internalSocket){
+    constructor(plugin, router, internalSocket, datagenRegistry){
         this.#_plugin = plugin;
         this.#_expressRouter = router;
         this.#_internalSocket = internalSocket;
         this.#_socket = new BackendSocket(`plugins/${plugin.package}`, internalSocket);
         this.#_router = new BackendRouter(`${plugin.package}`, this.#_expressRouter);
+        this.#_datagenRegisrty = datagenRegistry;
     }
 
     /**
@@ -62,6 +64,10 @@ class BackendApi {
 
     createModule(id){
         return new BackendModule(this.#_plugin, id, this.#_expressRouter, this.#_internalSocket);
+    }
+
+    registerDatagen(model){
+        this.#_datagenRegisrty.modelNames.push(model.mongoName);
     }
 };
 
@@ -288,6 +294,10 @@ class BackendModel {
 
     get mongoSchema() {
         return this.#_mongoSchema;
+    }
+
+    get mongoName(){
+        return `${this.#_prefix}/${this.#_name}`
     }
 };
 

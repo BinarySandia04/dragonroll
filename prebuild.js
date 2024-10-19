@@ -88,22 +88,33 @@ for(let i = 0; i < locales.length; i++){
 
 
 console.log("Updated Locales")
+
 // #endregion
 // #region plugins
 
 for(let j = 0; j < plugins.length; j++){
+  // Cient scripts and views
   if(fs.existsSync(`./plugins/${plugins[j]}/client/`)){
     fs.cpSync(`./plugins/${plugins[j]}/client/`, `./client/plugins/${plugins[j]}`, {recursive: true});
     fs.copyFileSync(`./plugins/${plugins[j]}/plugin.json`, `./client/plugins/${plugins[j]}/plugin.json`);
   }
 
+  // Backend scripts
   if(fs.existsSync(`./plugins/${plugins[j]}/backend/`)){
     fs.cpSync(`./plugins/${plugins[j]}/backend/`, `./backend/plugins/${plugins[j]}`, {recursive: true});
     fs.copyFileSync(`./plugins/${plugins[j]}/plugin.json`, `./backend/plugins/${plugins[j]}/plugin.json`);
   }
 
+  // Public folder
   if(fs.existsSync(`./plugins/${plugins[j]}/public/`)){
     fs.cpSync(`./plugins/${plugins[j]}/public/`, `./client/public/plugins/${plugins[j]}`, {recursive: true});
+  }
+
+  // Datagen
+  if(fs.existsSync(`./plugins/${plugins[j]}/datagen`)){
+    fs.readdirSync(`./plugins/${plugins[j]}/datagen`).forEach(d => {
+      fs.cpSync(`./plugins/${plugins[j]}/datagen/${d}`, `./backend/datagen/${plugins[j]}/${d}`, {recursive: true});
+    })
   }
 }
 

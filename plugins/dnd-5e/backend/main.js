@@ -84,6 +84,13 @@ function Main(api){
     dndModule.createModelRoutes(effectsModel);
     dndModule.createModelRoutes(entityModel);
 
+    Api.registerDatagen(itemModel);
+    Api.registerDatagen(monsterModel);
+    Api.registerDatagen(actorModel);
+    Api.registerDatagen(tableModel);
+    Api.registerDatagen(progressableModel);
+    Api.registerDatagen(effectsModel);
+
     // Api.socket.on("test", () => console.log("test"));
     // Api.router.createModelRoutes(itemModel, 'item');
 }

@@ -1,9 +1,0 @@
-{
-    "module": "dnd-5e",
-    "id": "dnd-5e-base",
-    "package": "dnd-5e",
-    "name": "Dnd 5e Essential Books",
-    "desc": "This book includes the player manual, dungeon master manual and the monsters manual",
-    "icon": "icon.png",
-    "dependencies": []
-}

@@ -1,0 +1,9 @@
+{
+    "module": "dnd-5e",
+    "id": "dnd-5e-monster-manual",
+    "package": "dnd-5e",
+    "name": "Dnd 5e Essential Books - Monster Manual",
+    "desc": "This book includes the content of the monster manual",
+    "icon": "icon.png",
+    "dependencies": []
+}

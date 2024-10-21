@@ -24,20 +24,15 @@ function FetchConcepts(){
     }).catch(err => console.log(err));
 }
 
-function FetchData(){
-    FetchConcepts();
-}
-
 let GetConcepts = () => data.value.concepts;
-let GetConcept = (id) => dndModule.router.get('/item/get', {id})
+let GetItem = (id) => dndModule.router.get('/item/get', {id})
 
 
 export {
     InitData,
-    FetchData,
 
     FetchConcepts,
 
     GetConcepts,
-    GetConcept,
+    GetItem,
 }

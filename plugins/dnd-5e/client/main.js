@@ -1,4 +1,4 @@
-import { FetchConcepts, FetchData, InitData } from "./data";
+import { FetchConcepts, InitData } from "./data";
 import { Global } from '@/services/PluginGlobals';
 
 var dndModule;
@@ -23,9 +23,12 @@ function Main(Api){
 
     let databaseWindow = Api.registerWindow('database', Api.createView('Database'));
     let actorsWindow = Api.registerWindow('actors', Api.createView('Actors'));
+    let booksWindow = Api.registerWindow('books', Api.createView('Books'))
 
     Global('dnd-5e').Data = {
         windows: {
+            database: databaseWindow,
+            actors: actorsWindow,
             character_sheet: Api.registerWindow('character_sheet', Api.createView('CharacterSheet')),
             item_sheet: Api.registerWindow('item_sheet', Api.createView('ItemSheet')),
             create_item_prompt: Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'))
@@ -36,15 +39,27 @@ function Main(Api){
         right: [
             {
                 id: 'database-button',
-                icon: '/icons/iconoir/regular/bookmark-book.svg',
+                icon: '/icons/iconoir/regular/book.svg',
                 action: () => {
                     Api.createWindow(databaseWindow, {
-                        title: "Database",
-                        id: databaseWindow,
-                        close: () => Api.clearWindow(databaseWindow)
+                        title: "Campaign items",
+                        id: 'campaign-items-window',
+                        close: () => Api.clearWindow("campaign-items-window")
                     });
                 }
-            }, {
+            },
+            {
+                id: 'database-button',
+                icon: '/icons/iconoir/regular/bookmark-book.svg',
+                action: () => {
+                    Api.createWindow(booksWindow, {
+                        title: "Books",
+                        id: booksWindow,
+                        close: () => Api.clearWindow(booksWindow)
+                    });
+                }
+            },
+            {
                 id: 'group-button',
                 icon: '/icons/iconoir/regular/group.svg',
                 action: () => {
@@ -64,7 +79,7 @@ function Main(Api){
 
     dndModule.onInit = () => {
         InitData();
-        FetchData();
+        FetchConcepts();
     }
 
     Api.registerModule(dndModule);

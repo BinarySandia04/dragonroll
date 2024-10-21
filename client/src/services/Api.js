@@ -156,6 +156,7 @@ class ClientModule {
     #_plugin;
     #_id;
     #_router;
+    #_baseRouter;
 
     #_buttons;
     #_previewData;
@@ -169,6 +170,7 @@ class ClientModule {
         this.#_plugin = plugin;
         this.#_id = id;
         this.#_router = new ClientRouter(`/plugins/${plugin.package}/_module/${id}`, {});
+        this.#_baseRouter = new ClientRouter("", {})
         this.#_socket = new ClientSocket(`plugins/${plugin.package}/${id}`)
     }
 
@@ -214,6 +216,10 @@ class ClientModule {
 
     get _plugin(){
         return this.#_plugin;
+    }
+
+    getDatagen(){
+        return this.#_baseRouter.get(`/datagen/${this.#_id}`);
     }
 }
 

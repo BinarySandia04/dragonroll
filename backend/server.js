@@ -77,7 +77,8 @@ app.use(checkAuth);
 
 // ROUTES WITH AUTH
 app.use('/campaign', require('./routes/campaign'));
-app.use('/maps', require('./routes/map'))
+app.use('/maps', require('./routes/map'));
+app.use('/datagen', require('./routes/datagen'))
 app.use('/admin', require('./routes/admin'))
 // GET localhost:8081/concept/list
 

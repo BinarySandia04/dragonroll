@@ -1,7 +1,7 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { GetConcept } from './../data.js';
+import { GetItem } from './../data.js';
 
 import { onMounted, ref, shallowRef } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
@@ -153,8 +153,7 @@ if(data.item_create){
 
     }).catch(err => console.log(err));
 } else {
-    // Get concept
-    GetConcept(data.item_id).then(response => {
+    GetItem(data.item_id).then(response => {
         concept.value = response.data.data;
         InitValues();
     }).catch(err => console.log(err));

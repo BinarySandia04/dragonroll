@@ -8,8 +8,9 @@ import * as _Tooltip from "@/services/Tooltip"
 import * as _Windows from "@/services/Windows"
 import Server from '@/services/Server';
 import { socket } from '@/services/Socket';
-const { t } = useI18n() 
+import i18n from '@/services/i18n'
 
+const { t } = i18n.global
 /**
  * Class for managing the client api
  * @hideconstructor
@@ -175,7 +176,8 @@ class ClientModule {
         this.#_previewData = data;
     }
 
-    set onInit(init){ this.#_init = (campaign) => {
+    set onInit(init){ 
+        this.#_init = (campaign) => {
             this.#_campaign = campaign;
             this.#_router._setParam("campaign", campaign._id);
             init();

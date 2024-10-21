@@ -75,18 +75,13 @@ let oldInfo;
 
 function Upload(){
     let params = {id: concept.value._id};
-    if(oldInfo != concept.value.info){
-        params['fireUpdate'] = true;
-        oldInfo = structuredClone(concept.value.info);
-    }
-
     dndModule.router.put('/item/update', params, {data: concept.value}).then(response => {
         // console.log(response);
     });
 }
 
 function SetParam(param, value){
-    SetKey(concept.value, `info.${param}`, value);
+    SetKey(concept.value, `${param}`, value);
     Upload();
 }
 
@@ -106,14 +101,14 @@ function InitValues(){
     let rarities = GenRarities();
     let weapon_types = GenTypes(["", "Melee", "Ranged", "Martial Melee", "Martial Ranged", "Natural", "Improvised", "Siege Weapon"]);
     
-    icon_selector.value.icon = GetKey(concept.value, "info.icon");
-    rarity.value.innerHTML = `<span class='important ${GetKey(concept.value, "info.rarity") ? GetKey(concept.value, "info.rarity").replace(/\s+/g, '-').toLowerCase() : ""}'>${GetKey(concept.value, "info.rarity")}</span>`;
+    icon_selector.value.icon = GetKey(concept.value, "icon");
+    rarity.value.innerHTML = `<span class='important ${GetKey(concept.value, "rarity") ? GetKey(concept.value, "rarity").replace(/\s+/g, '-').toLowerCase() : ""}'>${GetKey(concept.value, "rarity")}</span>`;
     weaponType.value.innerHTML = `<span class='important'>${GetKey(concept.value, "info.weapon_type")}</span>`;
-    description.value.text = GetKey(concept.value, "info.description");
+    description.value.text = GetKey(concept.value, "description");
     properties.value.selected = GetKey(concept.value, "info.properties");
-    quantity.value.Set(GetKey(concept.value, "info.quantity"));
-    weight.value.Set(GetKey(concept.value, "info.weight"));
-    price.value.Set(GetKey(concept.value, "info.price"));
+    quantity.value.Set(GetKey(concept.value, "quantity"));
+    weight.value.Set(GetKey(concept.value, "weight"));
+    price.value.Set(GetKey(concept.value, "price"));
     item_type_name.value = GetKey(concept.value, "type");
     item_name.value.innerHTML = GetKey(concept.value, "name");
 

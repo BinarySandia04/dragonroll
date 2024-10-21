@@ -75,18 +75,18 @@ function ElementContext(element){
 }
 
 function ElementTooltip(element){
-    let descHtml = GetKey(element, 'info.description');
+    let descHtml = GetKey(element, 'description');
     if(descHtml) descHtml = marked.parse(descHtml);
     else descHtml = '';
     return `<div class='document item'>
         <h2>${element.name}</h2>
-        <img src='${GetKey(element, "info.icon")}'></img>
+        <img src='${GetKey(element, "icon")}'></img>
         <div class='document'>${descHtml}</div>
     </div>`;
 }
 
 function ElementIcon(element){
-    return GetKey(element, "info.icon") ? GetKey(element, "info.icon") : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
+    return GetKey(element, "icon") ? GetKey(element, "icon") : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
 }
 </script>
 

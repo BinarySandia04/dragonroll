@@ -22,5 +22,6 @@
             "desc": "module.desc",
             "icon": "icon.png"
         }
-    ]
+    ],
+    "dependencies": []
 }

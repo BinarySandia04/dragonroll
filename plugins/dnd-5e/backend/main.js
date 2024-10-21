@@ -10,10 +10,14 @@ function Main(api){
 
     let itemModel = Api.createModel("item", {
         name: { type: "String", required: true, default: "New item"},
+        description: { type: "String", default: "New description" },
         type: { type: "String", required: true, default: "Item" },
-        info: { type: "Object" }, // For preview only
-        data: { type: "Object" }, // Advanced item
-        book: { type: "ObjectId", ref: "Book"}
+        icon: { type: "String" },
+        rarity: { type: "String", default: "" },
+        quantity: { type: "Number", default: "1" },
+        weight: { type: "Number", default: "0" },
+        price: { type: "Number", default: "0" },
+        data: { type: "Object" }, // Advanced properties depending on item type
     });
 
     let entityDataModel = Api.createModel('entitydata', {

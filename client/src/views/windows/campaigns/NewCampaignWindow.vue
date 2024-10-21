@@ -26,23 +26,13 @@ onMounted(() => {
     SetupHandle(id, handle);
     SetSize(id, {width: 350, height: 240});
     ResetPosition(id, "center");
-    GetEmitter().on('select', (system_id) => Select(system_id))
-
-    console.log(system);
 });
-
-function Select(system_id){
-    system = system_id;
-    try {
-        systemSelector.value.selectedSystem = system_id;
-    } catch {}
-}
 
 
 function NewCampaign(){
     Server().post('/campaign/create', {
         name: campaignName.value,
-        system
+        system: systemSelector.value.selectedSystem
     }).then((response) => {
         if(response.data.status == "error"){
             errorMessage.value = response.data.msg;

@@ -14,9 +14,10 @@ let windowId = props.windowId;
 function DisplaySystemSelector(){
     CreateChildWindow(windowId, 'system_selector', {'done': (data) => {
         let module = GetModule(data.selected);
+        console.log(module);
         selectedSystem.value = data.selected;
-        selectedImage.value.src = `modules/${module.id}/icon.png`;
-        systemTitle.value = module.title;
+        selectedImage.value.src = `plugins/${module.id}/icon.png`;
+        systemTitle.value = module.previewData.title;
         ClearWindow('system-selector');
     }});
 }

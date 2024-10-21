@@ -12,7 +12,7 @@ function LaunchGame(){
 
 function ExitGame(){
     inGameRef.value = false;
-    GetCampaignModule().exit();
+    if(GetCampaignModule().exit) GetCampaignModule().exit();
 }
 
 export {

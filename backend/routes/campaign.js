@@ -17,6 +17,8 @@ router.post('/create', (req, res) => {
         name,
         system
     } = req.body;
+    console.log(name)
+    console.log(system)
 
     if(!(name && system)){
         res.json({

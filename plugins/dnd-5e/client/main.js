@@ -58,7 +58,7 @@ function Main(Api){
     });
     
 
-    dndModule.socket.on('update-concepts', () => {
+    dndModule.socket.on('update-item-all', () => {
         FetchConcepts();
     });
 

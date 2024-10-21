@@ -151,7 +151,7 @@ class BackendModule {
     // scope => ['campaign'] 
     // coses que es necessiten verificar a tots els models
     // i s'agafa de req.query
-    createModelRoutes(model, scope = []){
+    createModelRoutes(model, scope = ['campaign']){
         this.router.get(`/${model.name}/list`, (req, res) => {
             let query = {}
             scope.forEach(k => query[k] = req.query[k]);
@@ -183,7 +183,7 @@ class BackendModule {
             scope.forEach(k => query[k] = req.query[k]);
             query['_id'] = req.query.id;
             model.findOneAndUpdate(query, req.body.data).then(data => {
-                if(req.query.fireUpdate) this.socket.emit(query['campaign'], `update-${model.name}-all`);
+                this.socket.emit(query['campaign'], `update-${model.name}-all`);
                 this.socket.emit(query['campaign'], `update-${model.name}`, req.query.id);
                 res.json({status: 'ok'});
             })
@@ -194,7 +194,7 @@ class BackendModule {
             scope.forEach(k => query[k] = req.query[k]);
             query['_id'] = req.query.id;
             model.deleteOne(query).then(data => {
-                if(req.query.fireUpdate) this.socket.emit(query['campaign'], `update-${model.name}-all`);
+                this.socket.emit(query['campaign'], `update-${model.name}-all`);
                 this.socket.emit(query['campaign'], `update-${model.name}`, req.query.id);
                 res.json({status: 'ok'});
             });

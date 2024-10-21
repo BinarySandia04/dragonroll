@@ -36,12 +36,29 @@ function FetchBookList(){
     });
 }
 
-function OpenBook(){
-    console.log("Open book!");
+function OpenBook(element){
+    console.log(element);
+    console.log("!!!!!");
+    dndModule.getDatagenData(element.id).then(response => {
+        console.log(response.data);
+        Api.createWindow(PluginData.windows.database, {
+            title: element.name,
+            id: 'campaign-items-window',
+            elements: response.data.elements,
+            topper: {
+                icon: "/plugins/" + element.package + "/" + element.icon,
+                title: element.name,
+                description: element.desc
+            },
+            close: () => Api.clearWindow("campaign-items-window")
+        });
+    });
+    
 }
 
 function BookIcon(element){
-    return "";
+    console.log(element);
+    return "/plugins/" + element.package + "/" + element.icon;
 }
 </script>
 

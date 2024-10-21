@@ -221,6 +221,10 @@ class ClientModule {
     getDatagen(){
         return this.#_baseRouter.get(`/datagen/${this.#_id}`);
     }
+
+    getDatagenData(id){
+        return this.#_baseRouter.get(`/datagen/${this.#_id}/${id}/all`);
+    }
 }
 
 class ClientSocket {

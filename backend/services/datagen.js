@@ -32,34 +32,42 @@ async function datagenTask(models) {
 async function resolveDatagen(models, path, info){
     // Do locale translation with info somewhere...?
     const datagenCollection = await DatagenCollection.create({
-        name: info.name,
-        id: info.id,
+        name: info.name,       // Display name?
+        id: info.id,           // Internal id?
+        package: info.package, // From what plugin?
+        module: info.module,  // What module is for?
         desc: info.desc,
-        package: info.package
+        icon: info.icon,
     });
 
-    const modelNames = models[info.package].modelNames;
-    modelNames.forEach(modelName => {
+    const modelNames = models[info.module].modelNames;
+    for(let i = 0; i < modelNames.length; i++){
+        let modelName = modelNames[i];
         if(Object.keys(mongoose.models).includes(modelName)){
             let modelLastName = modelName.split('/').pop();
             let modelDataPath = path + "/data/" + modelLastName;
             if(fs.existsSync(modelDataPath)){
                 const jsonFiles = fs.readdirSync(path + "/data/" + modelLastName, {recursive: true});
                 let modelPath = path + "/data/" + modelLastName;
-                jsonFiles.forEach(file => {
+                for(let j = 0; j < jsonFiles.length; j++){
+                    let file = jsonFiles[j];
                     if(fs.lstatSync(modelPath + "/" + file).isFile()){
-                        appendDatagen(modelPath + "/" + file, modelName, info, datagenCollection);
+                        const newDatagen = await appendDatagen(modelPath + "/" + file, modelName, info, datagenCollection);
+                        datagenCollection.entries.push(newDatagen._id);
                     }
-                })
+                }
             }
         }
-    })
+    };
+
+
+    await datagenCollection.save();
 }
 
 async function appendDatagen(file, modelName, info, datagenCollection){
     // "Appending " + file + " to model " + modelName + " from " + info.id + " for package " + info.package
     let fileData = JSON.parse(fs.readFileSync(file));
-    await DatagenEntry.create({
+    return await DatagenEntry.create({
         id: fileData.id,
         data: fileData.value,
         schema: modelName,

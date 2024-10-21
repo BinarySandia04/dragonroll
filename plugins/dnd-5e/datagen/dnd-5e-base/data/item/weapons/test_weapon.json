@@ -1,3 +1,19 @@
 {
-    
+    "id": "weapon/test_weapon",
+    "value": {
+        "name": "Test datagen weapon",
+        "type": "Weapon",
+        "data": {},
+        "info": {
+            "icon": "icons/weapons/ammunition/shot-round-blue.webp",
+            "weapon_type": "Natural",
+            "rarity": "Rare",
+            "quantity": "1",
+            "weight": "10",
+            "price": "10",
+            "properties": [
+                "Finesse"
+            ]
+        }
+    }
 }

@@ -37,19 +37,18 @@ function FetchBookList(){
 }
 
 function OpenBook(element){
-    console.log(element);
-    console.log("!!!!!");
     dndModule.getDatagenData(element.id).then(response => {
-        console.log(response.data);
         Api.createWindow(PluginData.windows.database, {
             title: element.name,
             id: 'campaign-items-window',
             elements: response.data.elements,
+            transformer: (element) => element.data,
             topper: {
                 icon: "/plugins/" + element.package + "/" + element.icon,
                 title: element.name,
                 description: element.desc
             },
+            getConcepts: () => response.data.elements,
             close: () => Api.clearWindow("campaign-items-window")
         });
     });

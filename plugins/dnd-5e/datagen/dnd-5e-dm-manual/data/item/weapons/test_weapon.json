@@ -1,5 +1,5 @@
 {
-    "id": "weapon/test_weapon",
+    "id": "weapons/test_weapon",
     "value": {
         "name": "Test datagen weapon",
         "description": "Test test test",
@@ -10,7 +10,7 @@
         "weight": "10",
         "price": "10",
         "data": {
-            "weapon_type": "Natural",
+        "weapon_type": "Natural",
             "properties": [
                 "Finesse"
             ]

@@ -1,4 +1,4 @@
-import { FetchConcepts, InitData } from "./data";
+import { FetchConcepts, GetConcepts, InitData } from "./data";
 import { Global } from '@/services/PluginGlobals';
 
 var dndModule;
@@ -44,6 +44,8 @@ function Main(Api){
                     Api.createWindow(databaseWindow, {
                         title: "Campaign items",
                         id: 'campaign-items-window',
+                        fetchConcepts: FetchConcepts, // Requests reactive ref update 
+                        getConcepts: GetConcepts,     // Needs to return reactive ref value
                         close: () => Api.clearWindow("campaign-items-window")
                     });
                 }

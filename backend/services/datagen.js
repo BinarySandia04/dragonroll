@@ -69,7 +69,7 @@ async function appendDatagen(file, modelName, info, datagenCollection){
     let fileData = JSON.parse(fs.readFileSync(file));
     return await DatagenEntry.create({
         id: fileData.id,
-        data: fileData.value,
+        data: fileData.value !== undefined ? fileData.value : {},
         schema: modelName,
         datagen_collection: datagenCollection
     });

@@ -38,22 +38,33 @@ onMounted(() => {
     SetResizable(id, true);
     SetMinSize(id, {width: 800, height: 300});
 
-    watch(GetConcepts, () => {
-        let elements = GetConcepts();
-        weapons.value = elements.filter((e) => e.type == "Weapon");
-        equipment.value = elements.filter((e) => e.type == "Equipment");
-        consumables.value = elements.filter((e) => e.type == "Consumable");
-        containers.value = elements.filter((e) => e.type == "Container");
-        tools.value = elements.filter((e) => e.type == "Tool");
-        spells.value = elements.filter((e) => e.type == "Spell");
-        features.value = elements.filter((e) => e.type == "Feature");
+    // console.log(data);
 
-        console.log(elements);
-        console.log(elements);
+    watch(data.getConcepts, () => {
+        updateView();
     });
     
-    FetchConcepts();
+    if(data.fetchConcepts) data.fetchConcepts();
+    updateView();
 });
+
+function updateView(){
+    let elements = data.getConcepts();
+    if(data.transformer) elements = elements.map(element => data.transformer(element));
+
+    console.log(elements);
+
+    weapons.value = elements.filter((e) => e.type == "Weapon");
+    equipment.value = elements.filter((e) => e.type == "Equipment");
+    consumables.value = elements.filter((e) => e.type == "Consumable");
+    containers.value = elements.filter((e) => e.type == "Container");
+    tools.value = elements.filter((e) => e.type == "Tool");
+    spells.value = elements.filter((e) => e.type == "Spell");
+    features.value = elements.filter((e) => e.type == "Feature");
+
+    console.log(elements);
+}
+
 function OpenCreateItemPrompt(){
     Api.createWindow(PluginData.windows.create_item_prompt, {id: 'create_item_prompt', title: 'Create Item', close: () => Api.clearWindow('create_item_prompt')})
 }

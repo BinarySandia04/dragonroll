@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const DatagenEntrySchema = new Schema({
     id: {type: String, required: true},
     schema: { type: String, required: true},
-    data: { type: Object },
+    data: { type: Object, default: {} },
     datagen_collection: {type: mongoose.Types.ObjectId, ref: "DatagenCollection"},
 });
 

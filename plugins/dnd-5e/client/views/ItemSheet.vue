@@ -3,7 +3,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { GetItem } from './../data.js';
 
-import { onMounted, ref, shallowRef } from 'vue';
+import { onMounted, ref, shallowRef, toRaw } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
 import IconSelector from '@/views/partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/ContextMenu';
@@ -138,6 +138,12 @@ onMounted(() => {
     SetResizable(id, true);
     SetMinSize(id, {width: 400, height: 300});
     ResetPosition(id, "center");
+
+    if(data.staticContent){
+    concept.value = toRaw(data.staticContent);
+        console.log(concept.value);
+        InitValues();
+    }
 });
 
 item_type.value = data.item_type;
@@ -153,10 +159,13 @@ if(data.item_create){
 
     }).catch(err => console.log(err));
 } else {
-    GetItem(data.item_id).then(response => {
-        concept.value = response.data.data;
-        InitValues();
-    }).catch(err => console.log(err));
+    if(!data.staticContent){
+        GetItem(data.item_id).then(response => {
+            concept.value = response.data.data;
+            console.log(concept.value);
+            InitValues();
+        }).catch(err => console.log(err));
+    }
 }
 </script>
 

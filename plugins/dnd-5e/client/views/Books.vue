@@ -48,6 +48,7 @@ function OpenBook(element){
                 title: element.name,
                 description: element.desc
             },
+            fromDatagen: true, // Makes read only mode from elements!
             getConcepts: () => response.data.elements,
             close: () => Api.clearWindow("campaign-items-window")
         });

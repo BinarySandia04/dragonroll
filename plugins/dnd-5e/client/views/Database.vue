@@ -70,10 +70,15 @@ function OpenCreateItemPrompt(){
 }
 
 function OpenConcept(element){
+    let fromDatagen = data.fromDatagen;
+    let staticContent = false;
+    if(fromDatagen) staticContent = element;
+
     Api.createWindow(PluginData.windows.item_sheet, {
         id: 'item_sheet_' + element._id,
         title: 'Edit Item',
         item_id: element._id,
+        staticContent,
         close: () => Api.clearWindow('item_sheet_' + element._id)
     });
 }

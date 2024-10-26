@@ -46,7 +46,7 @@ onMounted(() => {
     
     if(data.fetchConcepts) data.fetchConcepts();
     updateView();
-});
+});true
 
 function updateView(){
     let elements = data.getConcepts();
@@ -76,7 +76,7 @@ function OpenConcept(element){
 
     Api.createWindow(PluginData.windows.item_sheet, {
         id: 'item_sheet_' + element._id,
-        title: 'Edit Item',
+        title: staticContent ? 'View Item - Read only' : 'Edit Item',
         item_id: element._id,
         staticContent,
         close: () => Api.clearWindow('item_sheet_' + element._id)
@@ -187,7 +187,7 @@ function ElementIcon(element){
             </Tabs>
         </div>
 
-        <FixedBottomButtons :plus="OpenCreateItemPrompt"></FixedBottomButtons>
+        <FixedBottomButtons :plus="OpenCreateItemPrompt" v-if="!data.fromDatagen"></FixedBottomButtons>
     </div>
 </template>
 

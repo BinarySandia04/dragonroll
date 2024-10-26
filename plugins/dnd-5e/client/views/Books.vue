@@ -40,7 +40,7 @@ function OpenBook(element){
     dndModule.getDatagenData(element.id).then(response => {
         Api.createWindow(PluginData.windows.database, {
             title: element.name,
-            id: 'campaign-items-window',
+            id: 'book-items-window-' + element.id,
             elements: response.data.elements,
             transformer: (element) => element.data,
             topper: {
@@ -50,7 +50,7 @@ function OpenBook(element){
             },
             fromDatagen: true, // Makes read only mode from elements!
             getConcepts: () => response.data.elements,
-            close: () => Api.clearWindow("campaign-items-window")
+            close: () => Api.clearWindow('book-items-window-' + element.id)
         });
     });
     

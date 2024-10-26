@@ -3,7 +3,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { GetItem } from './../data.js';
 
-import { onMounted, ref, shallowRef, toRaw } from 'vue';
+import { onMounted, ref, shallowRef, toRaw, provide } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
 import IconSelector from '@/views/partials/IconSelector.vue';
 import { AddContextMenu, HideContextMenu, ShowContextMenu } from '@/services/ContextMenu';
@@ -11,6 +11,7 @@ import Tabs from '@/views/partials/Tabs.vue';
 import MarkdownEditor from '@/views/partials/MarkdownEditor.vue';
 import Tags from '@/views/partials/Tags.vue';
 import Input from '@/views/partials/Input.vue';
+import Form from '@/views/partials/Form.vue';
 import { GetKey, SetKey } from '@/services/Utils.js';
 
 import { Global } from '@/services/PluginGlobals';
@@ -23,6 +24,7 @@ const api = Global('dnd-5e').Api;
 const pluginData = Global('dnd-5e').Data;
 const dndModule = Global('dnd-5e').DndModule;
 
+const contentEditable = ref(true);
 
 const handle = ref(null);
 const item_type = ref("");
@@ -116,15 +118,12 @@ function InitValues(){
     weight.value.OnUpdate((val) => SetParam('weight', val));
     price.value.OnUpdate((val) => SetParam('price', val));
 
-    rarity.value.addEventListener("click", () => {
-        ShowContextMenu(rarities)
-    });
-    AddContextMenu(rarity.value, rarities, {dropdown: true})
 
-    weaponType.value.addEventListener("click", () => {
-        ShowContextMenu(weapon_types)
-    });
-    AddContextMenu(weaponType.value, weapon_types, {dropdown: true});
+    // TODO: Moure això
+    if(contentEditable.value){
+        AddContextMenu(rarity.value, rarities, {dropdown: true})
+        AddContextMenu(weaponType.value, weapon_types, {dropdown: true});
+    }
 
     item_name.value.addEventListener('blur', () => {
         concept.value.name = item_name.value.textContent;
@@ -140,8 +139,8 @@ onMounted(() => {
     ResetPosition(id, "center");
 
     if(data.staticContent){
-    concept.value = toRaw(data.staticContent);
-        console.log(concept.value);
+        concept.value = toRaw(data.staticContent);
+        contentEditable.value = false;
         InitValues();
     }
 });
@@ -167,14 +166,15 @@ if(data.item_create){
         }).catch(err => console.log(err));
     }
 }
+
+provide('editable', contentEditable);
 </script>
 
 
 <template>
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <WindowHandle :window="id" ref="handle"></WindowHandle>
-        
-        <div class="main-container">
+        <Form>
             <div class="item-header">
                 <IconSelector :window="id" ref="icon_selector" :done="IconSelected"></IconSelector>
                 <div class="header-info">
@@ -211,7 +211,7 @@ if(data.item_create){
                             </div>
                         </div>
                         <div class="description">
-                            <MarkdownEditor ref="description" :done="DescriptionChanged" :editable="true"></MarkdownEditor>
+                            <MarkdownEditor ref="description" :done="DescriptionChanged" :editable="contentEditable"></MarkdownEditor>
                         </div>
                     </div>
                 </template>
@@ -219,22 +219,22 @@ if(data.item_create){
                     <h2 class="section">Properties</h2>
                     <FormElement>
                         <label>Properties</label>
-                        <Tags ref="properties" :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged"></Tags>
+                        <Tags ref="properties" :items="['Amunnition','Finesse','Heavy','Light','Loading','Range','Reach','Special','Thrown','Two-Handed','Versatile']" :done="PropertiesChanged" :editable="contentEditable"></Tags>
                     </FormElement>
                     <h2 class="section">Usage</h2>
                     <FormElement>
                         <label>Range</label>
-                        <Input></Input><label>/</label><Input></Input><Dropdown :options="['ft', 'm']" :selected="'ft'"></Dropdown>
+                        <Input></Input><label>/</label><Input></Input><Dropdown :options="['ft', 'm']" :selected="'ft'" :editable="contentEditable"></Dropdown>
                     </FormElement>
                     <h2 class="section">Damage</h2>
                     <FormElement>
                         <label>Damage</label>
-                        <Dropdown :options="['None','Acid','Bludgeoning','Cold','Fire','Force','Lightning','Necrotic','Piercing','Poison','Psychic','Radiant','Slashing','Thunder','Healing','Healing (Temp)']"></Dropdown>
+                        <Dropdown :options="['None','Acid','Bludgeoning','Cold','Fire','Force','Lightning','Necrotic','Piercing','Poison','Psychic','Radiant','Slashing','Thunder','Healing','Healing (Temp)']" :editable="contentEditable"></Dropdown>
                         <Input></Input>
                     </FormElement>
                 </template>
             </Tabs>
-        </div>
+        </Form>
     </div>
 </template>
 

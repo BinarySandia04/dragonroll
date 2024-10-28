@@ -3,14 +3,16 @@ import { onMounted, ref, watch } from 'vue';
 import { AddContextMenu } from '@/services/ContextMenu';
 import { AddTooltip } from '@/services/Tooltip';
 import { GetKey } from '@/services/Utils';
+import { MakeDraggable } from '@/services/Draggable';
 import { marked } from "marked";
 
-const props = defineProps(['element', 'context', 'tooltip', 'icon']);
+const props = defineProps(['element', 'context', 'tooltip', 'icon', 'click']);
 
 const element = ref({});
 const elementDiv = ref(null);
 const tooltipContainer = ref(null);
 const icon = ref("icons/game-icons/ffffff/lorc/crossed-swords.svg")
+const tooltipIcon = ref(null);
 
 async function updateElement(){
     element.value = props.element;
@@ -22,7 +24,7 @@ async function updateElement(){
     if(props.icon) icon.value = await props.icon(element.value);
 
     let tooltip = await props.tooltip(element.value);
-    if(tooltip) AddTooltip(tooltipContainer.value, tooltip);
+    if(tooltip) AddTooltip(tooltipIcon.value, tooltip);
 }
 
 onMounted(async () => {
@@ -33,12 +35,14 @@ onMounted(async () => {
 
     let context = await props.context();
     if(context) AddContextMenu(elementDiv.value, context);
+
+    MakeDraggable(elementDiv.value, tooltipContainer.value, props.click);
 })
 </script>
 <template>
     <div class="concept-element" ref="elementDiv">
         <div class="concept-tooltip-container" ref="tooltipContainer">
-            <img :src="icon" class="concept-icon">
+            <img :src="icon" class="concept-icon" draggable="false" ref="tooltipIcon">
             <span class="title">{{ element.name }}</span>
         </div>
     </div>
@@ -61,7 +65,11 @@ onMounted(async () => {
     padding: 10px;
     align-items: center;
     border-bottom: 1px solid var(--color-border-soft);
-    
+    background-color: var(--color-background-soft);
+
+    &.drag {
+        border: 1px solid var(--color-border-hard);
+    }
 
     .title {
         padding-left: 10px;

@@ -5,6 +5,7 @@ import { ClearWindow, CreateWindow } from '../../services/Windows';
 
 import { animate } from "motion"
 import ConceptEntry from './ConceptEntry.vue';
+import DropZone from './DropZone.vue';
 
 const props = defineProps(['elements', 'open', 'tooltip', 'context', 'icon']);
 
@@ -16,12 +17,13 @@ let TooltipElement = () => {};
 let ContextElement = () => {};
 let IconElement = () => {};
 
-onMounted(() => {
-    if(props.open) OpenElement = props.open;
-    if(props.tooltip) TooltipElement = props.tooltip;
-    if(props.context) ContextElement = props.context;
-    if(props.icon) IconElement = props.icon;
 
+if(props.open) OpenElement = props.open;
+if(props.tooltip) TooltipElement = props.tooltip;
+if(props.context) ContextElement = props.context;
+if(props.icon) IconElement = props.icon;
+
+onMounted(() => {
     watch(() => props.elements, () => {
         elements.value = props.elements;
     });
@@ -47,22 +49,23 @@ function onLeave(el, done) {
 </script>
 
 <template>
-    <div class="list-container" ref="listContainer">
-        <TransitionGroup name="list-element" :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
-            <ConceptEntry class="list-element" v-for="(element, index) in elements"
-                :key="element._id"
-                :element="element"
-                :context="async () => await ContextElement(element)"
-                :tooltip="async (el) => await TooltipElement(el)"
-                :icon="async (el) => await IconElement(el)"
-                v-on:click.prevent="OpenElement(element)"
-                :data-index="index"></ConceptEntry>
-        </TransitionGroup>
-    </div>
+    <DropZone>
+        <div class="list-container" ref="listContainer">
+            <TransitionGroup name="list-element" :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
+                <ConceptEntry class="list-element" v-for="(element, index) in elements"
+                    :key="element._id"
+                    :element="element"
+                    :context="async () => await ContextElement(element)"
+                    :tooltip="async (el) => await TooltipElement(el)"
+                    :icon="async (el) => await IconElement(el)"
+                    :click="() => OpenElement(element)"
+                    :data-index="index"></ConceptEntry>
+            </TransitionGroup>
+        </div>
+    </DropZone>
 </template>
 
 <style lang="scss" scoped>
-
 .list-container {
     display: flex;
     flex-direction: column;

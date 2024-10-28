@@ -49,6 +49,7 @@ function OpenDropdown(){
 
 onMounted(() => {
     watch(selected, () => {
+        if(selected.value !== undefined)
         selectedTags.value = selected.value;
     });
 })

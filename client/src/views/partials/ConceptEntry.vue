@@ -36,7 +36,7 @@ onMounted(async () => {
     let context = await props.context();
     if(context) AddContextMenu(elementDiv.value, context);
 
-    MakeDraggable(elementDiv.value, tooltipContainer.value, props.click);
+    MakeDraggable(elementDiv.value, tooltipContainer.value, props.click, props.element);
 })
 </script>
 <template>

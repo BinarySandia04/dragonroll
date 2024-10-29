@@ -46,10 +46,14 @@ function onLeave(el, done) {
         translateX: [0, 20]
     });
 }
+
+function onDrop(element){
+    console.log(element);
+}
 </script>
 
 <template>
-    <DropZone>
+    <DropZone :onDrop="onDrop">
         <div class="list-container" ref="listContainer">
             <TransitionGroup name="list-element" :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
                 <ConceptEntry class="list-element" v-for="(element, index) in elements"

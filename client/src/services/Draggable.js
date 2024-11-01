@@ -3,6 +3,14 @@ var oldPos, oldZindex;
 var startX, startY;
 var dragStarted = false;
 
+
+function oneIncludesOther(a, b){
+  if(a === undefined || b === undefined) return false;
+  for(let i = 0; i < a.length; i++){
+    if(b.includes(a[i])) return true;
+  } return false;
+}
+
 function getZIndex(element){
   var z = window.document.defaultView.getComputedStyle(element).getPropertyValue('z-index');
   if (isNaN(z)) return getZIndex(element.parentNode);
@@ -77,23 +85,28 @@ function onMouseMove(event) {
   // if (dropzone !== startDropzone) {
     if (dropzone !== currentDropzone) {
       // Leave dropzone
-      console.log("Leaving dropzone")
+      // console.log("Leaving dropzone")
       if(currentDropzone !== undefined){
         currentDropzone.classList.remove('dashed');
       }
       // -> drag enter zone
       currentDropzone = dropzone;
       if(dropzone !== undefined && dropzone !== startDropzone){
-        dropzone.classList.add('dashed')
+        console.log(currentDropzone.__validDrops);
+        if(oneIncludesOther(currentDropzone.__validDrops, currentElement.__dropTypes)){
+          dropzone.classList.add('dashed')
+        }
       }
-      console.log("Enter other drop zone");
+      // console.log("Enter other drop zone");
     }
   // }
 }
 function onMouseUp(event) {
     if(event.button != 0) return;
+    
+    let clickOnly = false;
     if(!dragStarted){
-        currentElement._click();
+        clickOnly = true;
     }
     dragStarted = false;
     currentElement.style.position = oldPos;
@@ -101,22 +114,30 @@ function onMouseUp(event) {
     currentElement.classList.remove("drag");
     this.removeEventListener("mousemove", onMouseMove);
     this.removeEventListener("mouseup", onMouseUp);
+    
+    if(clickOnly){
+      currentElement._click();
+      return;
+    }
 
-    if(currentDropzone !== startDropzone){
+    if(currentDropzone !== startDropzone && currentDropzone !== undefined){
       // Dropped on a valid dropzone
       currentDropzone.classList.remove("dashed");
 
-      currentDropzone.__onDrop(currentElement.__dropData);
+      if(oneIncludesOther(currentDropzone.__validDrops, currentElement.__dropTypes)){
+        currentDropzone.__onDrop(currentElement.__dropData);
+      }
       currentElement = null;
     }
 }
 document.addEventListener("mousedown", onMouseDown);
 
-function MakeDraggable(element, header, click, elementData = {}){
+function MakeDraggable(element, header, click, elementData = {}, dropTypes = undefined){
     header.classList.add('dragonroll-draggable');
     element._click = click;
     element.__dropData = elementData;
     header.__element = element;
+    element.__dropTypes = dropTypes;
 }
 
 export {

@@ -7,7 +7,20 @@ import { animate } from "motion"
 import ConceptEntry from './ConceptEntry.vue';
 import DropZone from './DropZone.vue';
 
-const props = defineProps(['elements', 'open', 'tooltip', 'context', 'icon']);
+const props = defineProps([
+    'elements',
+    'open',
+    'tooltip',
+    'context',
+    'icon',
+    'types',
+    'validDrops',
+    'readonly',
+    'ondrop'
+]);
+
+let validDrops = undefined;
+if(!props.readonly) validDrops = props.validDrops;
 
 const listContainer = ref(null);
 const elements = ref([]);
@@ -16,7 +29,6 @@ let OpenElement = () => {};
 let TooltipElement = () => {};
 let ContextElement = () => {};
 let IconElement = () => {};
-
 
 if(props.open) OpenElement = props.open;
 if(props.tooltip) TooltipElement = props.tooltip;
@@ -48,12 +60,12 @@ function onLeave(el, done) {
 }
 
 function onDrop(element){
-    console.log(element);
+    props.ondrop(element);
 }
 </script>
 
 <template>
-    <DropZone :onDrop="onDrop">
+    <DropZone :onDrop="onDrop" :validDrops="validDrops">
         <div class="list-container" ref="listContainer">
             <TransitionGroup name="list-element" :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
                 <ConceptEntry class="list-element" v-for="(element, index) in elements"
@@ -63,6 +75,7 @@ function onDrop(element){
                     :tooltip="async (el) => await TooltipElement(el)"
                     :icon="async (el) => await IconElement(el)"
                     :click="() => OpenElement(element)"
+                    :types="props.types"
                     :data-index="index"></ConceptEntry>
             </TransitionGroup>
         </div>

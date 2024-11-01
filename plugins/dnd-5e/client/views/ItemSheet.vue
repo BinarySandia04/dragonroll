@@ -1,7 +1,7 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { GetItem } from './../data.js';
+import { GetItem, UpdateItem } from './../data.js';
 
 import { onMounted, ref, shallowRef, toRaw, provide } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
@@ -77,9 +77,7 @@ let oldInfo;
 
 function Upload(){
     let params = {id: concept.value._id};
-    dndModule.router.put('/item/update', params, {data: concept.value}).then(response => {
-        // console.log(response);
-    });
+    UpdateItem(concept.value._id, concept.value);
 }
 
 function SetParam(param, value){
@@ -138,34 +136,12 @@ onMounted(() => {
     SetMinSize(id, {width: 400, height: 300});
     ResetPosition(id, "center");
 
-    if(data.staticContent){
-        concept.value = toRaw(data.staticContent);
-        contentEditable.value = false;
-        InitValues();
-    }
+    concept.value = toRaw(data.content);
+    contentEditable.value = data.editable;
+    InitValues();
 });
 
 item_type.value = data.item_type;
-if(data.item_create){
-    dndModule.router.post('/item/create', {}, {
-        data: {
-            type: data.item_type,
-            name: "New " + data.item_type
-        },
-    }).then(response => {
-        concept.value = response.data.data;
-        InitValues();
-
-    }).catch(err => console.log(err));
-} else {
-    if(!data.staticContent){
-        GetItem(data.item_id).then(response => {
-            concept.value = response.data.data;
-            console.log(concept.value);
-            InitValues();
-        }).catch(err => console.log(err));
-    }
-}
 
 provide('editable', contentEditable);
 </script>

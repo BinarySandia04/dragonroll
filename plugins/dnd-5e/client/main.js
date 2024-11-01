@@ -29,6 +29,7 @@ function Main(Api){
         windows: {
             database: databaseWindow,
             actors: actorsWindow,
+            booksWindow,
             character_sheet: Api.registerWindow('character_sheet', Api.createView('CharacterSheet')),
             item_sheet: Api.registerWindow('item_sheet', Api.createView('ItemSheet')),
             create_item_prompt: Api.registerWindow('create_item_prompt', Api.createView('CreateItemPrompt'))

@@ -24,9 +24,28 @@ function FetchConcepts(){
     }).catch(err => console.log(err));
 }
 
-let GetConcepts = () => data.value.concepts;
-let GetItem = (id) => dndModule.router.get('/item/get', {id})
 
+const GetConcepts = () => data.value.concepts;
+const GetItem = (id, callback = () => {}) => {
+    dndModule.router.get('/item/get', {id}).then(response => {
+        if(response.data.status == "ok") callback(response.data.data);
+        else console.err("Request resulted with error " + response.data.status);
+    }).catch(err => console.log(err));
+}
+
+const CreateItem = (data, callback = () => {}) => {
+    dndModule.router.post('/item/create', {}, {data}).then(response => {
+        FetchConcepts();
+        callback(response.data);
+    }).catch(err => console.log(err));
+}
+
+const UpdateItem = (id, data, callback = () => {}) => {
+    dndModule.router.put('/item/update', {id}, {data}).then(response => {
+        FetchConcepts();
+        callback(response.data);
+    }).catch(err => console.log(err));
+}
 
 export {
     InitData,
@@ -35,4 +54,6 @@ export {
 
     GetConcepts,
     GetItem,
+    CreateItem,
+    UpdateItem
 }

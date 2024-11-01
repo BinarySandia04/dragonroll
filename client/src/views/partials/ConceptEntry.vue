@@ -6,7 +6,14 @@ import { GetKey } from '@/services/Utils';
 import { MakeDraggable } from '@/services/Draggable';
 import { marked } from "marked";
 
-const props = defineProps(['element', 'context', 'tooltip', 'icon', 'click']);
+const props = defineProps([
+    'element',
+    'context',
+    'tooltip',
+    'icon',
+    'click',
+    'types'
+]);
 
 const element = ref({});
 const elementDiv = ref(null);
@@ -36,7 +43,7 @@ onMounted(async () => {
     let context = await props.context();
     if(context) AddContextMenu(elementDiv.value, context);
 
-    MakeDraggable(elementDiv.value, tooltipContainer.value, props.click, props.element);
+    MakeDraggable(elementDiv.value, tooltipContainer.value, props.click, props.element, props.types);
 })
 </script>
 <template>

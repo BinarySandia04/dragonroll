@@ -3,7 +3,7 @@ import { marked } from "marked";
 
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, ref, shallowRef, watch } from 'vue';
+import { onMounted, ref, shallowRef, watch, toRaw } from 'vue';
 import { ResetPosition, SetMinSize, SetResizable, SetSize, SetupHandle } from '@/services/Windows';
 import ConceptList from '@/views/partials/ConceptList.vue';
 import Tabs from '@/views/partials/Tabs.vue';
@@ -11,7 +11,7 @@ import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 import { Global } from '@/services/PluginGlobals';
 import { GetKey } from '@/services/Utils.js';
 
-import { FetchConcepts, GetConcepts } from './../data.js'
+import { CreateItem, FetchConcepts, GetConcepts, GetItem } from './../data.js'
 
 const handle = ref(null);
 
@@ -33,10 +33,10 @@ const features = shallowRef([]);
 
 onMounted(() => {
     SetupHandle(id, handle);
-    SetSize(id, {width: 800, height: 800});
+    SetSize(id, {width: 500, height: 700});
     ResetPosition(id, "center");
     SetResizable(id, true);
-    SetMinSize(id, {width: 800, height: 300});
+    SetMinSize(id, {width: 400, height: 300});
 
     // console.log(data);
 
@@ -70,17 +70,25 @@ function OpenCreateItemPrompt(){
 }
 
 function OpenConcept(element){
-    let fromDatagen = data.fromDatagen;
-    let staticContent = false;
-    if(fromDatagen) staticContent = element;
+    const openConceptWindow = (itemData) => {
+        console.log(data.static);
+        Api.createWindow(PluginData.windows.item_sheet, {
+            id: 'item_sheet_' + itemData._id,
+            title: 'Item Sheet',
+            item_id: itemData._id,
+            content: itemData,
+            editable: !data.static,
+            close: () => Api.clearWindow('item_sheet_' + itemData._id)
+        });
+    };
 
-    Api.createWindow(PluginData.windows.item_sheet, {
-        id: 'item_sheet_' + element._id,
-        title: staticContent ? 'View Item - Read only' : 'Edit Item',
-        item_id: element._id,
-        staticContent,
-        close: () => Api.clearWindow('item_sheet_' + element._id)
-    });
+    if(data.static){
+        // Element passed has datagen data
+        openConceptWindow(element);
+    } else {
+        // We need to fetch the data from the database
+        GetItem(element._id, openConceptWindow);
+    }
 }
 
 function ElementContext(element){
@@ -104,6 +112,8 @@ function ElementTooltip(element){
 function ElementIcon(element){
     return GetKey(element, "icon") ? GetKey(element, "icon") : 'icons/game-icons/ffffff/lorc/crossed-swords.svg'
 }
+
+const OndropItem = (element) => CreateItem(toRaw(element));
 </script>
 
 
@@ -128,6 +138,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-weapon']"
+                        :types="['item', 'item-weapon']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #equipment>
@@ -137,6 +151,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-equipment']"
+                        :types="['item', 'item-equipment']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #consumables>
@@ -146,6 +164,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-consumable']"
+                        :types="['item', 'item-consumable']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #containers>
@@ -155,6 +177,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-container']"
+                        :types="['item', 'item-container']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #tools>
@@ -164,6 +190,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-tool']"
+                        :types="['item', 'item-tool']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #spells>
@@ -173,6 +203,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-spell']"
+                        :types="['item', 'item-spell']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
                 <template #features>
@@ -182,6 +216,10 @@ function ElementIcon(element){
                         :context="ElementContext"
                         :tooltip="ElementTooltip"
                         :icon="ElementIcon"
+                        :validDrops="['item-feature']"
+                        :types="['item', 'item-feature']"
+                        :readonly="data.fromDatagen"
+                        :ondrop="OndropItem"
                     ></ConceptList>
                 </template>
             </Tabs>

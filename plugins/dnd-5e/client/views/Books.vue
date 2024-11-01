@@ -48,10 +48,19 @@ function OpenBook(element){
                 title: element.name,
                 description: element.desc
             },
-            fromDatagen: true, // Makes read only mode from elements!
+            static: true, // Makes read only mode from elements!
             getConcepts: () => response.data.elements,
-            close: () => Api.clearWindow('book-items-window-' + element.id)
+            close: () => Api.clearWindow('book-items-window-' + element.id),
+            back: () => { 
+                Api.createWindow(PluginData.windows.booksWindow, {
+                    title: "Books",
+                    id: PluginData.windows.booksWindow,
+                    close: () => Api.clearWindow(PluginData.windows.booksWindow)
+                });
+                Api.clearWindow('book-items-window-' + element.id);
+            }
         });
+        Api.clearWindow(data.id);
     });
     
 }
@@ -71,6 +80,8 @@ function BookIcon(element){
                 :elements="books"
                 :open="OpenBook"
                 :icon="BookIcon"
+                type="content-book"
+                :validDrop="['content-book']"
             ></ConceptList>
         </div>
     </div>

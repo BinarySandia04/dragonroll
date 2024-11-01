@@ -3,6 +3,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
+import ConceptList from '@/views/partials/ConceptList.vue';
 const props = defineProps(['data']);
 const data = props.data;
 
@@ -426,7 +427,11 @@ function ConfigureBookmarks(){
                     </div>
                 </div>
                 <div class="filter-container"></div>
-                <div class="inventory-container"></div>
+                <div class="inventory-container">
+                    <ConceptList>
+                        
+                    </ConceptList>
+                </div>
             </div>
         </div>
         <div class="sheet-content" v-show="selectedBookmark == 2">
@@ -1045,6 +1050,12 @@ div.player-info-div {
 
 span.gray {
     color: gray;
+}
+
+.inventory-container {
+    margin-top: 12px;
+    width: 100%;
+    height: 100%;
 }
 
 </style>

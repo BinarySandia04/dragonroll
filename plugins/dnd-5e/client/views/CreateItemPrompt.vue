@@ -3,6 +3,7 @@ import WindowHandle from '@/views/partials/WindowHandle.vue';
 import { onMounted, ref } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
 import { Global } from '@/services/PluginGlobals';
+import { CreateItem } from '../data';
 
 const props = defineProps(['data']);
 const data = props.data;
@@ -25,15 +26,7 @@ function ConfirmSelection(){
     if(!selected) return;
     let value = selected.value;
 
-    Api.createWindow(PluginData.windows.item_sheet, {
-        id: 'item_sheet',
-        title: 'Edit Item',
-        item_type: value,
-        item_create: true,
-        close: () => Api.clearWindow('item_sheet')
-    });
-
-    Api.clearWindow(id);
+    CreateItem({type: value, name: "New " + value}, () => Api.clearWindow(id));
 }
 
 </script>

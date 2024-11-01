@@ -81,7 +81,7 @@ function SelectTab(row){
     flex-grow: 1;
     flex-basis: 0;
     font-weight: bold;
-    padding: 3px 3px 3px 12px;
+    padding: 3px 12px 3px 12px;
     font-size: 16px;
 
     color: #9c9c9c;

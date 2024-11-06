@@ -16,6 +16,7 @@ client/public/plugins/
 # Backend
 backend/plugins/
 backend/datagen/
+backend/uploads/
 
 # Docs
 documentation/docs/.vuepress/.cache

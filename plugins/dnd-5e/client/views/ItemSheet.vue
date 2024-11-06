@@ -1,7 +1,7 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { GetItem, UpdateItem } from './../data.js';
+import { GetItem, UpdateItem } from './../items.js';
 
 import { onMounted, ref, shallowRef, toRaw, provide } from 'vue';
 import { SetupHandle, SetSize, ResetPosition, SetMinSize, SetResizable } from '@/services/Windows';
@@ -20,9 +20,6 @@ import FormElement from '@/views/partials/FormElement.vue';
 
 const props = defineProps(['data']);
 const data = props.data;
-const api = Global('dnd-5e').Api;
-const pluginData = Global('dnd-5e').Data;
-const dndModule = Global('dnd-5e').DndModule;
 
 const contentEditable = ref(true);
 

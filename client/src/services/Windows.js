@@ -20,7 +20,6 @@ import SystemSelectorWindow from '@/views/windows/campaigns/SystemSelectorWindow
 import MapWindow from '@/views/windows/dm/MapWindow.vue'
 import CombatWindow from '@/views/windows/game/CombatWindow.vue'
 import EntityWindow from '@/views/windows/dm/EntityWindow.vue'
-import CharactersWindow from '@/views/windows/game/CharactersWindow.vue'
 import WelcomeWindow from '@/views/windows/WelcomeWindow.vue'
 import CompendiumWindow from '@/views/windows/CompendiumWindow.vue'
 import BookAnvilWindow from '@/views/windows/BookAnvilWindow.vue'
@@ -56,7 +55,6 @@ let windowMap = {
     map_window: MapWindow,
     combat_window: CombatWindow,
     entity_window: EntityWindow,
-    characters_window: CharactersWindow,
     compendium_window: CompendiumWindow,
     book_anvil_window: BookAnvilWindow,
     icon_selector: IconSelectorWindow,

@@ -189,7 +189,7 @@ class BackendModule {
             })
         });
 
-        this.router.delete(`/${model.name}/destroy`, (req, res) => {
+        this.router.delete(`/${model.name}/delete`, (req, res) => {
             let query = {}
             scope.forEach(k => query[k] = req.query[k]);
             query['_id'] = req.query.id;

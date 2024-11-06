@@ -1,5 +1,8 @@
-import { FetchConcepts, GetConcepts, InitData } from "./data";
+import { reactive } from 'vue';
+
 import { Global } from '@/services/PluginGlobals';
+import { FetchItems, GetItems } from "./items";
+import { FetchActors } from './actors';
 
 var dndModule;
 
@@ -45,8 +48,8 @@ function Main(Api){
                     Api.createWindow(databaseWindow, {
                         title: "Campaign items",
                         id: 'campaign-items-window',
-                        fetchConcepts: FetchConcepts, // Requests reactive ref update 
-                        getConcepts: GetConcepts,     // Needs to return reactive ref value
+                        fetchConcepts: FetchItems, // Requests reactive ref update 
+                        getConcepts: GetItems,     // Needs to return reactive ref value
                         close: () => Api.clearWindow("campaign-items-window")
                     });
                 }
@@ -74,20 +77,26 @@ function Main(Api){
                 }
             }]
     });
-    
 
-    dndModule.socket.on('update-item-all', () => {
-        FetchConcepts();
-    });
 
     dndModule.onInit = () => {
         InitData();
-        FetchConcepts();
+        console.log("Init Data");
+        FetchItems();
+        FetchActors();
     }
 
     Api.registerModule(dndModule);
 
     Global('dnd-5e').DndModule = dndModule;
+}
+
+function InitData(){
+    Global('dnd-5e').Data.game = reactive({});
+    Global('dnd-5e').Data.game.value = {
+        concepts: [],
+        actors: [],
+    };
 }
 
 export { 

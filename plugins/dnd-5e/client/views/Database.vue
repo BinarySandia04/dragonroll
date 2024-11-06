@@ -11,7 +11,8 @@ import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
 import { Global } from '@/services/PluginGlobals';
 import { GetKey } from '@/services/Utils.js';
 
-import { CreateItem, FetchConcepts, GetConcepts, GetItem } from './../data.js'
+import { CreateItem, DeleteItem, GetItem } from '../items.js'
+import { HideContextMenu } from "@/services/ContextMenu.js";
 
 const handle = ref(null);
 
@@ -42,6 +43,7 @@ onMounted(() => {
 
     watch(data.getConcepts, () => {
         updateView();
+        console.log("Update DATABASE");
     });
     
     if(data.fetchConcepts) data.fetchConcepts();
@@ -94,7 +96,10 @@ function OpenConcept(element){
 function ElementContext(element){
     return [
         {name: "Open"},
-        {name: "Delete"}
+        {name: "Delete", action: () => {
+            DeleteItem(element._id);
+            HideContextMenu();
+        }}
     ];
 }
 

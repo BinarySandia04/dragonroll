@@ -21,21 +21,21 @@ function Main(api){
     });
 
     let entityDataModel = Api.createModel('entitydata', {
-        name: { type: "String", required: true },
-        hp: { type: "Number", required: true },
-        max_hp: { type: "Number", required: true },
+        name: { type: "String", required: true, default: "New Entity" },
+        hp: { type: "Number", required: true, default: 5 },
+        max_hp: { type: "Number", required: true, default: 5 },
         effects: [ { type: "ObjectId", ref: "dnd-5e/effect" } ],
         attributes: { type: "Object" }, // {str, dex, ...}
         saving_attributes: {type: "Object"},
         skill_prof: { type: "Object" },
-        initiative: { type: "Number" },
-        speed: {type: "Number" },
-        ac: {type: "Number"},
-        proficency: { type: "Number" },
-        size: {type: "String"},
+        initiative: { type: "Number", required: true, default: 10 },
+        speed: {type: "Number", required: true, default: 30 },
+        ac: {type: "Number", required: true, default: 10},
+        proficency: { type: "Number", required: true, default: 0 },
+        size: {type: "String", required: true, default: "Medium" },
         items: [ {type: "ObjectId", ref: 'dnd-5e/item'} ],
-        competences: {type: "Object"},
-        resources: {type: "Object"},
+        competences: {type: "Object" },
+        resources: {type: "Object" },
         class: { type: "ObjectId", ref: "dnd-5e/progressable" },
         race: { type: "ObjectId", ref: "dnd-5e/progressable" },
         lvl: { type: "Number" },
@@ -50,8 +50,8 @@ function Main(api){
     }, entityDataModel);
 
     let actorModel = Api.createModel('actor', {
-        picture: { type: "String" },
-        xp: { type: "Number", required: true },
+        picture: { type: "String", default: "" },
+        xp: { type: "Number", required: true, default: 0 },
         death_throws: { type: "Object" }
     }, entityDataModel);
 

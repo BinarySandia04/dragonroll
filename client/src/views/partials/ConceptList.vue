@@ -56,6 +56,8 @@ function onLeave(el, done) {
     animate(el, {
         opacity: [1, 0],
         translateX: [0, 20]
+    }).finished.then(() => {
+        el.remove();
     });
 }
 

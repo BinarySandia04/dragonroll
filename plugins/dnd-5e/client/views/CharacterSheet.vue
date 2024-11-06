@@ -651,6 +651,7 @@ input[type="checkbox"] {
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right: 15px;
+    text-align: center;
 
     .extra-stat-container {
         flex-grow: 1;
@@ -825,6 +826,7 @@ div.player-info-div {
 
 .ac-container {
     width: 70px;
+    text-align: center;
     height: 70px;
     background-image: url('icons/ui/noun-shield.svg');
     background-size: cover;
@@ -937,6 +939,7 @@ div.player-info-div {
     background: #DED4D6;
     -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
     clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+    text-align: center;
 
     display: flex;
     flex-direction: column;
@@ -1027,6 +1030,7 @@ div.player-info-div {
         font-size: 32px;
         font-weight: bold;
         width: 70px;
+        text-align: center;
         height: 70px;
         background-color: #1B1A18;
         line-height: 68px;

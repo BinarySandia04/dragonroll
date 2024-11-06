@@ -52,10 +52,6 @@ function OpenEntityWindow(){
     CreateWindow('entity_window');
 }
 
-function OpenCharactersWindow(){
-    CreateWindow('characters_window');
-}
-
 function OpenDatabaseWindow(){
     CreateWindow('database');
 }

@@ -1,15 +1,22 @@
 <script setup>
 import WindowHandle from '@/views/partials/WindowHandle.vue';
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, shallowRef, watch } from 'vue';
 import { SetupHandle, SetSize, ResetPosition } from '@/services/Windows';
-import GameEntry from '@/views/partials/GameEntry.vue';
 import { CreateWindow, SetMinSize, SetMaxSize, SetResizable, ClearWindow } from '@/services/Windows';
 import { GetCampaignModuleName } from '@/services/Campaign';
+import ConceptList from '@/views/partials/ConceptList.vue';
+import FixedBottomButtons from '@/views/partials/FixedBottomButtons.vue';
+import { CreateActor, DeleteActor, FetchActors, GetActors } from '../actors';
+
+import { HideContextMenu } from "@/services/ContextMenu.js";
+
 const props = defineProps(['data']);
 const data = props.data;
 
 const handle = ref(null);
+
+const actorElements = shallowRef([]);
 
 let id = data.id;
 
@@ -21,7 +28,18 @@ onMounted(() => {
     SetMinSize(id, {height: 300});
     SetMaxSize(id, {height: 700});
     ResetPosition(id, {x: window.innerWidth - 420, y: 60});
+
+    watch(GetActors, () => {
+        update();
+    });
+    update();
 });
+
+function update(){
+    actorElements.value = GetActors();
+    console.log("ACTOR UPDATE");
+    console.log(actorElements.value);
+}
 
 // temp
 function openCharacterSheet(){
@@ -32,6 +50,24 @@ function openCharacterSheet(){
     });
 }
 
+async function ActorIcon(element){
+    return "public/img/def-avatar.jpg";
+}
+
+function ActorContext(element){
+    return [
+        {name: "Open"},
+        {name: "Delete", action: () => {
+            DeleteActor(element._id);
+            HideContextMenu();
+        }}
+    ];
+}
+
+function Create(){
+    CreateActor();
+}
+
 </script>
 
 
@@ -39,14 +75,27 @@ function openCharacterSheet(){
     <div class="window-wrapper" :id="'window-wrapper-' + id">
         <WindowHandle :window="id" ref="handle"></WindowHandle>
         
+
+        <div class="main-container">
+            <ConceptList
+                :elements="actorElements"
+                :icon="ActorIcon"
+                :open="openCharacterSheet"
+                :context="ActorContext"
+            ></ConceptList>
+        </div>
+            <!--
         <div class="map-list-container">
             <GameEntry :data='{
                 height: "10px",
                 icon: "img/game/weaponIcons32x32_png_Transparent/icon_axe1.png",
                 name: "Axe",
                 click: openCharacterSheet,
-                }'></GameEntry>
+            }'></GameEntry>
         </div>
+            -->
+
+        <FixedBottomButtons :plus="Create"></FixedBottomButtons>
     </div>
 </template>
 

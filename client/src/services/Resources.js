@@ -6,6 +6,10 @@ async function GetJson(url){
     return obj;
 }
 
+async function GetFile(url){
+    return await(await fetch(url)).text();
+}
+
 async function FetchResources(){
     let data = await GetJson('/data/data.json');
     icons = data.icons.files;
@@ -25,4 +29,5 @@ export {
     
     GetIcons,
     GetPluginPaths,
+    GetFile,
 };

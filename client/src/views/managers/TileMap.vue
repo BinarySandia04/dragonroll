@@ -23,11 +23,11 @@ watch(backgroundColor, () => {
 </script>
 
 <template>
-    <canvas class="tilemap" id="tilemap" ref="canvas"></canvas>
+    <div id="tilemap-container" ref="canvas"></div>
 </template>
 
 <style scoped lang="scss">
-.tilemap {
+#tilemap-container {
     width: 100%;
     height: 100%;
     overflow: hidden;

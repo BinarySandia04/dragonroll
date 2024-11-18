@@ -24,6 +24,7 @@
     "marked-katex-extension": "^4.0.1",
     "mitt": "^3.0.1",
     "motion": "^10.18.0",
+    "pixi.js": "^8.5.2",
     "prismjs": "^1.29.0",
     "serve": "^14.2.3",
     "socket.io-client": "^4.7.5",

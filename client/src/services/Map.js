@@ -1,6 +1,8 @@
 import { initCustomFormatter, ref, toRaw } from 'vue';
 
 import Server from '@/services/Server'
+import MapRender from '@/services/MapRender'
+
 import { _SendMap, GetCampaign } from './Dragonroll';
 import { backendUrl } from './BackendURL';
 import { socket } from './Socket';
@@ -25,13 +27,16 @@ let mouseX = 0;
 let mouseY = 0;
 
 function SetupTilemap(){
-    let tilemap = document.getElementById("tilemap");
+    MapRender.Setup();
+
+    let tilemap = document.getElementById("tilemap-container");
     tilemap.addEventListener("wheel", (event) => {
         let direction = 0;
         if(event.deltaY > 0) direction = 0.95;
         else if(event.deltaY < 0) direction = 1.05;
 
-        zoom(direction);
+        // zoom(direction);
+        console.log("wheel")
     })
 
     let mouseDown = false;
@@ -44,6 +49,8 @@ function SetupTilemap(){
         startY = event.clientY;
         oldOffsetX = offsetX;
         oldOffsetY = offsetY;
+
+        console.log("mousedown")
     });
 
     tilemap.addEventListener("mousemove", (event) => {
@@ -54,7 +61,9 @@ function SetupTilemap(){
         offsetX = oldOffsetX + ((event.clientX - startX) * (1 / scale));
         offsetY = oldOffsetY + ((event.clientY - startY) * (1 / scale));
 
-        Draw();
+        console.log("mousemove")
+
+        // Draw();
     });
 
     tilemap.addEventListener("mouseup", () => mouseDown = false);
@@ -64,7 +73,7 @@ function SetupTilemap(){
     offsetX = window.innerWidth / 2;
     offsetY = window.innerHeight / 2;
 
-    Draw();
+    // Draw();
 }
 
 // Map coords -> Real coords
